@@ -103,7 +103,6 @@
                 </head>
                 <body>
                     <center>
-                        <img src='../../img/rispro.png' width='300' height='132' class='responsive'>
                         <img src='../../img/gobersecre.png' width='300' height='141' class='responsive'>
                     
                     <div class='container'>

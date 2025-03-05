@@ -129,7 +129,6 @@
                         <body>
                             <center>
                                 <img src='../../img/logo_educacion_fondo_azul.png' width='600' height='111' class='responsive'>
-                            
                             <div class='container'>
                                 <br />
                                 <h3><b><i class='fas fa-school'></i> SE ACTUALIZÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
