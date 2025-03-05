@@ -1,0 +1,281 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.college {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.question {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.answer {
+    margin-bottom: 20px;
+}
+
+.project-separator {
+    border: none;
+    background-color: #f4f4f4; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 10vh;
+}
+
+
+
+.excel-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+
+.excel-container a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #117d28;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.excel-container a:hover {
+    background-color: #69bde7;
+}
+
+
+.excel-button {
+    display: inline-block; 
+    margin: 10px;
+}
+
+.report {
+    border: none;
+    background-color: #f4f4f4; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 15vh;
+}
+
+
+
+.report a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3183ac;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.report a:hover {
+    background-color: #117d28;
+}
+
+.site-footer {
+    background-color: #f4f4f4;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    height: 20vh;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.site-footer a {
+    color: #50a9d6;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+.back {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back button {
+    background-color: #3498db;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 253, 253);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back button img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.back button:hover {
+    background-color: #50a9d6;
+}
+
+
+.update {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.update button {
+    background-color: #eee05a;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 253, 253);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.update button img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.update button:hover {
+    background-color: #259718;
+}
+
+/* Estilos para el formulario de carga de archivos */
+form {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+form b {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+form input[type="file"] {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para la tabla de archivos */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #50a9d6;
+    color: #fff;
+}
+
+td {
+    background-color: #fff;
+    transition: background-color 0.3s;
+}
+
+td:hover {
+    background-color: #f2f2f2;
+}
+
+img.icon {
+    width: 30px;
+    height: 30px;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+img.icon:hover {
+    transform: scale(1.1);
+}
+
+
+li a {
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+  }
+  
+li  a:link {
+    color: #2c9733;
+  }
+  
+li  a:visited {
+    color: #50a9d6;
+  }
+  
+li  a:focus {
+    border-bottom: 1px solid;
+    background: #50a9d6b5;
+  }
+  
+li  a:hover {
+    border-bottom: 1px solid;
+    background: #89cef0b9;
+  }
+  
+li  a:active {
+    background: #5ab0dc;
+    color: #cdfeaa;
+    text-decoration: none;
+  }

@@ -1,0 +1,357 @@
+body {
+  background-color: #fffdfdb0; 
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh; 
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #3e3d3d; /* Borde de la tabla */
+  max-width: 95%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  table-layout: auto; /* Ajuste automático del ancho de las columnas */
+}
+
+th, td {
+  border: 1px solid #b8b8b8ed; /* Color de borde gris claro */
+  padding: 4px;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #3498db;
+  color: #fff;
+}
+
+
+  
+  .oculto {
+    display: none;
+    /* text-align: center; */
+    border-bottom: 1px solid #ddd;
+    /* background-color: transparent; Fondo transparente */
+    border: none; 
+    /* padding-top: 40px; */
+    vertical-align: middle;
+   
+    
+}
+
+
+ b{
+  text-align:center;
+  color: white
+ }
+
+
+  
+  /* Estilos para las celdas alternas */
+  tr:nth-child(even) {
+    background-color: rgba(56, 165, 238, 0.1);
+  }
+  
+  /* Estilos para el encabezado flotante */
+  thead {
+    position: sticky;
+    top: 0;
+    background-color: #4472c4;
+    text-align: center;
+    
+    
+
+  }
+  
+  /* Estilos para el hover de las filas */
+  tr:hover {
+    background-color: #4c80d9d7; 
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+ 
+
+/* Estilos para el formulario de filtrado */
+form {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  
+  input[type="text"] {
+    padding: 10px;
+    border: 2px solid #60b4df;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+  }
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #60b4df;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #3498db;
+  }
+  
+  /* Estilos para el título */
+  h2 {
+    font-size: 24px;
+    color: #3498db;
+    margin-bottom: 10px;
+  }
+  
+  
+  .back {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back button {
+  background-color: #61b2e4;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 253, 253);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back button img {
+    vertical-align: middle;
+    margin-right: 5px;
+    
+}
+
+.back button:hover {
+    background-color: #82cef3;
+}
+
+.green-cell {
+    background-color: rgba(32, 246, 32, 0.729);
+    
+}
+
+.red-cell {
+    background-color: rgba(226, 78, 78, 0.695);
+    
+}
+
+a {
+    text-decoration: none; 
+    color: #007bff; 
+}
+
+tr:hover a {
+  color: rgba(13, 13, 14, 0.983); /* Cambia el color de los enlaces a blanco en hover de la fila */
+}
+
+/* Estilo para enlaces cuando se pasan el ratón por encima (hover) */
+a:hover {
+    text-decoration: underline; /* Subraya el texto cuando se pasa el ratón por encima */
+    color: #ebe66b; /* Cambia el color del texto del enlace al pasar el ratón (puedes usar cualquier color) */
+}
+
+/* Estilo para enlaces visitados */
+a:visited {
+    color: #007bff; /* Cambia el color de los enlaces visitados (puedes usar cualquier color) */
+}
+
+/* Estilo para enlaces activos (cuando se hace clic) */
+a:active {
+    color: #399749; /* Cambia el color del texto del enlace al hacer clic (puedes usar cualquier color) */
+}
+
+/* Estilo para las celdas que se expandirán al pasar el mouse */
+.expansible {
+    max-height: 20px; /* Altura máxima inicial (ajusta según tus necesidades) */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; /* Efecto de transición suave */
+}
+
+/* Estilo para las celdas expandidas */
+.expansible:hover {
+    max-height: none; /* Sin límite de altura al pasar el mouse */
+}
+
+li {
+  text-align: center;
+   
+}
+
+li a{
+  text-align: center;
+}
+
+.verde {
+  /* background-color: #c6ffbb; */
+  /* color: rgb(14, 2, 2); */
+  text-align: center;
+}
+
+.rojo {
+  background-color: #ffc7ce;
+  text-align: center;
+ 
+}
+
+.rojo:hover {
+  background-color: #ffc7ce; /* Mantén el color de fondo rojo en hover */
+  color: white; /* Cambia el color del texto a blanco al pasar el ratón */
+  transition: background-color 0.3s ease-in-out;
+}
+
+tr:hover {
+  /* background-color: #ccc; */
+  color: white; /* Cambia el color del texto a blanco al pasar el ratón */
+  transition: background-color 0.3s ease-in-out;
+}
+
+
+ 
+    /* Estilo para el contenedor principal */
+   
+
+  .rigth {
+    position: relative; /* Establece la posición relativa para el div */
+}
+
+ 
+  .corner-button {
+    position: absolute; /* Establece la posición absoluta para el botón dentro del div */
+    top: 0;
+    right: 0;
+    z-index: 999;
+    padding: 20px;
+}  
+
+.separador{
+  height: 8vh; 
+}
+
+button {
+  display: inline-block;
+  background-color: #1d6f42;
+  border: none;
+  color: white;
+  text-align: center;
+  padding: 10px 10px;
+  margin: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilos para el enlace dentro del botón */
+.button a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Cambiar color del botón al pasar el mouse sobre él */
+.button:hover {
+  background-color:  #1d6f42;
+}
+
+/* Estilos para el contenedor principal */
+/* Estilos para el contenedor de botones */
+.botones {
+  display: flex; /* Usamos flexbox para alinear elementos horizontalmente */
+  justify-content: center; /* Centra los elementos horizontalmente en el contenedor */
+  align-items: center; /* Centra los elementos verticalmente en el contenedor */
+  gap: 10px; /* Espacio entre los elementos */
+  margin-top: 20px; /* Espacio superior para separar de otros elementos */
+}
+
+/* Estilo para el botón */
+.button {
+  background-color: #1d6f42;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Cambiar color del botón al pasar el mouse sobre él */
+.button:hover {
+  background-color: #5397e5;
+}
+
+/* Estilo para el enlace dentro del botón */
+.button a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Estilos para la casilla de verificación */
+/* Estilos para la casilla de verificación */
+.detalles input[type="checkbox"] {
+  display: none; /* Oculta la casilla de verificación predeterminada */
+}
+
+/* Estilos para el contenedor personalizado */
+/* Estilos para el contenedor de la casilla de verificación personalizada */
+.detalles label {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ecee75; /* Color de fondo del botón (azul) */
+  color: #fff; /* Color del texto (blanco) */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilos para la casilla de verificación oculta */
+.detalles input[type="checkbox"] {
+  display: none;
+}
+
+/* Estilos para el icono de verificación */
+.detalles .custom-checkbox::after {
+  content: "\2713"; /* Símbolo de marca de verificación Unicode */
+  font-size: 18px;
+  color: #fff; /* Color del icono (blanco) */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* Oculta el icono por defecto */
+}
+
+/* Estilos para la casilla de verificación cuando está marcada */
+.detalles input[type="checkbox"]:checked + label {
+  background-color: #56a4ee; /* Cambia el color de fondo cuando está marcada (verde) */
+}
+.td-textarea {
+  width: 90%; 
+  height: 100px; 
+
+  
+}
+
+.buton-observacion {
+  background-color: rgb(134, 185, 232); /* Color de fondo azul */
+  color: white; /* Color del texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno (ajusta según sea necesario) */
+  cursor: pointer; /* Cambia el cursor al estilo de puntero al pasar el mouse */
+  transition: background-color 0.3s; /* Transición de color de fondo */
+}
+
+/* Estilo de hover */
+.buton-observacion:hover {
+  background-color: #6cb0c5; /* Color de fondo amarillo en hover */
+}

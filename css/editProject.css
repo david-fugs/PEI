@@ -1,0 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.container {
+    width: 70%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #b3b0b0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.college {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.college h2 {
+    background-color: #50a9d6;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.project {
+    margin-bottom: 20px;
+}
+
+.question {
+    font-weight: bold;
+    color: #333;
+}
+
+
+
+
+/* Estilos para input[type="number"] */
+input[type="number"] {
+    width: 93%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f7fb;
+    color: #333;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Estilos para select */
+select {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f7fb;
+    color: #333;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Estilos para textarea */
+textarea {
+    height: 150px;
+    resize: vertical; /* Permite redimensionar solo verticalmente */
+    font-size: 14px;
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f7fb;
+    color: #333;
+    transition: border-color 0.3s ease-in-out;
+}
+
+  textarea:hover {
+    cursor: grab;
+  }
+  
+  /* Cambia el cursor mientras se está redimensionando */
+  textarea:active {
+    cursor: grabbing;
+  }
+
+
+
+/* Estilos para el foco de los inputs y textarea */
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #3498db;
+    outline: none;
+   
+}
+
+
+.back {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back button {
+    background-color: #3498db;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 253, 253);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back button img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.back button:hover {
+    background-color: #5db2dd;
+}
+
+/*  */
+.update {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.update button {
+    background-color: #eee05a;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 253, 253);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.update button img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.update button:hover {
+    background-color: #259718;
+}
+
+
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 100px;
+}
+
+.error-message {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.success-message {
+    background-color: #37be45;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+.empty-field {
+    border: 1px solid red; 
+}

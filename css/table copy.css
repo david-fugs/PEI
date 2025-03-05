@@ -1,0 +1,44 @@
+body {
+    background-image: url('../img/fondo3.jpg');
+    background-position: center top; /* Establece el punto de referencia en el centro de la parte superior */
+    background-size: 100% auto; /* Establece el tamaño del fondo al 100% del ancho y el tamaño original de la imagen */
+    background-repeat: no-repeat; /* Evita que se repita la imagen */
+}
+
+
+    
+  table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+  }
+
+  th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+  }
+
+  th {
+      background-color: #60b4df;
+      color: white;
+      font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+      background-color: #f2f2f2;
+  }
+
+  tr:hover {
+      background-color: #ddd;
+  }
+
+  .corner-button {
+      position: fixed;
+      top: 20px; 
+      right: 25px; 
+      z-index: 999;
+      }
+
+
