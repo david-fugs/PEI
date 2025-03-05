@@ -1,337 +1,155 @@
 <?php
-    session_start();
-    
-    if(!isset($_SESSION['id'])){
-        header("Location: index.php");
-    }
-    
-    $usuario = $_SESSION['usuario'];
-    $nombre = $_SESSION['nombre'];
-    $tipo_usuario = $_SESSION['tipo_usuario'];
-    $id_cole = $_SESSION['id_cole'];
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php");
+}
+
+$usuario = $_SESSION['usuario'];
+$nombre = $_SESSION['nombre'];
+$tipo_usu = $_SESSION['tipo_usuario'];
+$id_cole = $_SESSION['id_cole'];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>PEI | SOFT</title>
-        <script src="js/64d58efce2.js" ></script>
-        <link rel="stylesheet" href="css/menu.css">
-        <style>
-            .responsive {
-                max-width: 100%;
-                height: auto;
-            }
-        </style>
-    <head>
-    <body>
-        
-        <header>
-            <div class="container">
-                <input type="checkbox" name="" id="check">
 
-                <div class="nav-btn">
-                    <div class="nav-links">
-                        <ul>
-                            <li class="nav-link" style="--i: 1.85s">
-                                <a href="#">I.E.<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">ESTABLECIMIENTO EDUCATIVO<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                   <!--<li class="dropdown-link">
-                                                        <a href="code/ie/addie1.php">Ingresar</a>
-                                                    </li>-->
-                                                    <li class="dropdown-link">
-                                                        <a href="code/ie/addie.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">SEDES<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                   <!--<li class="dropdown-link">
-                                                        <a href="code/ie/addie1.php">Ingresar</a>
-                                                    </li>-->
-                                                    <li class="dropdown-link">
-                                                        <a href="code/ie/addsedes.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">MEJORAS<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                   <!--<li class="dropdown-link">
-                                                        <a href="code/ie/addie1.php">Ingresar</a>
-                                                    </li>-->
-                                                    <li class="dropdown-link">
-                                                        <a href="code/ie/mejoras/addmejoras.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-link" style="--i: .85s">
-                                <a href="#">TELEOLOGICO<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">MISIÓN - VISIÓN - PE - OI<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                   <li class="dropdown-link">
-                                                        <a href="code/teleologico/addteleologico1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/teleologico/addteleologico.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
-                
-                            <li class="nav-link" style="--i: 1.1s">
-                                <a href="#">PEDAGÓGICO<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">MALLAS - PLAN DE ESTUDIOS<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/mallas/addmallas1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/mallas/addmallas.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                       
-                                        <li class="dropdown-link">
-                                            <a href="#">SIEE<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/siee/siee1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/siee/siee.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fed2435e21.js" crossorigin="anonymous"></script>
+    <title>PEI | SOFT</title>
+    <link href="fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/access.css" />
+</head>
 
-                            <li class="nav-link" style="--i: 1.35s">
-                                <a href="#">PLANES|PROYECTOS<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">TRANSVERSALES<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/project/addproject1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/project/addproject.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-
-                                        <li class="dropdown-link">
-                                            <a href="#">PROYECTOS PEDAGOGICOS<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/proyect_transv/proyect_transv1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/proyect_transv/management/userViewProject.php">Ver</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/proyect_transv/management/userListProject.php">Editar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/proyect_transv/management/userListFiles.php">Archivos</a>
-                                                    </li>
-                                                    
-                                                    <!--<li class="dropdown-link">
-                                                        <a href="code/project/addproject.php">Consultar</a>
-                                                    </li>-->
-
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-                                        <li class="dropdown-link">
-                                            <a href="#">PROYECTOS y/o PLANES<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/plans/addplans1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/plans/addplans.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li class="nav-link" style="--i: 1.35s">
-                                <a href="#">TRANSICION<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">CAPÍTULO EDUCACIÓN INICIAL<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/initial/educa/addeduca1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/initial/educa/addeduca.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">PLAN DE AULA<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/initial/aula/addaula1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/initial/aula/addaula.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">SEGUIMIENTO AL DESARROLLO INTEGRAL<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="C:\User\ricar\Desktop\BACKUP\pei\transversales\proyect_transv0.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/initial/integral/addintegral.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li class="nav-link" style="--i: .85s">
-                                <a href="#">ANOTACIONES<i class="fas fa-caret-down"></i></a>
-                                <div class="dropdown">
-                                    <ul>
-                                        <li class="dropdown-link">
-                                            <a href="#">OBSERVACIONES<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                   <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addanotaciones1.php">Ingresar</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addanotaciones.php">Consultar</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">SEGUIMIENTO<i class="fas fa-caret-down"></i></a>
-                                            <div class="dropdown second">
-                                                <ul>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addobservaciones1.php">Observaciones</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addobservaciones.php">Consulta Observaciones</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addsolicitudes1.php">Solicitudes</a>
-                                                    </li>
-                                                    <li class="dropdown-link">
-                                                        <a href="code/anotaciones/addsolicitudes.php">Consulta Solicitudes</a>
-                                                    </li>
-                                                    <div class="arrow"></div>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <div class="arrow"></div>
-                                    </ul>
-                                </div>
-                            </li>
-                
-
-                        </ul>
-                    </div>
-
-                        <div class="log-sign" style="--i: 1.8s">
-                            <!--<a href="#" class="btn transparent">Log in</a>-->
-                            <a href="logout.php" class="btn solid">Salir</a>
-                       
-                            <div class="log-sign" style="--i: 1.8s">
-                                <!--<a href="#" class="btn transparent">Log in</a>-->
-                                <a href="reset-password.php" class="btn solid">Cambiar Contraseña</a>
-                            </div>
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="logo_item">
+            <i class="bx bx-menu" id="sidebarOpen"></i>
+            <img src="img/logo_educacion_fondo_azul.png" alt=""></i>PEI | SOFT
+        </div>
+        <div class="navbar_content">
+            <i class="bi bi-grid"></i>
+            <i class="fa-solid fa-sun" id="darkLight"></i><!--<i class='bx bx-sun' id="darkLight"></i>-->
+            <a href="logout.php"> <i class="fa-solid fa-door-open"></i></a>
+            <img src="img/logo_educacion_fondo_azul.png" alt="" class="profile" />
+        </div>
+    </nav>
+    <?php if ($tipo_usu == 1) { ?>
+        <!-- sidebar -->
+        <nav class="sidebar">
+            <div class="menu_content">
+                <ul class="menu_items">
+                    <div class="menu_title menu_dahsboard"></div>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                               <i class="fa-solid fa-school-flag"></i>
+                            </span>
+                            <span class="navlink">ESTABLECIMIENTO EDUCATIVO</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
-                </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/ie/showIe.php" class="nav_link sublink">I.E</a>
+                            <a href="code/mie/showMembers.php" class="nav_link sublink">Consultar Referido</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-person"></i>
+                            </span>
+                            <span class="navlink">Lideres</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/leaders/createLeaders.php" class="nav_link sublink">Crear Lider</a>
+                            <a href="code/leaders/showLeaders.php" class="nav_link sublink">Consultar lideres</a>
+                        </ul>
+                    </li>
+                    
+                    <hr style="border: 1px solid #F3840D; border-radius: 5px;">
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </span>
+                            <span class="navlink">Mi Cuenta</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
 
-                <div class="hamburger-menu-container">
-                    <div class="hamburger-menu">
-                        <div></div>
+                        <ul class="menu_items submenu">
+                            <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+                        </ul>
+                    </li>
+                    <!-- Sidebar Open / Close -->
+                    <div class="bottom_content">
+                        <div class="bottom expand_sidebar">
+                            <span> Expand</span>
+                            <i class='bx bx-log-in'></i>
+                        </div>
+                        <div class="bottom collapse_sidebar">
+                            <span> Collapse</span>
+                            <i class='bx bx-log-out'></i>
+                        </div>
                     </div>
-                </div>
             </div>
-        </header>
-            <main>
-                <section>
-                    <div class="overlay"></div>
-                </section>
-            </main>
-    </body>
+        </nav>
+    <?php } ?>
+    <!--************************MENÚ ENCUESTAS DE CAMPO************************-->
+    <?php if ($tipo_usu == 2) { ?>
+        <!-- sidebar -->
+        <nav class="sidebar">
+            <div class="menu_content">
+                <ul class="menu_items">
+                    <div class="menu_title menu_dahsboard"></div>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                               <i class="fa-solid fa-school-flag"></i>
+                            </span>
+                            <span class="navlink">ESTABLECIMIENTO EDUCATIVO</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/ie/showIe.php" class="nav_link sublink">Ver Institucion Educativa</a>
+                        </ul>
+                    </li>
+                    
+                    <hr style="border: 1px solid #F3840D; border-radius: 5px;">
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </span>
+                            <span class="navlink">Mi Cuenta</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+
+                        <ul class="menu_items submenu">
+                            <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+                        </ul>
+                    </li>
+                    <!-- Sidebar Open / Close -->
+                    <div class="bottom_content">
+                        <div class="bottom expand_sidebar">
+                            <span> Expand</span>
+                            <i class='bx bx-log-in'></i>
+                        </div>
+                        <div class="bottom collapse_sidebar">
+                            <span> Collapse</span>
+                            <i class='bx bx-log-out'></i>
+                        </div>
+                    </div>
+            </div>
+        </nav>
+    <?php } ?>
+    <!-- JavaScript -->
+    <script src="js/access.js"></script>
+</body>
+
 </html>
