@@ -1,67 +1,78 @@
 <?php
-    
-    session_start();
-    
-    if(!isset($_SESSION['id'])){
-        header("Location: index.php");
-    }
-    
-    header("Content-Type: text/html;charset=utf-8");
-    $nombre 		= $_SESSION['nombre'];
-    $tipo_usuario 	= $_SESSION['tipo_usuario'];
-    $id_cole        = $_SESSION['id_cole'];
+
+session_start();
+
+if (!isset($_SESSION['id'])) {
+	header("Location: index.php");
+}
+
+header("Content-Type: text/html;charset=utf-8");
+$nombre 		= $_SESSION['nombre'];
+$tipo_usuario 	= $_SESSION['tipo_usuario'];
+$id_cole        = $_SESSION['id_cole'];
 
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>PEI | SOFT</title>
-        <script src="js/64d58efce2.js" ></script>
-		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
-		<!--<link rel="stylesheet" type="text/css" href="../../css/estilos.css">-->
-		<link rel="stylesheet" href="../../css/bootstrap.min.css">
-		<link href="../../fontawesome/css/all.css" rel="stylesheet">
 
-		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-      	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-      	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-		<style>
-        	.responsive {
-           		max-width: 100%;
-            	height: auto;
-        	}
-    	</style>
-    </head>
-    <body>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>PEI | SOFT</title>
+	<script src="js/64d58efce2.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+	<!--<link rel="stylesheet" type="text/css" href="../../css/estilos.css">-->
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link href="../../fontawesome/css/all.css" rel="stylesheet">
 
-		<center>
-	    	<img src="../../img/logo_educacion_fondo_azul.png" width="945" height="175" class="responsive">
-		</center>
-		<BR/>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
-		<section class="principal">
+	<style>
+		.responsive {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
 
-			<div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
+<body>
 
-				<div align="center">
-					<h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="far fa-comments"></i> COMPONENTE ANOTACIONES </b></h1>
-				</div>
-	    		<br />
+	<center>
+		<img src="../../img/logo_educacion_fondo_azul.png" width="945" height="175" class="responsive">
+	</center>
+	<BR />
 
-<?php
+	<section class="principal">
 
-	date_default_timezone_set("America/Bogota");
-	include("../../conexion.php");
-	
-	$query = "SELECT * FROM anotaciones INNER JOIN colegios ON anotaciones.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
-	$res = $mysqli->query($query);
-	
-	echo "<div class='table-responsive-xl'>
+		<div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
+
+			<div align="center">
+				<h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="far fa-comments"></i> COMPONENTE ANOTACIONES </b></h1>
+			</div>
+			<div class="d-flex justify-content-end p-3 mr-1" style="margin-right: 45px;">
+				<a href="addanotaciones1.php" class="btn btn-success btn-lg d-flex align-items-center gap-2 rounded-pill shadow  pl-3 mr-4">
+					<i class="fas fa-plus"></i>
+					<span>Agregar Anotaciones</span>
+				</a>
+			</div>
+
+			<br />
+
+			<?php
+
+			date_default_timezone_set("America/Bogota");
+			include("../../conexion.php");
+
+			$query = "SELECT * FROM anotaciones INNER JOIN colegios ON anotaciones.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
+			$res = $mysqli->query($query);
+
+			echo "<div class='container-lg'>
+			<div class='table-responsive-xl'>
           <table class='table'>
             <thead>
               <tr>
@@ -73,35 +84,36 @@
             </thead>
         	<tbody>";
 
-	$consulta = "SELECT * FROM anotaciones INNER JOIN colegios ON anotaciones.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
-	$result = $mysqli->query($consulta);
+			$consulta = "SELECT * FROM anotaciones INNER JOIN colegios ON anotaciones.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
+			$result = $mysqli->query($consulta);
 
-	$i = 1;
-	while($row = mysqli_fetch_array($result))
-	{
+			$i = 1;
+			while ($row = mysqli_fetch_array($result)) {
 
-		echo '
+				echo '
 				<tr>
-					<th scope="row">'.$i++.'</th>
-					<th><center>'.$row['fecha_anot'].'</center></th>
-					<th><center>'.$row['tipo_anot'].'</center></th>
-					<td><p align="justify">'.$row['obs_anot'].'</p></td>
+					<th scope="row">' . $i++ . '</th>
+					<th><center>' . $row['fecha_anot'] . '</center></th>
+					<th><center>' . $row['tipo_anot'] . '</center></th>
+					<td><p align="justify">' . $row['obs_anot'] . '</p></td>
 				</tr>';
-	}
- 
-	echo '</tbody>
+			}
+
+			echo '</tbody>
           </table>
-        </div>';
+        </div>
+		</div>';
 
-?>
+			?>
 
-		<center>
-		<br/><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-		</center>
+			<center>
+				<br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
+			</center>
 
-			</div>
+		</div>
 
-		</section>
+	</section>
 
-	</body>
+</body>
+
 </html>

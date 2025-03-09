@@ -51,7 +51,7 @@
                     <div class='container'>
                         <br />
                         <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
-                        <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
+                        <p align='center'><a href='addobservaciones.php'><img src='../../img/atras.png' width=96 height=96></a></p>
                     </div>
                     </center>
                 </body>

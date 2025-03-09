@@ -10,7 +10,6 @@
     $nombre 		= $_SESSION['nombre'];
     $tipo_usuario 	= $_SESSION['tipo_usuario'];
     $id_cole        = $_SESSION['id_cole'];
-
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +131,7 @@
 		  			</form>
 		  		
 					<center>
-					<br/><a href="addsedes.php"><img src="../../../img/atras.png" width="72" height="72" title="Regresar" /></a>
+					<br/><a href="addmejoras.php"><img src="../../../img/atras.png" width="72" height="72" title="Regresar" /></a>
 				</center>
 
 			</div>

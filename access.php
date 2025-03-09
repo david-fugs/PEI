@@ -48,7 +48,7 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
-                               <i class="fa-solid fa-school-flag"></i>
+                                <i class="fa-solid fa-school-flag"></i>
                             </span>
                             <span class="navlink">ESTABLECIMIENTO EDUCATIVO</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
@@ -58,20 +58,7 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="code/mie/showMembers.php" class="nav_link sublink">Consultar Referido</a>
                         </ul>
                     </li>
-                    <li class="item">
-                        <div href="#" class="nav_link submenu_item">
-                            <span class="navlink_icon">
-                                <i class="fa-solid fa-person"></i>
-                            </span>
-                            <span class="navlink">Lideres</span>
-                            <i class="bx bx-chevron-right arrow-left"></i>
-                        </div>
-                        <ul class="menu_items submenu">
-                            <a href="code/leaders/createLeaders.php" class="nav_link sublink">Crear Lider</a>
-                            <a href="code/leaders/showLeaders.php" class="nav_link sublink">Consultar lideres</a>
-                        </ul>
-                    </li>
-                    
+
                     <hr style="border: 1px solid #F3840D; border-radius: 5px;">
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
@@ -110,7 +97,7 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
-                               <i class="fa-solid fa-school-flag"></i>
+                                <i class="fa-solid fa-school-flag"></i>
                             </span>
                             <span class="navlink">ESTABLECIMIENTO EDUCATIVO</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
@@ -119,7 +106,54 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="code/ie/showIe.php" class="nav_link sublink">Ver Institucion Educativa</a>
                         </ul>
                     </li>
-                    
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </span>
+                            <span class="navlink">MEJORAS INSTITUCION</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/ie/mejoras/addmejorasedit.php" class="nav_link sublink">Consultar mejoras</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-comment"></i>
+                            </span>
+                            <span class="navlink">ANOTACIONES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/anotaciones/addanotaciones.php" class="nav_link sublink">Consultar Anotaciones</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-note-sticky"></i>
+                            </span>
+                            <span class="navlink">OBSERVACIONES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/anotaciones/addobservaciones.php" class="nav_link sublink">Consultar Observaciones</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-hand"></i>
+                            </span>
+                            <span class="navlink">SOLICITUDES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="code/anotaciones/addsolicitudes.php" class="nav_link sublink">Consultar Solicitudes</a>
+                        </ul>
+                    </li>
                     <hr style="border: 1px solid #F3840D; border-radius: 5px;">
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
