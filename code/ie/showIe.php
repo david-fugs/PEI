@@ -194,7 +194,7 @@
                                             <div id="proPredagogicos" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogico">
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
-                                                        <li class="list-group-item"><a href="proyect_transv/management/userViewProject.php">Ingresar a proyectos pedagogicos</a></li>
+                                                        <li class="list-group-item"><a href="../proyect_transv/management/userViewProject.php">Ingresar a proyectos pedagogicos</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
