@@ -51,11 +51,12 @@
 		$usuario = mysqli_real_escape_string($mysqli,$usuario); //escapes special characters in a string
 		$password = stripslashes($_REQUEST['password']);
 		$password = mysqli_real_escape_string($mysqli,$password);
+		$password = sha1($password);
 		$nombre = stripslashes($_REQUEST['nombre']);
-		$tipo_usuario = 4;
+		$tipo_usuario = 2;
 		$id_cole = stripslashes($_REQUEST['id_cole']);
 		
-        $query = "INSERT INTO `usuarios` (usuario, password, tipo_usuario, nombre, id_cole) VALUES ('$usuario', '".sha1($password)."', '$tipo_usuario', '$nombre', '$id_cole')";
+        $query = "INSERT INTO `usuarios` (usuario, password, tipo_usuario, nombre, id_cole) VALUES ('$usuario', '$password', '$tipo_usuario', '$nombre', '$id_cole')";
         $result = mysqli_query($mysqli,$query);
         if($result){
             echo "<center><p style='border-radius: 20px;box-shadow: 10px 10px 5px #c68615; font-size: 23px; font-weight: bold;' >REGISTRO CREADO SATISFACTORIAMENTE<br><br></p></center>
