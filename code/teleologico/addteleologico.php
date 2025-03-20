@@ -143,7 +143,7 @@ $id_cole       = $_SESSION['id_cole'];
         echo '</tbody></table></div>';
         ?>
         <center>
-            <br /><a href="../ie/showie.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
+            <br /><a href="../ie/showIe.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
         </center>
         </div>
     </section>

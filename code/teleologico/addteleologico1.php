@@ -98,7 +98,7 @@
 				<div class="form-group">
                 	<div class="row">
                 		<label for="id_cole">NOMBRE DEL ESTABLECIMIENTO EDUCATIVO (verifique que muestre de forma correcta el nombre de su establecimiento educativo):</label>
-	                        <select name='id_cole' class='form-control' readonly />
+	                        <select name='id_cole' class='form-control' disabled />
 		                        <option value=''></option>
 		                            <?php
 		                                header('Content-Type: text/html;charset=utf-8');
