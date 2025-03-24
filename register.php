@@ -33,6 +33,10 @@ session_start();
 		$(document).ready(function() {
 			ordenarSelect('selectIE');
 		});
+
+		function toggleSubmitButton() {
+			document.getElementById('submitButton').disabled = !document.getElementById('aceptaDatos').checked;
+		}
 	</script>
 </head>
 
@@ -54,7 +58,6 @@ session_start();
 		$password = mysqli_real_escape_string($mysqli, $password);
 		$password = sha1($password);
 		$nombre = stripslashes($_REQUEST['nombre']);
-		$tipo_usuario = 2;
 		$id_cole = stripslashes($_REQUEST['id_cole']);
 
 		// Verificar si el usuario ya existe
@@ -69,11 +72,14 @@ session_start();
 
 		// Si no existe, insertar el nuevo usuario
 		$query = "INSERT INTO `usuarios` (usuario, password, tipo_usuario, nombre, id_cole) 
-				  VALUES ('$usuario', '$password', '$tipo_usuario', '$nombre', '$id_cole')";
+				  VALUES ('$usuario', '$password', '9', '$nombre', '$id_cole')";
 
 		$result = mysqli_query($mysqli, $query);
 
 		if ($result) {
+			echo "<script>
+            alert('Recuerda pedirle al rector del colegio que te permita el ingreso a la plataforma.');
+          </script>";
 			echo "<center><p style='border-radius: 20px;box-shadow: 10px 10px 5px #c68615; font-size: 23px; font-weight: bold;'>REGISTRO CREADO SATISFACTORIAMENTE<br><br></p></center>
 				  <div class='form' align='center'><h3>Regresar para iniciar la sesión... <br/><br/><center><a href='index.php'>Regresar</a></center></h3></div>";
 		}
@@ -127,7 +133,12 @@ session_start();
 						</div>
 					</div>
 				</div>
-
+				<div class="form-group mt-3">
+					<input type="checkbox" id="aceptaDatos" required onclick="toggleSubmitButton()">
+					<label for="aceptaDatos">
+						Acepto el tratamiento de datos personales</a>.
+					</label>
+				</div>
 				<button type="submit" class="btn btn-outline-warning">
 					<span class="spinner-border spinner-border-sm"></span>
 					REGISTRAR USUARIO
@@ -136,10 +147,6 @@ session_start();
 				</button>
 			</form>
 		</div>
-
 </body>
-
 </html>
-
-
 <?php } ?>

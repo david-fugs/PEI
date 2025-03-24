@@ -9,6 +9,7 @@ $usuario = $_SESSION['usuario'];
 $nombre = $_SESSION['nombre'];
 $tipo_usu = $_SESSION['tipo_usuario'];
 $id_cole = $_SESSION['id_cole'];
+
 ?>
 
 <!DOCTYPE html>
@@ -168,6 +169,21 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
                         </ul>
                     </li>
+                    <?php if($tipo_usu == 2  || $tipo_usu == 1) : ?>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                            <i class="fa-solid fa-address-book"></i>
+                            </span>
+                            <span class="navlink">Asignar Roles</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+
+                        <ul class="menu_items submenu">
+                            <a href="assignRol.php" class="nav_link sublink">Asignar Roles</a>
+                        </ul>
+                    </li>
+                    <?php endif; ?>
                     <!-- Sidebar Open / Close -->
                     <div class="bottom_content">
                         <div class="bottom expand_sidebar">

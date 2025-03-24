@@ -38,10 +38,10 @@
           {
             header("Location: access.php");
           }
-          /*elseif($row['tipo_usuario']==3)
+          elseif($row['tipo_usuario']==3)
           {
-            header("Location: select_ie.php");
-          }*/
+            header("Location: access.php");
+          }
           else
           {
             
