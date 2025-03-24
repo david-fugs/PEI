@@ -187,6 +187,8 @@
                     <select class="form-control" onchange="actualizarRol(this, ' . $row['id'] . ')">
                         <option value="2" ' . ($row['tipo_usuario'] == 2 ? 'selected' : '') . '>Rector</option>
                         <option value="3" ' . ($row['tipo_usuario'] == 3 ? 'selected' : '') . '>Implementador Encuestas</option>
+                        <option value="9" ' . ($row['tipo_usuario'] == 9 ? 'selected' : '') . '>Pendiente</option>
+
                     </select>
                 </td>
             </tr>';

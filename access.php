@@ -89,7 +89,7 @@ $id_cole = $_SESSION['id_cole'];
         </nav>
     <?php } ?>
     <!--************************MENÚ ENCUESTAS DE CAMPO************************-->
-    <?php if ($tipo_usu == 2) { ?>
+    <?php if ($tipo_usu == 2 || $tipo_usu == 3 ) { ?>
         <!-- sidebar -->
         <nav class="sidebar">
             <div class="menu_content">
