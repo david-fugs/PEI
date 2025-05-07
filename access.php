@@ -51,12 +51,38 @@ $id_cole = $_SESSION['id_cole'];
                             <span class="navlink_icon">
                                 <i class="fa-solid fa-school-flag"></i>
                             </span>
-                            <span class="navlink">ESTABLECIMIENTO EDUCATIVO</span>
+                            <span class="navlink">USUARIOS</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
                         <ul class="menu_items submenu">
-                            <a href="code/ie/showIe.php" class="nav_link sublink">I.E</a>
-                            <a href="code/mie/showMembers.php" class="nav_link sublink">Consultar Referido</a>
+                            <a href="./code/usuarios/adduser.php" class="nav_link sublink">Ver Usuarios</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-school-flag"></i>
+                            </span>
+                            <span class="navlink">SEGUMIENTO PEI</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-school-flag"></i>
+                            </span>
+                            <span class="navlink">PROYECTOS PEDAGÓGICOS</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
+                        </ul>
+                        <ul class="menu_items submenu">
+                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
                         </ul>
                     </li>
 
@@ -89,7 +115,7 @@ $id_cole = $_SESSION['id_cole'];
         </nav>
     <?php } ?>
     <!--************************MENÚ ENCUESTAS DE CAMPO************************-->
-    <?php if ($tipo_usu == 2 || $tipo_usu == 3 ) { ?>
+    <?php if ($tipo_usu == 2 || $tipo_usu == 3) { ?>
         <!-- sidebar -->
         <nav class="sidebar">
             <div class="menu_content">
@@ -169,20 +195,20 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
                         </ul>
                     </li>
-                    <?php if($tipo_usu == 2  || $tipo_usu == 1) : ?>
-                    <li class="item">
-                        <div href="#" class="nav_link submenu_item">
-                            <span class="navlink_icon">
-                            <i class="fa-solid fa-address-book"></i>
-                            </span>
-                            <span class="navlink">Asignar Roles</span>
-                            <i class="bx bx-chevron-right arrow-left"></i>
-                        </div>
+                    <?php if ($tipo_usu == 2  || $tipo_usu == 1) : ?>
+                        <li class="item">
+                            <div href="#" class="nav_link submenu_item">
+                                <span class="navlink_icon">
+                                    <i class="fa-solid fa-address-book"></i>
+                                </span>
+                                <span class="navlink">Asignar Roles</span>
+                                <i class="bx bx-chevron-right arrow-left"></i>
+                            </div>
 
-                        <ul class="menu_items submenu">
-                            <a href="assignRol.php" class="nav_link sublink">Asignar Roles</a>
-                        </ul>
-                    </li>
+                            <ul class="menu_items submenu">
+                                <a href="assignRol.php" class="nav_link sublink">Asignar Roles</a>
+                            </ul>
+                        </li>
                     <?php endif; ?>
                     <!-- Sidebar Open / Close -->
                     <div class="bottom_content">

@@ -6,6 +6,7 @@
 
   if($_POST)
   {
+ 
 
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
@@ -29,10 +30,10 @@
           $_SESSION['tipo_usuario'] = $row['tipo_usuario'];
           $_SESSION['id_cole'] = $row['id_cole'];
 
-          if($row['tipo_usuario']==1)
+          if($row['tipo_usuario'] == 1)
           {
             // header("Location: code/usuarios/adduser.php");
-            header("Location: accessAdmin.php");
+            header("Location: access.php");
           }
           elseif($row['tipo_usuario']==2)
           {

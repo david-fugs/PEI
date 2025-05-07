@@ -95,7 +95,6 @@ $id_cole        = $_SESSION['id_cole'];
 			<p><i><b>
 						<font size=3 color=#c68615>*Datos obligatorios</i></b></font>
 			</p>
-
 			<form action='addintegral2.php' enctype="multipart/form-data" method="POST">
 
 				<div class="form-group">
