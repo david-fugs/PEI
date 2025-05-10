@@ -61,7 +61,7 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
-                                <i class="fa-solid fa-school-flag"></i>
+                                <i class="fa-solid fa-bell"></i>
                             </span>
                             <span class="navlink">SEGUMIENTO PEI</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
@@ -73,16 +73,16 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
-                                <i class="fa-solid fa-school-flag"></i>
+                                <i class="fa-solid fa-person-chalkboard"></i>
                             </span>
                             <span class="navlink">PROYECTOS PEDAGÓGICOS</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
                         <ul class="menu_items submenu">
-                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
+                            <a href="./code/proyect_transv/management/admin/colleges.php" class="nav_link sublink">Ver Proyectos</a>
                         </ul>
                         <ul class="menu_items submenu">
-                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
+                            <a href="./code/proyect_transv/management/admin/supervisor/supervisor.php" class="nav_link sublink">Seguimiento Proyectos</a>
                         </ul>
                     </li>
 

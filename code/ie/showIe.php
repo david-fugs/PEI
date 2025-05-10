@@ -293,6 +293,13 @@
     <br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a><br>
 
     <h1 style="margin-bottom: 35px; color: #412fd1; text-shadow: #FFFFFF 0.1em 0.1em 0.2em; font-size: 40px; text-align: center;"><b><i class="fa-solid fa-file-signature "></i> INSTITUCION EDUCATIVA</b></h1>
+    <!-- boton de agregar sede a la derecha que abra modal -->
+    <div class="d-flex justify-content-end p-3">
+        <button type="button" class="mr-3 btn btn-success btn-lg d-flex align-items-center gap-2 rounded-pill shadow"
+            data-bs-toggle="modal" data-bs-target="#modalAgregarSede">
+            <span>Agregar Sede</span>
+        </button>
+    </div>
     <?php
     date_default_timezone_set("America/Bogota");
     include("../../conexion.php");
@@ -377,7 +384,10 @@
                     <th>DANE</th>
                     <th>SEDE</th>
                     <th>ZONA</th>
+                    <th>ESTRATEGIA J.U</th>
                     <th>VERIFICAR</th>
+                    <th>OPCIONES</th>
+
                 </tr>
               </thead>
         <tbody>";
@@ -393,7 +403,20 @@
                 <td data-label="DANE">' . $row['cod_dane_sede'] . '</td>
                 <td data-label="SEDE">' . $row['nombre_sede'] . '</td>
                 <td data-label="ZONA">' . $row['zona_sede'] . '</td>
+                <td data-label="ESTRATEGIA J.U">
+                    <button class="btn btn-primary btn-sm" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')">
+                        <i class="fas fa-edit"></i> Registrar
+                    </button>
+                </td>
                 <th data-label="VERIFICAR"><a href="addsedesedit.php?cod_dane_sede=' . $row['cod_dane_sede'] . '"><img src="../../img/check.png" width=25 heigth=25></td>
+            <td data-label="OPCIONES">
+                <a href="addsedesedit.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" class="d-inline-block me-2">
+                    <img src="../../img/editar.png" width="27" height="25">
+                </a>
+                <a href="eliminar_sede.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" class="d-inline-block" onclick="return confirm(\'¿Estás seguro de eliminar esta sede?\')">
+                    <img src="../../img/trash.png" width="25" height="25">
+                </a>
+            </td>
             </tr>';
     }
 
@@ -401,13 +424,214 @@
         </table>
             </div>';
     ?>
+    <!-- Modal Agregar Sede -->
+    <div class="modal fade" id="modalAgregarSede" tabindex="-1" aria-labelledby="modalAgregarSedeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="procesar_sede.php" method="POST" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarSedeLabel">Agregar Sede</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id_cole" value="<?= $id_cole ?>">
 
+                    <div class="mb-3">
+                        <label for="codigo_dane" class="form-label">Código DANE Sede</label>
+                        <input type="text" class="form-control" id="codigo_dane" name="codigo_dane" required>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="nombre_sede" class="form-label">Nombre de la Sede</label>
+                        <input type="text" class="form-control" id="nombre_sede" name="nombre_sede" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="zona" class="form-label">Zona</label>
+                        <select class="form-select" id="zona" name="zona" required>
+                            <option value="">Seleccione...</option>
+                            <option value="RURAL">Rural</option>
+                            <option value="URBANO">Urbano</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-dark">Guardar Sede</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Estrategia JU -->
+    <div class="modal fade" id="estrategiaModal" tabindex="-1" aria-labelledby="estrategiaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form action="guardar_estrategia.php" id="formEstrategia" method="POST" id="formEstrategiaJU">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="estrategiaModalLabel">Registrar Estrategia J.U</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="cod_dane_sede" id="cod_dane_sede">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="aliado">Aliado responsable</label>
+                                <select name="aliado" class="form-control" required>
+                                    <option value="">Seleccione</option>
+                                    <option>COMFAMILIAR</option>
+                                    <option>CRESE</option>
+                                    <option>ONDAS</option>
+                                    <option>ICBF</option>
+                                    <option>Ministerios</option>
+                                    <option>Alcaldias</option>
+                                    <option>Chef_Fundeca</option>
+                                    <option>Entre Otros</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="eje">Eje Movilizador</label>
+                                <select name="eje" class="form-control" required>
+                                    <option value="">Seleccione</option>
+                                    <option>Recreacion y deporte</option>
+                                    <option>Educacion artistica y cultural</option>
+                                    <option>Ciencia y tecnologia</option>
+                                    <option>Articulacion de la media</option>
+                                    <option>Centro de interes</option>
+                                    <option>Otros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="dias">Número de días (semanal)</label>
+                                <input type="number" class="form-control" name="dias" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="horas">Número de horas (semanal)</label>
+                                <input type="number" class="form-control" name="horas" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="jornada">Tipo de jornada</label>
+                            <select name="jornada" class="form-control" required>
+                                <option value="">Seleccione</option>
+                                <option>Regular</option>
+                                <option>Extra Curricular</option>
+                            </select>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-center text-primary fw-bold">Grados</h5>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <?php
+                            $grados = ['Prejardin', 'Jardin', 'Transicion'];
+                            for ($i = 1; $i <= 11; $i++) {
+                                $grados[] = $i;
+                            }
+                            foreach ($grados as $grado) {
+                                echo '
+                                <div class="col-md-3 col-sm-6 mb-3">
+                                    <label class="form-label fw-semibold text-primary">' . $grado . '</label>
+                                    <input type="number" class="form-control form-control-lg cantidad" 
+                                        name="cantidad[' . strtolower($grado) . ']" value="0" min="0" style="font-size: 1.1rem;">
+                                </div>';
+                            }
+                            ?>
+                        </div>
+
+                        <div class="mt-3">
+                            <label><strong>Total Estudiantes:</strong></label>
+                            <span id="totalEstudiantes">0</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-dark">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <center>
         <br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
     </center>
 
     <script src="https://www.jose-aguilar.com/scripts/fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
+
+    <script>
+        const estrategiaModal = document.getElementById('estrategiaModal');
+        estrategiaModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const codDane = button.getAttribute('data-cod-dane-sede');
+            document.getElementById('cod_dane_sede').value = codDane;
+        });
+
+        // Sumar totales en tiempo real
+        document.querySelectorAll('.cantidad').forEach(input => {
+            input.addEventListener('input', calcularTotal);
+        });
+
+        function abrirModalEstrategia(codDane) {
+            const form = document.getElementById('formEstrategia');
+            form.reset();
+            document.getElementById('cod_dane_sede').value = codDane;
+
+            fetch(`obtener_estrategia.php?cod_dane_sede=${codDane}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data && Object.keys(data).length > 0) {
+                        // Rellenar campos normales
+                        form.querySelector('[name="aliado"]').value = data.aliado || '';
+                        form.querySelector('[name="eje"]').value = data.eje || '';
+                        form.querySelector('[name="dias"]').value = data.dias || '';
+                        form.querySelector('[name="horas"]').value = data.horas || '';
+                        form.querySelector('[name="jornada"]').value = data.jornada || '';
+
+                        // Rellenar cantidades por grado
+                        const grados = ['prejardin', 'jardin', 'transicion', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+                        grados.forEach(grado => {
+                            const nombreCampo = `cantidad[${grado}]`;
+                            const input = form.querySelector(`input[name="${nombreCampo}"]`);
+                            const clave = 'cantidad_' + grado.toString().toLowerCase();
+                            if (input && data.hasOwnProperty(clave)) {
+                                input.value = data[clave];
+                            }
+                        });
+
+
+                        // Actualizar total estudiantes si tienes función
+                        if (typeof calcularTotal === 'function') {
+                            calcularTotal();
+                        }
+                    }
+                    const modal = new bootstrap.Modal(document.getElementById('estrategiaModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error('Error al obtener datos:', error);
+                    const modal = new bootstrap.Modal(document.getElementById('estrategiaModal'));
+                    modal.show();
+                });
+        }
+
+
+        function calcularTotal() {
+            let total = 0;
+            document.querySelectorAll('.cantidad').forEach(input => {
+                total += parseInt(input.value) || 0;
+            });
+            document.getElementById('totalEstudiantes').textContent = total;
+        }
+    </script>
 
 </body>
 

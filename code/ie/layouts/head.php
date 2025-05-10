@@ -17,7 +17,7 @@ $id_cole = $_SESSION['id_cole'];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CT | SOFT</title>
+    <title>PEI | SOFT</title>
     <script src="js/64d58efce2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
