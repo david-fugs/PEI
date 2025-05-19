@@ -1,65 +1,53 @@
 <?php
-    
-    session_start();
-    
-    if(!isset($_SESSION['id'])){
-        header("Location: index.php");
-    }
-    
-    header("Content-Type: text/html;charset=utf-8");
-    $nombre         = $_SESSION['nombre'];
-    $tipo_usuario   = $_SESSION['tipo_usuario'];
-    $id_cole        = $_SESSION['id_cole'];
 
-    include("../../conexion.php");
-    date_default_timezone_set("America/Bogota");
+session_start();
 
-    $nombre_proy_plan       =   $_POST['nombre_proy_plan'];
-    $tipo_proy_plan         =   $_POST['tipo_proy_plan'];
-    $obs_proy_plan          =   $_POST['obs_proy_plan'];
-    $id_cole                 =   $_POST['id_cole'];
-    $fecha_alta_proy_plan   =   date('Y-m-d h:i:s');
-    $fecha_edit_proy_plan   =   ('0000-00-00 00:00:00');
-    $id_usu                  =   $_SESSION['id'];
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php");
+}
 
-   $sql = "INSERT INTO proyectos_planes (nombre_proy_plan, tipo_proy_plan, obs_proy_plan, id_cole, fecha_alta_proy_plan, fecha_edit_proy_plan, id_usu) values ('$nombre_proy_plan', '$tipo_proy_plan', '$obs_proy_plan', '$id_cole', '$fecha_alta_proy_plan', '$fecha_edit_proy_plan', '$id_usu')";
-    $resultado = $mysqli->query($sql);
+header("Content-Type: text/html;charset=utf-8");
+$nombre         = $_SESSION['nombre'];
+$tipo_usuario   = $_SESSION['tipo_usuario'];
+$id_cole        = $_SESSION['id_cole'];
 
+include("../../conexion.php");
+date_default_timezone_set("America/Bogota");
+$nombre_proy_plan       =   $_POST['nombre_proy_plan'];
+$tipo_proy_plan         =   $_POST['tipo_proy_plan'];
+$obs_proy_plan          =   $_POST['obs_proy_plan'];
+$id_cole                 =   $_POST['id_cole'];
+$fecha_alta_proy_plan   =   date('Y-m-d h:i:s');
+$fecha_edit_proy_plan   =   ('0000-00-00 00:00:00');
+$id_usu                  =   $_SESSION['id'];
+
+$sql = "INSERT INTO proyectos_planes (nombre_proy_plan, tipo_proy_plan, obs_proy_plan, id_cole, fecha_alta_proy_plan, fecha_edit_proy_plan, id_usu) values ('$nombre_proy_plan', '$tipo_proy_plan', '$obs_proy_plan', '$id_cole', '$fecha_alta_proy_plan', '$fecha_edit_proy_plan', '$id_usu')";
+$resultado = $mysqli->query($sql);
+
+if ($resultado) {
     $id_insert = $mysqli->insert_id;
-     //Como el elemento es un arreglos utilizamos foreach para extraer todos los valores
-    foreach($_FILES["archivo"]['tmp_name'] as $key => $tmp_name)
-    {
-        //Validamos que el archivo exista
-        if($_FILES["archivo"]["name"][$key])
-        {
-            $filename = $_FILES["archivo"]["name"][$key]; //Obtenemos el nombre original del archivo
-            $source = $_FILES["archivo"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
-            
-            $directorio = 'files/'.$id_insert.'/'; //Declaramos un  variable con la ruta donde guardaremos los archivos
-            
-            //Validamos si la ruta de destino existe, en caso de no existir la creamos
-            if(!file_exists($directorio))
-            {
-                mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");    
+
+    foreach ($_FILES["archivo"]['tmp_name'] as $key => $tmp_name) {
+        if ($_FILES["archivo"]["name"][$key]) {
+            $filename = $_FILES["archivo"]["name"][$key];
+            $source = $_FILES["archivo"]["tmp_name"][$key];
+
+            $directorio = 'files/' . $id_insert . '/';
+            if (!file_exists($directorio)) {
+                mkdir($directorio, 0777) or die("No se puede crear el directorio de extracción");
             }
-            
-            $dir=opendir($directorio); //Abrimos el directorio de destino
-            $target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
-            
-            //Movemos y validamos que el archivo se haya cargado correctamente
-            //El primer campo es el origen y el segundo el destino
-            if(move_uploaded_file($source, $target_path))
-            { 
-                //echo "El archivo $filename se ha almacenado en forma exitosa.<br>";
-            } 
-                else 
-                {    
-                    echo "Ha ocurrido un error, por favor inténtelo de nuevo.<br>";
-                }
-            closedir($dir); //Cerramos el directorio de destino
+
+            $dir = opendir($directorio);
+            $target_path = $directorio . '/' . $filename;
+
+            if (!move_uploaded_file($source, $target_path)) {
+                echo "Ha ocurrido un error al subir el archivo.<br>";
+            }
+            closedir($dir);
         }
     }
 
+    // Solo mostramos el HTML si el INSERT fue exitoso
     echo "
         <!DOCTYPE html>
             <html lang='es'>
@@ -92,4 +80,6 @@
                 </body>
             </html>
         ";
-?>
+} else {
+    echo "❌ Error al insertar el proyecto/plan: " . $mysqli->error;
+}
