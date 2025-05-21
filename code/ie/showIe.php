@@ -385,7 +385,6 @@
                     <th>SEDE</th>
                     <th>ZONA</th>
                     <th>ESTRATEGIA J.U</th>
-                    <th>VERIFICAR</th>
                     <th>OPCIONES</th>
 
                 </tr>
@@ -404,11 +403,10 @@
                 <td data-label="SEDE">' . $row['nombre_sede'] . '</td>
                 <td data-label="ZONA">' . $row['zona_sede'] . '</td>
                 <td data-label="ESTRATEGIA J.U">
-                    <button class="btn btn-primary btn-sm" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')">
-                        <i class="fas fa-edit"></i> Registrar
+                    <button class="btn btn-success btn-sm" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')">
+                        <i class="fas fa-edit"></i> 
                     </button>
                 </td>
-                <th data-label="VERIFICAR"><a href="addsedesedit.php?cod_dane_sede=' . $row['cod_dane_sede'] . '"><img src="../../img/check.png" width=25 heigth=25></td>
             <td data-label="OPCIONES">
                 <a href="addsedesedit.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" class="d-inline-block me-2">
                     <img src="../../img/editar.png" width="27" height="25">
@@ -478,7 +476,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="aliado">Aliado responsable</label>
-                                <select name="aliado" class="form-control" required>
+                                <select name="aliado" class="form-control" >
                                     <option value="">Seleccione</option>
                                     <option>COMFAMILIAR</option>
                                     <option>CRESE</option>
@@ -492,7 +490,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="eje">Eje Movilizador</label>
-                                <select name="eje" class="form-control" required>
+                                <select name="eje" class="form-control" >
                                     <option value="">Seleccione</option>
                                     <option>Recreacion y deporte</option>
                                     <option>Educacion artistica y cultural</option>
@@ -507,17 +505,17 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="dias">Número de días (semanal)</label>
-                                <input type="number" class="form-control" name="dias" required>
+                                <input type="number" class="form-control" name="dias" >
                             </div>
                             <div class="col-md-6">
                                 <label for="horas">Número de horas (semanal)</label>
-                                <input type="number" class="form-control" name="horas" required>
+                                <input type="number" class="form-control" name="horas" >
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="jornada">Tipo de jornada</label>
-                            <select name="jornada" class="form-control" required>
+                            <select name="jornada" class="form-control" >
                                 <option value="">Seleccione</option>
                                 <option>Regular</option>
                                 <option>Extra Curricular</option>

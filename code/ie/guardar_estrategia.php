@@ -13,7 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Mapear grados a columnas
     $grados = [
-        'Prejardin', 'Jardin', 'Transicion', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+        'prejardin',
+        'jardin',
+        'transicion',
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
     ];
 
     $campos = [];
@@ -25,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($grados as $grado) {
         $columna = 'cantidad_' . strtolower($grado);
         $valor = isset($cantidad[$grado]) ? (int)$cantidad[$grado] : 0;
-        
+
         // Depuración: Mostrar el valor que se está obteniendo
         echo "Clave: $grado => Valor: $valor<br>";
 
@@ -38,6 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sqlCheck = "SELECT id FROM estrategia_ju WHERE cod_dane_sede = '$cod_dane_sede'";
     $resultCheck = $mysqli->query($sqlCheck);
 
+    if (!$resultCheck) {
+        die("Error en la consulta SELECT: " . $mysqli->error);
+    }
+
     if ($resultCheck->num_rows > 0) {
         // Ya existe, actualizamos
         // Construir la consulta SQL
@@ -48,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Eliminar la última coma
         $setFields = rtrim($setFields, ", ");
         var_dump($setFields);
-       
+
 
         $sql = "UPDATE estrategia_ju SET aliado='$aliado', eje='$eje', dias='$dias', horas='$horas', jornada='$jornada', $setFields, total_estudiantes='$total_estudiantes' WHERE cod_dane_sede='$cod_dane_sede'";
 
@@ -61,13 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Error al guardar: " . $mysqli->error;
         }
-
     } else {
         // No existe, insertamos
         $camposSql = implode(", ", $campos);
-        $placeholdersSql = implode(", ", array_fill(0, count($campos), "?"));
+        $valoresSql = implode(", ", $valores);
+
         $sql = "INSERT INTO estrategia_ju (cod_dane_sede, aliado, eje, dias, horas, jornada, $camposSql, total_estudiantes)
-            VALUES ('$cod_dane_sede', '$aliado', '$eje', '$dias', '$horas', '$jornada', $placeholdersSql, '$total_estudiantes')";
+    VALUES ('$cod_dane_sede', '$aliado', '$eje', '$dias', '$horas', '$jornada', $valoresSql, '$total_estudiantes')";
+
 
         // Debug: Ver la consulta SQL
         echo "SQL QUERY (INSERT): " . $sql . "<br>";
@@ -80,4 +98,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
