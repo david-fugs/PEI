@@ -76,7 +76,7 @@ $resultados = mysqli_query($mysqli, $consulta);
 
 
             <div class="back">
-                <button type="reset" role="link" onclick="window.location.href='./../../accessAdmin.php';">
+                <button type="reset" role="link" onclick="window.location.href='./../../access.php';">
                     <img src="./../../img/atras.png" width="27" height="27"> REGRESAR
                 </button>
             </div>

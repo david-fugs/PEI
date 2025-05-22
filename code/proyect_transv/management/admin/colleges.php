@@ -44,7 +44,7 @@ $resultados = mysqli_query($mysqli, $consulta);
 
         <?php
          echo'<div class="back">';
-         echo '<button type="reset"  role="link" onclick="window.location.href=\'./../../../../accessAdmin.php\';">';
+         echo '<button type="reset"  role="link" onclick="window.location.href=\'./../../../../access.php\';">';
          echo '<img src="./../../../../img/atras.png" width="27" height="27"> REGRESAR';
          echo '</button>';
          echo'</div>';

@@ -223,7 +223,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transicion">
-                                    Transicion
+                                    Preescolar
                                 </button>
                             </h2>
                             <div id="transicion" class="accordion-collapse collapse" data-bs-parent="#menuAccordion">
