@@ -408,9 +408,14 @@
                     </button>
                 </td>
             <td data-label="OPCIONES">
-                <a href="addsedesedit.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" class="d-inline-block me-2">
+                <button style="border: none; background: none;"
+                    class="btn-editar-sede" 
+                    data-cod="' . $row['cod_dane_sede'] . '" 
+                    data-nombre="'. $row['nombre_sede'] . '" 
+                    data-zona="' . htmlspecialchars($row['zona_sede']) . '"
+                >
                     <img src="../../img/editar.png" width="27" height="25">
-                </a>
+                </button>
                 <a href="eliminar_sede.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" class="d-inline-block" onclick="return confirm(\'¿Estás seguro de eliminar esta sede?\')">
                     <img src="../../img/trash.png" width="25" height="25">
                 </a>
@@ -460,6 +465,42 @@
             </form>
         </div>
     </div>
+    <!-- Modal edicion sede -->
+    <div class="modal fade" id="modalEditarSede" tabindex="-1" aria-labelledby="modalEditarSedeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formEditarSede">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarSedeLabel">Editar Sede</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                         <label for="nombre_sede" class="form-label">Codigo Dane</label>
+                        <input type="number" class="form-control" name="cod_dane_sede" id="cod_dane_sede">
+                        <input type="hidden" class="form-control" name="cod_dane_sede_old" id="cod_dane_sede1">
+
+                        <div class="mb-3 mt-3">
+                            <label for="nombre_sede" class="form-label">Nombre de la Sede</label>
+                            <input type="text" class="form-control" name="nombre_sede" id="nombre_sede1" >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="zona_sede" class="form-label">Zona</label>
+                            <select class="form-control" name="zona_sede" id="zona_sede">
+                                <option value="">Seleccione...</option>
+                                <option value="URBANO">URBANO</option>
+                                <option value="RURAL">RURAL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Estrategia JU -->
     <div class="modal fade" id="estrategiaModal" tabindex="-1" aria-labelledby="estrategiaModalLabel" aria-hidden="true">
@@ -476,7 +517,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="aliado">Aliado responsable</label>
-                                <select name="aliado" class="form-control" >
+                                <select name="aliado" class="form-control">
                                     <option value="">Seleccione</option>
                                     <option>COMFAMILIAR</option>
                                     <option>CRESE</option>
@@ -490,7 +531,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="eje">Eje Movilizador</label>
-                                <select name="eje" class="form-control" >
+                                <select name="eje" class="form-control">
                                     <option value="">Seleccione</option>
                                     <option>Recreacion y deporte</option>
                                     <option>Educacion artistica y cultural</option>
@@ -505,17 +546,17 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="dias">Número de días (semanal)</label>
-                                <input type="number" class="form-control" name="dias" >
+                                <input type="number" class="form-control" name="dias">
                             </div>
                             <div class="col-md-6">
                                 <label for="horas">Número de horas (semanal)</label>
-                                <input type="number" class="form-control" name="horas" >
+                                <input type="number" class="form-control" name="horas">
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="jornada">Tipo de jornada</label>
-                            <select name="jornada" class="form-control" >
+                            <select name="jornada" class="form-control">
                                 <option value="">Seleccione</option>
                                 <option>Regular</option>
                                 <option>Extra Curricular</option>
@@ -565,6 +606,45 @@
     <script src="https://www.jose-aguilar.com/scripts/fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
 
     <script>
+        //modal para editar sede
+        document.querySelectorAll('.btn-editar-sede').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const cod = this.dataset.cod;
+                const nombre = this.dataset.nombre;
+                const zona = this.dataset.zona;
+                console.log(nombre);
+
+                document.getElementById('cod_dane_sede').value = cod;
+                document.getElementById('cod_dane_sede1').value = cod;
+                document.getElementById('nombre_sede1').value = nombre;
+                document.getElementById('zona_sede').value = zona;
+
+                // Mostrar el modal
+                const modal = new bootstrap.Modal(document.getElementById('modalEditarSede'));
+                modal.show();
+            });
+        });
+        //edicion sede
+        document.getElementById('formEditarSede').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const datos = new FormData(this);
+
+            fetch('editarSede.php', {
+                    method: 'POST',
+                    body: datos
+                })
+                .then(res => res.text())
+                .then(respuesta => {
+                    alert('Cambios guardados correctamente');
+                    location.reload(); // Recarga la página para ver los cambios
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Error al guardar los cambios');
+                });
+        });
+
         const estrategiaModal = document.getElementById('estrategiaModal');
         estrategiaModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
