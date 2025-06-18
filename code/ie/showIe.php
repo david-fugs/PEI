@@ -506,13 +506,12 @@
     <div class="modal fade" id="estrategiaModal" tabindex="-1" aria-labelledby="estrategiaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <form action="guardar_estrategia.php" id="formEstrategia" method="POST" id="formEstrategiaJU">
+                <form action="guardar_estrategia.php" id="formEstrategia" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="estrategiaModalLabel">Registrar Estrategia J.U</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="cod_dane_sede" id="cod_dane_sede">
+                    </div>                    <div class="modal-body">
+                        <input type="hidden" name="cod_dane_sede" id="cod_dane_sede_estrategia">
 
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -643,32 +642,56 @@
                     console.error(err);
                     alert('Error al guardar los cambios');
                 });
-        });
-
-        const estrategiaModal = document.getElementById('estrategiaModal');
-        estrategiaModal.addEventListener('show.bs.modal', function(event) {
+        });        const estrategiaModal = document.getElementById('estrategiaModal');        estrategiaModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
-            const codDane = button.getAttribute('data-cod-dane-sede');
-            document.getElementById('cod_dane_sede').value = codDane;
+            if (button) {
+                const codDane = button.getAttribute('data-cod-dane-sede');
+                if (codDane) {
+                    document.getElementById('cod_dane_sede_estrategia').value = codDane;
+                }
+            }
         });
 
-        // Sumar totales en tiempo real
+        // Event listener para cuando cambie el aliado
+        document.addEventListener('change', function(event) {
+            if (event.target && event.target.name === 'aliado') {
+                cargarDatosPorAliado();
+            }
+        });// Sumar totales en tiempo real
         document.querySelectorAll('.cantidad').forEach(input => {
             input.addEventListener('input', calcularTotal);
-        });
+        });        // Calcular total inicial
+        calcularTotal();
 
         function abrirModalEstrategia(codDane) {
+            console.log('Abriendo modal para sede:', codDane);
+            
             const form = document.getElementById('formEstrategia');
             form.reset();
-            document.getElementById('cod_dane_sede').value = codDane;
+            document.getElementById('cod_dane_sede_estrategia').value = codDane;
 
-            fetch(`obtener_estrategia.php?cod_dane_sede=${codDane}`)
+            // Abrir el modal directamente sin cargar datos previos
+            const modal = new bootstrap.Modal(document.getElementById('estrategiaModal'));
+            modal.show();
+        }
+
+        // Función para cargar datos según aliado seleccionado
+        function cargarDatosPorAliado() {
+            const codDane = document.getElementById('cod_dane_sede_estrategia').value;
+            const aliado = document.querySelector('[name="aliado"]').value;
+            
+            if (!codDane || !aliado) {
+                return;
+            }
+
+            fetch(`obtener_estrategia.php?cod_dane_sede=${codDane}&aliado=${encodeURIComponent(aliado)}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+                    console.log('Datos encontrados:', data);
+                    const form = document.getElementById('formEstrategia');
+                    
                     if (data && Object.keys(data).length > 0) {
-                        // Rellenar campos normales
-                        form.querySelector('[name="aliado"]').value = data.aliado || '';
+                        // Rellenar campos (excepto aliado que ya está seleccionado)
                         form.querySelector('[name="eje"]').value = data.eje || '';
                         form.querySelector('[name="dias"]').value = data.dias || '';
                         form.querySelector('[name="horas"]').value = data.horas || '';
@@ -685,22 +708,32 @@
                             }
                         });
 
-
-                        // Actualizar total estudiantes si tienes función
-                        if (typeof calcularTotal === 'function') {
-                            calcularTotal();
-                        }
+                        // Actualizar total estudiantes
+                        calcularTotal();
+                    } else {
+                        // No hay datos, limpiar campos (excepto aliado)
+                        form.querySelector('[name="eje"]').value = '';
+                        form.querySelector('[name="dias"]').value = '';
+                        form.querySelector('[name="horas"]').value = '';
+                        form.querySelector('[name="jornada"]').value = '';
+                        
+                        // Limpiar cantidades
+                        const grados = ['prejardin', 'jardin', 'transicion', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+                        grados.forEach(grado => {
+                            const nombreCampo = `cantidad[${grado}]`;
+                            const input = form.querySelector(`input[name="${nombreCampo}"]`);
+                            if (input) {
+                                input.value = 0;
+                            }
+                        });
+                        
+                        calcularTotal();
                     }
-                    const modal = new bootstrap.Modal(document.getElementById('estrategiaModal'));
-                    modal.show();
                 })
                 .catch(error => {
                     console.error('Error al obtener datos:', error);
-                    const modal = new bootstrap.Modal(document.getElementById('estrategiaModal'));
-                    modal.show();
                 });
         }
-
 
         function calcularTotal() {
             let total = 0;
@@ -708,7 +741,72 @@
                 total += parseInt(input.value) || 0;
             });
             document.getElementById('totalEstudiantes').textContent = total;
-        }
+        }// Manejar el envío del formulario de estrategia
+        document.getElementById('formEstrategia').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Formulario enviado');
+              // Validar que cod_dane_sede esté presente
+            const codDaneSede = document.getElementById('cod_dane_sede_estrategia').value;
+            console.log('Código DANE sede:', codDaneSede);
+            
+            if (!codDaneSede) {
+                alert('Error: No se pudo identificar la sede. Por favor, cierre el modal e intente nuevamente.');
+                return;
+            }
+
+            // Validar que aliado esté seleccionado
+            const aliado = document.querySelector('[name="aliado"]').value;
+            if (!aliado) {
+                alert('Por favor, seleccione un aliado responsable.');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            
+            // Debug: mostrar datos del formulario
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+            
+            // Mostrar loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Guardando...';
+            submitBtn.disabled = true;
+            
+            fetch('guardar_estrategia.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Respuesta recibida:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos de respuesta:', data);
+                if (data.success) {
+                    alert(data.message);
+                    
+                    // Cerrar el modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('estrategiaModal'));
+                    modal.hide();
+                    
+                    // Recargar la página para ver los cambios
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar la estrategia');
+            })
+            .finally(() => {
+                // Restaurar botón
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
     </script>
 
 </body>
