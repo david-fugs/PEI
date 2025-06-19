@@ -544,11 +544,11 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="dias">Número de días (semanal)</label>
+                                <label for="dias">Numero de dias (semanal)</label>
                                 <input type="number" class="form-control" name="dias">
                             </div>
                             <div class="col-md-6">
-                                <label for="horas">Número de horas (semanal)</label>
+                                <label for="horas">Numero de horas (semanal)</label>
                                 <input type="number" class="form-control" name="horas">
                             </div>
                         </div>
