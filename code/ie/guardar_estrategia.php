@@ -11,13 +11,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        if (!isset($_POST['aliado']) || empty($_POST['aliado'])) {
+            echo json_encode(['success' => false, 'message' => 'Aliado responsable es requerido']);
+            exit;
+        }
+
+        if (!isset($_POST['eje']) || empty($_POST['eje'])) {
+            echo json_encode(['success' => false, 'message' => 'Eje movilizador es requerido']);
+            exit;
+        }
+
         $cod_dane_sede = $_POST['cod_dane_sede'];
         $aliado = $_POST['aliado'] ?? '';
         $eje = $_POST['eje'] ?? '';
+        $especificar_aliado = $_POST['especificar_aliado'] ?? '';
         $dias = intval($_POST['dias'] ?? 0);
         $horas = intval($_POST['horas'] ?? 0);
         $jornada = $_POST['jornada'] ?? '';
         $cantidad = $_POST['cantidad'] ?? [];
+
+        // Validar campo especificar_aliado si el aliado es "Entre Otros"
+        if ($aliado === 'Entre Otros' && empty($especificar_aliado)) {
+            echo json_encode(['success' => false, 'message' => 'Debe especificar el nombre del aliado']);
+            exit;
+        }
 
         // Debug
         error_log("Datos recibidos: " . print_r($_POST, true));
@@ -61,17 +78,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultCheck->num_rows == 0) {
             echo json_encode(['success' => false, 'message' => 'La tabla estrategia_ju no existe. Contacte al administrador.']);
             exit;
-        }        // Verificar si ya existe registro con la combinación cod_dane_sede + aliado
-        $sqlCheckRecord = "SELECT id FROM estrategia_ju WHERE cod_dane_sede = ? AND aliado = ?";
-        $stmtCheck = $mysqli->prepare($sqlCheckRecord);
-        $stmtCheck->bind_param("ss", $cod_dane_sede, $aliado);
+        }        // Verificar si ya existe registro con la combinación cod_dane_sede + aliado + eje + especificar_aliado
+        if ($aliado === 'Entre Otros' && !empty($especificar_aliado)) {
+            $sqlCheckRecord = "SELECT id FROM estrategia_ju WHERE cod_dane_sede = ? AND aliado = ? AND eje = ? AND especificar_aliado = ?";
+            $stmtCheck = $mysqli->prepare($sqlCheckRecord);
+            $stmtCheck->bind_param("ssss", $cod_dane_sede, $aliado, $eje, $especificar_aliado);
+        } else {
+            $sqlCheckRecord = "SELECT id FROM estrategia_ju WHERE cod_dane_sede = ? AND aliado = ? AND eje = ?";
+            $stmtCheck = $mysqli->prepare($sqlCheckRecord);
+            $stmtCheck->bind_param("sss", $cod_dane_sede, $aliado, $eje);
+        }
         $stmtCheck->execute();
         $resultCheckRecord = $stmtCheck->get_result();
 
         if ($resultCheckRecord->num_rows > 0) {
             // Ya existe, actualizamos
             $setFields = implode(" = ?, ", $campos) . " = ?";
-              $sql = "UPDATE estrategia_ju SET eje = ?, dias = ?, horas = ?, jornada = ?, $setFields, total_estudiantes = ? WHERE cod_dane_sede = ? AND aliado = ?";
+            
+            if ($aliado === 'Entre Otros' && !empty($especificar_aliado)) {
+                $sql = "UPDATE estrategia_ju SET dias = ?, horas = ?, jornada = ?, especificar_aliado = ?, $setFields, total_estudiantes = ? WHERE cod_dane_sede = ? AND aliado = ? AND eje = ? AND especificar_aliado = ?";
+            } else {
+                $sql = "UPDATE estrategia_ju SET dias = ?, horas = ?, jornada = ?, especificar_aliado = ?, $setFields, total_estudiantes = ? WHERE cod_dane_sede = ? AND aliado = ? AND eje = ?";
+            }
             
             $stmt = $mysqli->prepare($sql);
             if (!$stmt) {
@@ -79,15 +107,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             
-            // Crear array de parámetros (sin aliado porque ya está en WHERE)
-            $params = [$eje, $dias, $horas, $jornada];
+            // Crear array de parámetros
+            $params = [$dias, $horas, $jornada, $especificar_aliado];
             $params = array_merge($params, $valores);
             $params[] = $total_estudiantes;
             $params[] = $cod_dane_sede;
             $params[] = $aliado;
+            $params[] = $eje;
             
-            // Crear string de tipos
-            $types = 'siis' . str_repeat('i', count($valores)) . 'iss';
+            // Si es "Entre Otros", agregar especificar_aliado al WHERE
+            if ($aliado === 'Entre Otros' && !empty($especificar_aliado)) {
+                $params[] = $especificar_aliado;
+                $types = 'iiss' . str_repeat('i', count($valores)) . 'issss';
+            } else {
+                $types = 'iiss' . str_repeat('i', count($valores)) . 'isss';
+            }
             
             $stmt->bind_param($types, ...$params);
             
@@ -103,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $camposSql = implode(", ", $campos);
             
-            $sql = "INSERT INTO estrategia_ju (cod_dane_sede, aliado, eje, dias, horas, jornada, $camposSql, total_estudiantes) VALUES (?, ?, ?, ?, ?, ?, $placeholders, ?)";
+            $sql = "INSERT INTO estrategia_ju (cod_dane_sede, aliado, eje, especificar_aliado, dias, horas, jornada, $camposSql, total_estudiantes) VALUES (?, ?, ?, ?, ?, ?, ?, $placeholders, ?)";
             
             $stmt = $mysqli->prepare($sql);
             if (!$stmt) {
@@ -112,12 +146,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // Crear array de parámetros
-            $params = [$cod_dane_sede, $aliado, $eje, $dias, $horas, $jornada];
+            $params = [$cod_dane_sede, $aliado, $eje, $especificar_aliado, $dias, $horas, $jornada];
             $params = array_merge($params, $valores);
             $params[] = $total_estudiantes;
             
             // Crear string de tipos
-            $types = 'sssiis' . str_repeat('i', count($valores)) . 'i';
+            $types = 'ssssiis' . str_repeat('i', count($valores)) . 'i';
             
             $stmt->bind_param($types, ...$params);
             

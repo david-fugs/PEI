@@ -7,9 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre_sede = $_POST['nombre_sede'];
     $cod_dane_sede_old = $_POST['cod_dane_sede_old'];
     $zona_sede = $_POST['zona_sede'];
+    $estado_sede = isset($_POST['estado_sede']) ? $_POST['estado_sede'] : 'activo';
+    
     //actualizar la sede
-$sql = "UPDATE sedes SET cod_dane_sede = '$cod_dane_sede', nombre_sede = '$nombre_sede', zona_sede = '$zona_sede' WHERE cod_dane_sede = '$cod_dane_sede_old'";
-$result = $mysqli->query($sql);
+    $sql = "UPDATE sedes SET cod_dane_sede = '$cod_dane_sede', nombre_sede = '$nombre_sede', zona_sede = '$zona_sede', estado = '$estado_sede' WHERE cod_dane_sede = '$cod_dane_sede_old'";
+    $result = $mysqli->query($sql);
 
 if ($result) {
     echo "<script>

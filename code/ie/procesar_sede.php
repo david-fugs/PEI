@@ -20,7 +20,7 @@ if (isset($_POST)) {
     $nombre_sede = $_POST['nombre_sede'] ?? '';
     $zona = $_POST['zona'] ?? '';
     //ejecutar consulta en sedes
-    $sql = "INSERT INTO sedes (id_cole, cod_dane_sede, nombre_sede, zona_sede, fecha_alta_sede) VALUES ('$id_cole', '$codigo_dane', '$nombre_sede', '$zona', NOW())";
+    $sql = "INSERT INTO sedes (id_cole, cod_dane_sede, nombre_sede, zona_sede, estado, fecha_alta_sede) VALUES ('$id_cole', '$codigo_dane', '$nombre_sede', '$zona', 'activo', NOW())";
     $resultado = $mysqli->query($sql);
     if ($resultado) {
         //si se inserto correctamente
