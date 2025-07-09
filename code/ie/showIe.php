@@ -879,6 +879,9 @@ include('layouts/head.php');
                                     <ul class="list-group">
                                         <li class="list-group-item"><a href="../convivencia/manualConvivencia.php">Manual Convivencia</a></li>
                                     </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="../convivencia/convivenciaEscolar.php"> Convivencia Escolar</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
