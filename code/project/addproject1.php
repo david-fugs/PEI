@@ -309,6 +309,7 @@
 	                    </div>
                 	</div>
             	</div>
+				<input type="hidden" name="id_cole" value="<?= $id_cole; ?>" />
 				
 				<button type="submit" class="btn btn-primary">
 					<span class="spinner-border spinner-border-sm"></span>

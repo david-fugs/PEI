@@ -991,6 +991,7 @@
 	                    </div>
                 	</div>
             	</div>
+                <input type="hidden" name="id_cole" value="<?= $id_cole; ?>" />
 
                 <button type="submit" class="btn btn-primary" name="btn-update">
                     <span class="spinner-border spinner-border-sm"></span>
