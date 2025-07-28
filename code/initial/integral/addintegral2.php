@@ -154,7 +154,7 @@
                     <script>
                         // Mostrar alerta de exito
                         Swal.fire({
-                            title: '¡Exito!',
+                            title: 'Exito!',
                             text: 'El Seguimiento al Desarrollo Integral se ha guardado correctamente',
                             icon: 'success',
                             confirmButtonText: 'OK',
