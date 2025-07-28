@@ -38,7 +38,7 @@
             $tipo_proy_trans        =   $_POST['tipo_proy_trans'];
             $nombre_tipo_proy_trans =   $_POST['nombre_tipo_proy_trans'];
             $obj_proy_trans         =   $_POST['obj_proy_trans'];
-            $sos_proy_trans         =   $_POST['sos_proy_trans'];
+            $sos_proy_trans         =   $_POST['sos_proy_trans'] ??'';
             $des_proy_trans         =   $_POST['des_proy_trans'];
             $gra_0_proy_trans       =   $_POST['gra_0_proy_trans'];
             $gra_1_proy_trans       =   $_POST['gra_1_proy_trans'];

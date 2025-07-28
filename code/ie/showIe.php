@@ -751,7 +751,7 @@ include('layouts/head.php');
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#planesproyectos">
-                                    Planes Proyectos
+                                    Planes - Programas - Proyectos
                                 </button>
                             </h2>
                             <div id="planesproyectos" class="accordion-collapse collapse" data-bs-parent="#menuAccordion">
@@ -760,7 +760,7 @@ include('layouts/head.php');
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#transversales">
-                                                    Transversales
+                                                    Transversales Obligatorios
                                                 </button>
                                             </h2>
                                             <div id="transversales" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectos">
@@ -776,13 +776,13 @@ include('layouts/head.php');
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#proPredagogicos">
-                                                    Proyectos Pedagogicos
+                                                    Planes - Programas y Proyectos
                                                 </button>
                                             </h2>
                                             <div id="proPredagogicos" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogico">
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
-                                                        <li class="list-group-item"><a href="../proyect_transv/management/userViewProject.php">Ingresar a proyectos pedagogicos</a></li>
+                                                        <li class="list-group-item"><a href="../proyect_transv/management/userViewProject.php">Ingresar a proyectos</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

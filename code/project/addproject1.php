@@ -165,7 +165,7 @@
                 <div class="form-group">
                 	<div class="row">
                     	<div class="col-12">
-                        	<label for="nombre_tipo_proy_trans">Si se contestó "OTROS" en la anterior selección, por favor escriba el tipo de proyecto en este recuadro:</label>
+                        	<label for="nombre_tipo_proy_trans">Si se contesto "OTROS" en la anterior seleccion, por favor escriba el tipo de proyecto en este recuadro:</label>
 	                        <input type='text' name='nombre_tipo_proy_trans' class='form-control' style="text-transform:uppercase;" />
                    		</div>
                		</div>
@@ -174,32 +174,33 @@
                 <div class="form-group">
                 	<div class="row">
                     	<div class="col-12">
-                        	<label for="obj_proy_trans">* OBJETIVOS DEL PROYECTO: (número de caracteres permitido-> <span></span>)</label>
+                        	<label for="obj_proy_trans">* OBJETIVOS DEL PROYECTO: (numero de caracteres permitido-> <span></span>)</label>
                         	<textarea class="form-control" rows="7" name="obj_proy_trans" style="text-transform:uppercase;" required cols="123" maxlength="10000"></textarea>
                    		</div>
                		</div>
                 </div>
 
-                <div class="form-group">
+                <!-- comentado por sugerencia cliente8  
+				 <div class="form-group">
                 	<div class="row">
                     	<div class="col-12">
                         	<label for="sos_proy_trans">SOSTENIBILIDAD DEL PROYECTO (Si con el tiempo se puede seguir realizando las actividades asociadas del proyecto)<br>(número de caracteres permitido-> <span></span>)</label>
                         	<textarea class="form-control" rows="3" name="sos_proy_trans" style="text-transform:uppercase;" cols="123" maxlength="10000"></textarea>
                    		</div>
                		</div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                 	<div class="row">
                     	<div class="col-12">
-                        	<label for="des_proy_trans">* DESCRIPCIÓN DEL PROYECTO (Describa de forma clara el proyecto)<br>(número de caracteres permitido-> <span></span>)</label>
+                        	<label for="des_proy_trans">* En que punto del PEI se encuentra integrado y/o articulado este proyecto <span></span></label>
                         	<textarea class="form-control" rows="7" name="des_proy_trans" style="text-transform:uppercase;" required cols="123" maxlength="10000"></textarea>
                    		</div>
                		</div>
                 </div>
 
                 <hr style="border: 4px solid #04547c; border-radius: 5px;">
-	            <h4><b><CENTER>POBLACIÓN IMPACTADA</h4></CENTER></b>
+	            <h4><b><CENTER>POBLACION IMPACTADA</h4></CENTER></b>
 	            <label>Indicar si el proyecto se aplica en algunos grados o es un proyecto transversal de grado 0 a 11, por favor marque los grados donde aplica este proyecto</label>
                 <div class="form-group">
 	                <div class="row">
@@ -211,77 +212,77 @@
 					        </label>
 				        </div>
 				        <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 1º:</label>
+					        <label class="containerCheck">GRADO 1:</label>
 					        <input type="hidden" name="gra_1_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_1_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 2º:</label>
+					        <label class="containerCheck">GRADO 2:</label>
 					        <input type="hidden" name="gra_2_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_2_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 3º:</label>
+					        <label class="containerCheck">GRADO 3:</label>
 					        <input type="hidden" name="gra_3_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_3_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 4º:</label>
+					        <label class="containerCheck">GRADO 4:</label>
 					        <input type="hidden" name="gra_4_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_4_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 5º:</label>
+					        <label class="containerCheck">GRADO 5:</label>
 					        <input type="hidden" name="gra_5_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_5_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 6º:</label>
+					        <label class="containerCheck">GRADO 6:</label>
 					        <input type="hidden" name="gra_6_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_6_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 				        <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 7º:</label>
+					        <label class="containerCheck">GRADO 7:</label>
 					        <input type="hidden" name="gra_7_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_7_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 8º:</label>
+					        <label class="containerCheck">GRADO 8:</label>
 					        <input type="hidden" name="gra_8_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_8_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 9º:</label>
+					        <label class="containerCheck">GRADO 9:</label>
 					        <input type="hidden" name="gra_9_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_9_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 10º:</label>
+					        <label class="containerCheck">GRADO 10:</label>
 					        <input type="hidden" name="gra_10_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_10_proy_trans" value="SI">
 					        <span class="checkmark"></span>
 					        </label>
 				        </div>
 					    <div class="col-12 col-sm-2">
-					        <label class="containerCheck">GRADO 11º:</label>
+					        <label class="containerCheck">GRADO 11:</label>
 					        <input type="hidden" name="gra_11_proy_trans" value="NO">  
 					        <input type="checkbox" name="gra_11_proy_trans" value="SI">
 					        <span class="checkmark"></span>
@@ -294,7 +295,7 @@
             	<div class="form-group">
 	                <div class="row">
 	                    <div class="col-12 col-sm-12">
-	                        <label for="obs_proy_trans">OBSERVACIONES y/o COMENTARIOS ADICIONALES: (número de caracteres permitido-> <span></span>)</label>
+	                        <label for="obs_proy_trans">OBSERVACIONES y/o COMENTARIOS ADICIONALES: (numero de caracteres permitido-> <span></span>)</label>
 	                        <textarea class="form-control" rows="7" cols="122" maxlength="10000" name="obs_proy_trans" style="text-transform:uppercase;" ></textarea>
                     	</div>
 	                </div>
@@ -305,7 +306,7 @@
 	                    <div class="col-12">
 	                        <label for="archivo"><i class="fas fa-file-pdf"></i> ADJUNTAR DOCUMENTOS RELACIONADOS CON EL PROYECTO TRANSVERSAL:</label>
 	                        <input type="file" id="archivo[]" name="archivo[]" multiple="" accept="application/msexcel, application/msword, application/pdf, application/rtf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/*">
-	                        <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;">Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez estén seleccionados presione el botón abrir. Utilice archivos de tipo: PDF</p>
+	                        <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;">Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez esten seleccionados presione el botón abrir. Utilice archivos de tipo: PDF</p>
 	                    </div>
                 	</div>
             	</div>

@@ -89,17 +89,17 @@
         </script>
 </head>
 <body >
-   	<?php
+    <?php
         include("../../conexion.php");
-	    $id_proy_trans  = $_GET['id_proy_trans'];
-	    if(isset($_GET['id_proy_trans']))
-	    {
-	       $sql = mysqli_query($mysqli, "SELECT * FROM proyectos_transversales WHERE id_proy_trans = '$id_proy_trans'");
-	       $row = mysqli_fetch_array($sql);
+        $id_proy_trans  = $_GET['id_proy_trans'];
+        if(isset($_GET['id_proy_trans']))
+        {
+           $sql = mysqli_query($mysqli, "SELECT * FROM proyectos_transversales WHERE id_proy_trans = '$id_proy_trans'");
+           $row = mysqli_fetch_array($sql);
         }
     ?>
 
-   	<div class="container">
+    <div class="container">
         <center>
             <img src='../../img/logo_educacion_fondo_azul.png' width="600" height="111" class="responsive">
         </center>
@@ -190,19 +190,19 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div class="row">
                     <div class="col-12">
                         <label for="sos_proy_trans">SOSTENIBILIDAD DEL PROYECTO (Si con el tiempo se puede seguir realizando las actividades asociadas del proyecto)<br>(número de caracteres permitido-> <span></span>)</label>
                         <textarea class="form-control" rows="3" name="sos_proy_trans" style="text-transform:uppercase;" cols="123" maxlength="10000"><?php echo $row['sos_proy_trans']; ?></textarea>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <div class="row">
                     <div class="col-12">
-                        <label for="des_proy_trans">* DESCRIPCIÓN DEL PROYECTO (Describa de forma clara el proyecto)<br>(número de caracteres permitido-> <span></span>)</label>
+                        <label for="des_proy_trans">* En que punto del PEI se encuentra integrado y/o articulado este proyecto<span></span></label>
                         <textarea class="form-control" rows="3" name="des_proy_trans" style="text-transform:uppercase;" required cols="123" maxlength="10000"><?php echo $row['des_proy_trans']; ?></textarea>
                     </div>
                 </div>
@@ -218,8 +218,8 @@
                         <label class="containerCheck">GRADO 0:</label>
                         <select class="form-control" name="gra_0_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_0_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_0_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_0_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_0_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         <span class="checkmark"></span>
                         </label>
@@ -228,8 +228,8 @@
                         <label class="containerCheck">GRADO 1º:</label>
                         <select class="form-control" name="gra_1_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_1_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_1_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_1_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_1_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -237,8 +237,8 @@
                         <label class="containerCheck">GRADO 2º:</label>
                         <select class="form-control" name="gra_2_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_2_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_2_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_2_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_2_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -246,8 +246,8 @@
                         <label class="containerCheck">GRADO 3º:</label>
                         <select class="form-control" name="gra_3_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_3_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_3_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_3_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_3_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -255,8 +255,8 @@
                         <label class="containerCheck">GRADO 4º:</label>
                         <select class="form-control" name="gra_4_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_4_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_4_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_4_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_4_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -264,8 +264,8 @@
                         <label class="containerCheck">GRADO 5º:</label>
                         <select class="form-control" name="gra_5_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_5_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_5_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_5_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_5_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -273,8 +273,8 @@
                         <label class="containerCheck">GRADO 6º:</label>
                         <select class="form-control" name="gra_6_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_6_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_6_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_6_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_6_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -282,8 +282,8 @@
                         <label class="containerCheck">GRADO 7º:</label>
                         <select class="form-control" name="gra_7_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_7_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_7_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_7_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_7_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -291,8 +291,8 @@
                         <label class="containerCheck">GRADO 8º:</label>
                         <select class="form-control" name="gra_8_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_8_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_8_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_8_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_8_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -300,8 +300,8 @@
                         <label class="containerCheck">GRADO 9º:</label>
                         <select class="form-control" name="gra_9_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_9_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_9_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_9_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_9_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -309,8 +309,8 @@
                         <label class="containerCheck">GRADO 10º:</label>
                         <select class="form-control" name="gra_10_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_10_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_10_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_10_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_10_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>
@@ -318,8 +318,8 @@
                         <label class="containerCheck">GRADO 11º:</label>
                         <select class="form-control" name="gra_11_proy_trans" required/>
                             <option value=""></option>   
-                            <option value=SI <?php if(utf8_encode($row['gra_11_proy_trans'])==SI){echo 'selected';} ?>>SI</option>
-                            <option value=NO <?php if(utf8_encode($row['gra_11_proy_trans'])==NO){echo 'selected';} ?>>NO</option>
+                            <option value="SI" <?php if(utf8_encode($row['gra_11_proy_trans'])=="SI"){echo 'selected';} ?>>SI</option>
+                            <option value="NO" <?php if(utf8_encode($row['gra_11_proy_trans'])=="NO"){echo 'selected';} ?>>NO</option>
                         </select>
                         </label>
                     </div>

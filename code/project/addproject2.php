@@ -20,7 +20,7 @@ $nombre_proy_trans       = $_POST['nombre_proy_trans'];
 $tipo_proy_trans         = $_POST['tipo_proy_trans'];
 $nombre_tipo_proy_trans  = $_POST['nombre_tipo_proy_trans'];
 $obj_proy_trans          = $_POST['obj_proy_trans'];
-$sos_proy_trans          = $_POST['sos_proy_trans'];
+$sos_proy_trans          = $_POST['sos_proy_trans'] ?? '';
 $des_proy_trans          = $_POST['des_proy_trans'];
 $gra_0_proy_trans        = $_POST['gra_0_proy_trans'];
 $gra_1_proy_trans        = $_POST['gra_1_proy_trans'];
@@ -59,13 +59,20 @@ if ($resultado) {
         if($_FILES["archivo"]["name"][$key]) {
             $filename = $_FILES["archivo"]["name"][$key];
             $source = $_FILES["archivo"]["tmp_name"][$key];
-            $directorio = 'files/' . $id_insert . '/';
+            $base_dir = 'files/';
+            $directorio = $base_dir . $id_insert . '/';
 
-            if(!file_exists($directorio)) {
-                mkdir($directorio, 0777) or die("No se puede crear el directorio");
+            // Asegura que la carpeta base 'files/' exista
+            if (!file_exists($base_dir)) {
+                mkdir($base_dir, 0777, true) or die("No se puede crear el directorio base");
             }
 
-            $target_path = $directorio . '/' . $filename;
+            // Ahora crea el subdirectorio del proyecto
+            if(!file_exists($directorio)) {
+                mkdir($directorio, 0777, true) or die("No se puede crear el directorio del proyecto");
+            }
+
+            $target_path = $directorio . $filename;
             move_uploaded_file($source, $target_path);
         }
     }
