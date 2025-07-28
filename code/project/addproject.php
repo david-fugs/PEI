@@ -71,26 +71,24 @@ $id_cole        = $_SESSION['id_cole'];
 			$num_registros = mysqli_num_rows($res);
 
 			echo "<div class='container'>
-        	<table class='table'>
-            	<thead>
+			<table class='table'>
+				<thead>
 					<tr>
 						<th>No.</th>
 						<th>ESTABLECIMIENTO</th>
-		        		<th>PROYECTO</th>
-		        		<th>TIPO</th>
-		        		<th>OTRO</th>
-		        		<th>ARCHIVOS</th>
-		        		<th>EDIT</th>
-		    		</tr>
-		  		</thead>
-            <tbody>";
+						<th>PROYECTO</th>
+						<th>TIPO</th>
+						<th>OTRO</th>
+						<th>ARCHIVOS</th>
+						<th>EDIT</th>
+						<th>ELIMINAR</th>
+					</tr>
+				</thead>
 
-			$consulta = "SELECT * FROM proyectos_transversales INNER JOIN colegios ON proyectos_transversales.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
-			$result = $mysqli->query($consulta);
+			<tbody>";
 
 			$i = 1;
-			while ($row = mysqli_fetch_array($result)) {
-
+			while ($row = mysqli_fetch_array($res)) {
 				echo '
 				<tr>
 					<td data-label="No.">' . $i++ . '</td>
@@ -98,12 +96,17 @@ $id_cole        = $_SESSION['id_cole'];
 					<td data-label="PROYECTO">' . $row['nombre_proy_trans'] . '</td>
 					<td data-label="TIPO">' . $row['tipo_proy_trans'] . '</td>
 					<td data-label="OTRO">' . $row['nombre_tipo_proy_trans'] . '</td>
-					<td data-label="ARCHIVOS"><a href="find_doc.php?id_proy_trans=' . $row['id_proy_trans'] . '"><img src="../../img/files.png" width=28 heigth=28></td>
-					<td data-label="EDIT"><a href="addprojectedit.php?id_proy_trans=' . $row['id_proy_trans'] . '"><img src="../../img/editar.png" width=20 heigth=20></td>
+					<td data-label="ARCHIVOS"><a href="find_doc.php?id_proy_trans=' . $row['id_proy_trans'] . '"><img src="../../img/files.png" width=28 height=28></a></td>
+					<td data-label="EDIT"><a href="addprojectedit.php?id_proy_trans=' . $row['id_proy_trans'] . '"><img src="../../img/editar.png" width=20 height=20></a></td>
+					<td data-label="ELIMINAR">
+						<a href="deleteproject.php?id_proy_trans=' . $row['id_proy_trans'] . '" onclick="return confirm(\'¿Está seguro de eliminar este proyecto?\');">
+							<img src="../../img/trash.png" width=20 height=20>
+						</a>
+					</td>
 				</tr>';
 			}
 
-			echo '</table>';
+			echo '    </tbody>    </table></div>';
 
 			?>
 
