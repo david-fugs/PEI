@@ -25,6 +25,14 @@
     $sql = "INSERT INTO mallas_curriculares (obs_malla_mc, obs_plan_mc, obs_gen_mc, id_cole, fecha_alta_mc, fecha_edit_mc, id_usu) values ('$obs_malla_mc', '$obs_plan_mc', '$obs_gen_mc', '$id_cole', '$fecha_alta_mc', '$fecha_edit_mc', '$id_usu')";
     $resultado = $mysqli->query($sql);
 
+    if(!$resultado){
+        echo "<div style='color:red; font-weight:bold; text-align:center;'>\n";
+        echo "<h3>Error al insertar en la base de datos: " . $mysqli->error . "</h3>\n";
+        echo "<a href='../../access.php'>Volver</a>";
+        echo "</div>";
+        exit();
+    }
+
     $id_insert = $mysqli->insert_id;
      //Como el elemento es un arreglos utilizamos foreach para extraer todos los valores
     foreach($_FILES["archivo"]['tmp_name'] as $key => $tmp_name)
@@ -85,7 +93,7 @@
                     
                     <div class='container'>
                         <br />
-                        <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
+                        <h3><b><i class='fas fa-check-circle'></i> SE GUARDO DE FORMA EXITOSA EL REGISTRO</b></h3><br />
                         <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
                     </div>
                     </center>

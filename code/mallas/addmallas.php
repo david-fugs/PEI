@@ -71,19 +71,20 @@ $id_cole        = $_SESSION['id_cole'];
 			$num_registros = mysqli_num_rows($res);
 
 			echo "<div class='container'>
-        	<table class='table'>
-            	<thead>
+			<table class='table'>
+				<thead>
 					<tr>
 						<th>No.</th>
 						<th>I.E.</th>
 						<th>MALLAS</th>
-		        		<th>PLANES</th>
-		        		<th>OBJETIVOS</th>
-		        		<th>ARCHIVOS</th>
-		        		<th>EDIT</th>
-		    		</tr>
-		  		</thead>
-            <tbody>";
+						<th>PLANES</th>
+						<th>OBJETIVOS</th>
+						<th>ARCHIVOS</th>
+<th>EDIT</th>
+<th>ELIMINAR</th>
+					</tr>
+				</thead>
+			<tbody>";
 
 			$consulta = "SELECT * FROM mallas_curriculares INNER JOIN colegios ON mallas_curriculares.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
 			$result = $mysqli->query($consulta);
@@ -98,8 +99,9 @@ $id_cole        = $_SESSION['id_cole'];
 					<td data-label="MALLAS">' . $row['obs_malla_mc'] . '</td>
 					<td data-label="PLANES">' . $row['obs_plan_mc'] . '</td>
 					<td data-label="OBJETIVOS">' . $row['obs_gen_mc'] . '</td>
-					<td data-label="ARCHIVOS"><a href="find_doc.php?id_mc=' . $row['id_mc'] . '"><img src="../../img/files.png" width=28 heigth=28></td>
-					<td data-label="EDIT"><a href="addmallasedit.php?id_mc=' . $row['id_mc'] . '"><img src="../../img/editar.png" width=20 heigth=20></td>
+					<td data-label="ARCHIVOS"><a href="find_doc.php?id_mc=' . $row['id_mc'] . '"><img src="../../img/files.png" width=28 heigth=28></a></td>
+					<td data-label="EDIT"><a href="addmallasedit.php?id_mc=' . $row['id_mc'] . '"><img src="../../img/editar.png" width=20 heigth=20></a></td>
+					<td data-label="ELIMINAR"><a href="#" onclick="eliminarMalla(' . $row['id_mc'] . '); return false;" style="font-size:20px;">🗑️</a></td>
 				</tr>';
 			}
 
@@ -115,6 +117,27 @@ $id_cole        = $_SESSION['id_cole'];
 
 	</section>
 
+<script>
+function eliminarMalla(id_mc) {
+	if (confirm('Esta seguro de eliminar este registro? Esta accion no se puede deshacer.')) {
+		fetch('eliminar_malla_ajax.php', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: 'id_mc=' + encodeURIComponent(id_mc)
+		})
+		.then(response => response.json())
+		.then(data => {
+			alert(data.message);
+			if (data.success) {
+				location.reload();
+			}
+		})
+		.catch(() => {
+			alert('Error de conexion.');
+		});
+	}
+}
+</script>
 </body>
 
 </html>

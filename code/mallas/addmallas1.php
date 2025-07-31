@@ -121,11 +121,11 @@
 				<div class="form-group">
                 	<div class="row">
                     	<div class="col">
-	                        <label for="obs_malla_mc">OBSERVACIÓN SOBRE LAS MALLAS CURRICULARES: (número de caracteres permitido-> <span></span>)</label>
+	                        <label for="obs_malla_mc">OBSERVACION SOBRE LAS MALLAS CURRICULARES: (numero de caracteres permitido-> <span></span>)</label>
 	                        <textarea class="form-control" rows="10" cols="55" name="obs_malla_mc" maxlength="10000" style="text-transform:uppercase;" ></textarea>
                     	</div>
                     	<div class="col">
-                        	<label for="obs_plan_mc">OBSERVACIÓN SOBRE LOS PLANES DE ESTUDIO: (número de caracteres permitido-> <span></span>)</label>
+                        	<label for="obs_plan_mc">OBSERVACION SOBRE LOS PLANES DE ESTUDIO: (numero de caracteres permitido-> <span></span>)</label>
 	                        <textarea class="form-control" rows="10" cols="55" name="obs_plan_mc" maxlength="10000" style="text-transform:uppercase;" ></textarea>
                    		</div>
                		</div>
@@ -145,10 +145,11 @@
 	                    <div class="col-12">
 	                        <label for="archivo">* <i class="fas fa-file-pdf"></i> ADJUNTAR SOPORTE y/o ARCHIVO QUE CONTIENE LAS MALLAS - PLANES DE ESTUDIO:</label>
 	                        <input type="file" id="archivo[]" name="archivo[]" required multiple="" accept="application/msexcel, application/msword, application/pdf, application/rtf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/*">
-	                        <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;"><b><u>Solamente adicione documentos siempre y cuando este paso no se haya realizado anteriormente. </b></u>Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez estén seleccionados presione el botón abrir. Utilice archivos de tipo: PDF</p>
+	                        <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;"><b><u>Solamente adicione documentos siempre y cuando este paso no se haya realizado anteriormente. </b></u>Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez esten seleccionados presione el boton abrir. Utilice archivos de tipo: PDF</p>
 	                    </div>
                 	</div>
             	</div>
+				<input type="hidden" name="id_cole" value="<?php echo $id_cole; ?>">
 				
 				<button type="submit" class="btn btn-primary">
 					<span class="spinner-border spinner-border-sm"></span>
