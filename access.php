@@ -133,7 +133,7 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="code/ie/showIe.php" class="nav_link sublink">Ver Institucion Educativa</a>
                         </ul>
                     </li>
-                    <li class="item">
+                    <!-- <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
                                 <i class="fa-solid fa-thumbs-up"></i>
@@ -144,7 +144,7 @@ $id_cole = $_SESSION['id_cole'];
                         <ul class="menu_items submenu">
                             <a href="code/ie/mejoras/addmejorasedit.php" class="nav_link sublink">Consultar mejoras</a>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
