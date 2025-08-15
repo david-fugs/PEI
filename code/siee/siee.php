@@ -76,7 +76,6 @@ $id_cole        = $_SESSION['id_cole'];
 					<tr>
 						<th>No.</th>
 						<th>I.E.</th>
-						<th>INFORME</th>
 						<th>ADJUNTOS</th>
 		        		<th>EDIT</th>
 		    		</tr>
@@ -93,7 +92,6 @@ $id_cole        = $_SESSION['id_cole'];
 				<tr>
 					<td data-label="No.">' . $i++ . '</td>
 					<td data-label="I.E.">' . $row['nombre_cole'] . '</td>
-					<td data-label="INFORME"><a href="report/report_general_siee.php?id_cole=' . $row['id_cole'] . '"><img src="../../img/siee.png" width=28 heigth=28></td>
 					<td data-label="ADJUNTOS"><a href="find_doc.php?id_cole=' . $row['id_cole'] . '"><img src="../../img/files.png" width=28 heigth=28></td>
 					<td data-label="EDIT"><a href="sieeedit.php?id_siee=' . $row['id_siee'] . '"><img src="../../img/editar.png" width=20 heigth=20></td>
 				</tr>';
