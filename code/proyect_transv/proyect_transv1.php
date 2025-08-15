@@ -149,14 +149,14 @@
 
                                 <option value=""></option>
                                 <option value="PROYECTO PARA LA EDUCACION SEXUAL Y CONSTRUCCION DE CIUDADANIA PESCC">PROYECTO PARA LA EDUCACION SEXUAL Y CONSTRUCCION DE CIUDADANIA PESCC</option>
-                                <option value="PROYECTO DE EDUCACIÓN AMBIENTAL PRAE">PROYECTO DE EDUCACIÓN AMBIENTAL PRAE</option>
+                                <option value="PROYECTO DE EDUCACION AMBIENTAL PRAE">PROYECTO DE EDUCACIÓN AMBIENTAL PRAE</option>
                                 <option value="PROYECTO PARA EL EJERCICIO DE LOS DERECHOS HUMANOS">PROYECTO PARA EL EJERCICIO DE LOS DERECHOS HUMANOS</option>
                                 <option value="PROYECTO DE EDUCACION VIAL">PROYECTO DE EDUCACIÓN VIAL </option>                                
                             </select>
                         </div>
                     </div>
                 </div>           
-                     
+                    
 
             <p align="justify"><font size=4 color=#000000 style="font-family: georgia; font-size: 18px;">Número de estudiantes vinculados al proyecto en los diferentes niveles educativos En: </font></p>            
 

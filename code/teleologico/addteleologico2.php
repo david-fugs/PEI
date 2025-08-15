@@ -8,6 +8,7 @@
     
     $nombre         = $_SESSION['nombre'];
     $tipo_usuario   = $_SESSION['tipo_usuario'];
+    $id_cole        = $_SESSION['id_cole'];
 
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
@@ -17,7 +18,6 @@
     $per_egr_ct         =   strtoupper($_POST['per_egr_ct']);
     $obj_ins_ct         =   strtoupper($_POST['obj_ins_ct']);
     $obs_ct             =   strtoupper($_POST['obs_ct']);
-    $id_cole            =   $_POST['id_cole'];
     $estado_ct          =   1;
     $fecha_alta_ct      =   date('Y-m-d h:i:s');
     $fecha_edit_ct      =   ('0000-00-00 00:00:00');
@@ -36,28 +36,35 @@
             $filename = $_FILES["archivo"]["name"][$key]; //Obtenemos el nombre original del archivo
             $source = $_FILES["archivo"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
             
-            $directorio = 'files/'.$id_insert.'/'; //Declaramos un  variable con la ruta donde guardaremos los archivos
-            
-            //Validamos si la ruta de destino existe, en caso de no existir la creamos
-            if(!file_exists($directorio))
-            {
-                mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");    
-            }
-            
-            $dir=opendir($directorio); //Abrimos el directorio de destino
-            $target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
-            
-            //Movemos y validamos que el archivo se haya cargado correctamente
-            //El primer campo es el origen y el segundo el destino
-            if(move_uploaded_file($source, $target_path))
-            { 
-                //echo "El archivo $filename se ha almacenado en forma exitosa.<br>";
-            } 
-                else 
-                {    
-                    echo "Ha ocurrido un error, por favor inténtelo de nuevo.<br>";
+            // Ruta relativa y absoluta para guardar archivos
+            $base_dir_rel = 'files/';
+            $base_dir_abs = __DIR__ . '/' . $base_dir_rel;
+            $directorio_rel = $base_dir_rel . $id_insert . '/';
+            $directorio_abs = $base_dir_abs . $id_insert . '/'; //ruta absoluta
+
+            // Asegura que la carpeta base 'files/' exista
+            if (!file_exists($base_dir_abs)) {
+                if (!mkdir($base_dir_abs, 0777, true)) {
+                    die("No se puede crear el directorio base de archivos");
                 }
-            closedir($dir); //Cerramos el directorio de destino
+            }
+
+            // Crea el subdirectorio del id si no existe
+            if (!file_exists($directorio_abs)) {
+                if (!mkdir($directorio_abs, 0777, true)) {
+                    die("No se puede crear el directorio de extracci&oacute;n");
+                }
+            }
+
+            // Ruta absoluta de destino para mover el archivo
+            $target_path_abs = $directorio_abs . $filename;
+
+            // Mover archivo desde la ruta temporal a la absoluta
+            if (move_uploaded_file($source, $target_path_abs)) {
+                // archivo guardado correctamente
+            } else {
+                echo "Ha ocurrido un error al mover el archivo $filename, por favor inténtelo de nuevo.<br>";
+            }
         }
     }
 

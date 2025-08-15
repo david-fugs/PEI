@@ -79,7 +79,7 @@ if ($_POST) {
                     case "PROYECTO PARA LA EDUCACION SEXUAL Y CONSTRUCCION DE CIUDADANIA PESCC":
                         $nroProject = 1;
                         break;
-                    case "PROYECTO DE EDUCACIÓN AMBIENTAL PRAE":
+                    case "PROYECTO DE EDUCACION AMBIENTAL PRAE":
                         $nroProject = 2;
                         break;
                     case "PROYECTO PARA EL EJERCICIO DE LOS DERECHOS HUMANOS":

@@ -1222,6 +1222,7 @@ include('layouts/head.php');
                                                 <option value="CRESE">🎓 CRESE</option>
                                                 <option value="ONDAS">🌊 ONDAS</option>
                                                 <option value="ICBF">👨‍👩‍👧‍👦 ICBF</option>
+                                                <option value="SENA">🏢 SENA</option>
                                                 <option value="Ministerios">🏛️ Ministerios</option>
                                                 <option value="Alcaldias">🏛️ Alcaldias</option>
                                                 <option value="Chef_Fundeca">👨‍🍳 Chef Fundeca</option>
