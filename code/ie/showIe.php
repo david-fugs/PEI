@@ -6,6 +6,8 @@ mb_internal_encoding('UTF-8');
 mb_http_output('UTF-8');
 
 include('layouts/head.php');
+include('../../conexion.php');
+include('../general/observacion.php');
 ?>
 
 <style>
@@ -742,7 +744,26 @@ include('layouts/head.php');
                                                 </div>
                                             </div>
                                         </div>
+
+
+
                                     </div> <!-- Fin Submenús Pedagogico -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EVIDENCIAS -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#evidencias">
+                                    Evidencias
+                                </button>
+                            </h2>
+                            <div id="evidencias" class="accordion-collapse collapse" data-bs-parent="#menuAccordion">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="https://www.mineducacion.gov.co/portal/men/Publicaciones/Guias/339480:Guia-No-49-Guias-pedagogicas-para-la-convivencia-escolar" target="_blank" rel="noopener">Gui 49 ministerio de educacio</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -803,6 +824,23 @@ include('layouts/head.php');
                                             </div>
                                         </div>
 
+                                        <!-- Submenú Intensidad Horaria -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#intensidadHoraria">
+                                                    Intensidad Horaria Semanal por Áreas y Asignaturas por Grados
+                                                </button>
+                                            </h2>
+                                            <div id="intensidadHoraria" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectos">
+                                                <div class="accordion-body">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item"><a href="../hours/intensidad_horaria.php">Configurar Intensidad Horaria</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div> <!-- Fin Submenús Pedagogico -->
                                 </div>
 
@@ -833,17 +871,17 @@ include('layouts/head.php');
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Submenú Plan aula-->
+                                        <!-- Submenú Plan de Estudios-->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#planaula">
-                                                    Plan Aula
+                                                    Plan de Estudios
                                                 </button>
                                             </h2>
                                             <div id="planaula" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogico">
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
-                                                        <li class="list-group-item"><a href="../initial/aula/addaula.php">Ingresar Plan aula</a></li>
+                                                        <li class="list-group-item"><a href="../initial/aula/addaula.php">Ingresar Plan de Estudios</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -881,6 +919,9 @@ include('layouts/head.php');
                                     </ul>
                                     <ul class="list-group">
                                         <li class="list-group-item"><a href="../convivencia/convivenciaEscolar.php"> Convivencia Escolar</a></li>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="../convivencia/circular.php">Circular</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1339,6 +1380,41 @@ include('layouts/head.php');
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seccion de Observaciones Administracion -->
+            <div class="mt-5">
+                <h1 class="main-title text-center mb-4">
+                    <i class="fas fa-clipboard-check me-3"></i>
+                    OBSERVACIONES ADMINISTRACION
+                </h1>
+                
+                <div class="section-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <?php
+                            // Obtener las observaciones para este establecimiento educativo
+                            $contenido_observacion = MostrarInformacionObservacion($id_cole, $mysqli);
+                            ?>
+                            
+                            <div class="mb-3">
+                                <label for="observacion_admin" class="form-label">
+                                    <i class="fas fa-edit me-2"></i>Observaciones para este Establecimiento Educativo
+                                </label>
+                                <textarea 
+                                    id="observacion_admin" 
+                                    class="form-control" 
+                                    rows="6" 
+                                    readonly
+                                    placeholder="Observaciones administrativas (solo lectura)"><?php echo htmlspecialchars($contenido_observacion); ?></textarea>
+                            </div>
+
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>Esta sección es de solo lectura. Para editar observaciones contacte al administrador del sistema.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

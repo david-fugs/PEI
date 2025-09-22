@@ -70,6 +70,18 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
                         </ul>
                     </li>
+                     <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-bell"></i>
+                            </span>
+                            <span class="navlink">SEGUMIENTO INSTITUCIONES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/ie/showIeAdmin.php" class="nav_link sublink">Ver Seguimiento Instituciones</a>
+                        </ul>
+                    </li>
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">

@@ -28,8 +28,9 @@ window.onload = function() {
             document.querySelector(".encabezado1").colSpan = 2;
             document.querySelector(".encabezado2").colSpan = 1;
             document.querySelector(".encabezado3").colSpan = 2;
-            document.querySelector(".encabezado4").colSpan = 3;
+            document.querySelector(".encabezado4").colSpan = 4;
             document.querySelector(".encabezado5").colSpan = 3;
+            document.querySelector(".encabezado6").colSpan = 3;
             
         } else {
             //mostrar archivos
@@ -37,13 +38,9 @@ window.onload = function() {
             document.querySelector(".encabezado1").colSpan = 3;
             document.querySelector(".encabezado2").colSpan = 2;
             document.querySelector(".encabezado3").colSpan = 4;
-            document.querySelector(".encabezado4").colSpan = 6;
+            document.querySelector(".encabezado4").colSpan = 8;
             document.querySelector(".encabezado5").colSpan = 6;
-
-            
-
-    
-            
+            document.querySelector(".encabezado6").colSpan = 6;
         }
     }
 

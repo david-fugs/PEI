@@ -1,0 +1,92 @@
+-- Tabla para almacenar intensidad horaria semanal por áreas y asignaturas por grados
+CREATE TABLE IF NOT EXISTS intensidad_horaria_semanal (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cod_dane_sede VARCHAR(20) NOT NULL,
+    nit_establecimiento VARCHAR(20),
+    nombre_establecimiento VARCHAR(255),
+    area VARCHAR(100) NOT NULL,
+    asignatura VARCHAR(100) NOT NULL,
+    grado_1 DECIMAL(4,2) DEFAULT 0,
+    grado_2 DECIMAL(4,2) DEFAULT 0,
+    grado_3 DECIMAL(4,2) DEFAULT 0,
+    grado_4 DECIMAL(4,2) DEFAULT 0,
+    grado_5 DECIMAL(4,2) DEFAULT 0,
+    grado_6 DECIMAL(4,2) DEFAULT 0,
+    grado_7 DECIMAL(4,2) DEFAULT 0,
+    grado_8 DECIMAL(4,2) DEFAULT 0,
+    grado_9 DECIMAL(4,2) DEFAULT 0,
+    grado_10 DECIMAL(4,2) DEFAULT 0,
+    grado_11 DECIMAL(4,2) DEFAULT 0,
+    total_horas DECIMAL(5,2) DEFAULT 0,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_cod_dane_sede (cod_dane_sede),
+    INDEX idx_area (area),
+    INDEX idx_asignatura (asignatura),
+    UNIQUE KEY unique_sede_area_asignatura (cod_dane_sede, area, asignatura)
+);
+
+-- Insertar datos de configuración de áreas y asignaturas
+CREATE TABLE IF NOT EXISTS areas_asignaturas_config (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    area VARCHAR(100) NOT NULL,
+    asignatura VARCHAR(100) NOT NULL,
+    activa TINYINT(1) DEFAULT 1,
+    orden_area INT DEFAULT 0,
+    orden_asignatura INT DEFAULT 0
+);
+
+-- Insertar las áreas y asignaturas según especificaciones
+INSERT INTO areas_asignaturas_config (area, asignatura, orden_area, orden_asignatura) VALUES
+-- CIENCIAS NATURALES
+('CIENCIAS NATURALES', 'BIOLOGIA', 1, 1),
+('CIENCIAS NATURALES', 'AMBIENTAL', 1, 2),
+('CIENCIAS NATURALES', 'QUIMICA', 1, 3),
+('CIENCIAS NATURALES', 'FISICA', 1, 4),
+
+-- CIENCIAS SOCIALES
+('CIENCIAS SOCIALES', 'HISTORIA DE COLOMBIA', 2, 1),
+('CIENCIAS SOCIALES', 'DEMOCRACIA', 2, 2),
+('CIENCIAS SOCIALES', 'CONSTITUCION POLITICA', 2, 3),
+('CIENCIAS SOCIALES', 'CATEDRA DE LA PAZ', 2, 4),
+('CIENCIAS SOCIALES', 'AFROCOLOMBIANIDAD', 2, 5),
+('CIENCIAS SOCIALES', 'CONVIVENCIA', 2, 6),
+
+-- EDUCACION ARTISTICA
+('EDUCACION ARTISTICA', 'EDUCACION ARTISTICA', 3, 1),
+
+-- ETICA Y VALORES HUMANOS
+('ETICA Y VALORES HUMANOS', 'ETICA Y VALORES HUMANOS', 4, 1),
+
+-- EDUCACION RELIGIOSA
+('EDUCACION RELIGIOSA', 'EDUCACION RELIGIOSA', 5, 1),
+
+-- EDUCACION FISICA RECREACION Y DEPORTE
+('EDUCACION FISICA RECREACION Y DEPORTE', 'EDUCACION FISICA RECREACION Y DEPORTE', 6, 1),
+
+-- HUMANIDADES
+('HUMANIDADES', 'LENGUA CASTELLANA', 7, 1),
+('HUMANIDADES', 'IDIOMA EXTRANJERO', 7, 2),
+
+-- MATEMATICAS
+('MATEMATICAS', 'MATEMATICAS', 8, 1),
+('MATEMATICAS', 'GEOMETRIA', 8, 2),
+('MATEMATICAS', 'ESTADISTICA', 8, 3),
+
+-- TECNOLOGIA E INFORMATICA
+('TECNOLOGIA E INFORMATICA', 'TECNOLOGIA', 9, 1),
+('TECNOLOGIA E INFORMATICA', 'INFORMATICA', 9, 2),
+
+-- EMPRENDIMIENTO
+('EMPRENDIMIENTO', 'EMPRENDIMIENTO', 10, 1),
+
+-- AREAS DE LA MEDIA ACADEMICA
+('AREAS DE LA MEDIA ACADEMICA', 'CIENCIAS POLITICAS Y ECONOMICAS', 11, 1),
+('AREAS DE LA MEDIA ACADEMICA', 'FILOSOFIA', 11, 2),
+
+-- MEDIA TECNICA AREAS DE LA ESPECIALIDAD
+('MEDIA TECNICA AREAS DE LA ESPECIALIDAD', 'MEDIA TECNICA', 12, 1)
+ON DUPLICATE KEY UPDATE 
+    asignatura = VALUES(asignatura),
+    orden_area = VALUES(orden_area),
+    orden_asignatura = VALUES(orden_asignatura);

@@ -208,6 +208,19 @@ $id_cole       = $_SESSION['id_cole'];
             background-color: #ffc107;
             color: #212529;
         }
+        .type-header.planes {
+            background: linear-gradient(45deg, #6f42c1, #9b59b6);
+            color: #fff;
+        }
+        .count-badge {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 15px;
+            margin-left: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
 
         .documents-content {
             padding: 20px;
@@ -291,9 +304,17 @@ $id_cole       = $_SESSION['id_cole'];
     <section class="principal">
         <div style="border-radius: 9px; border: 4px solid #FFFFFF; width: 100%;" align="center">
             <div align="center">
-                <h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em">
-                    <b><i class="fas fa-users"></i> CONVIVENCIA ESCOLAR </b>
-                </h1>
+                <div style="margin-bottom:12px;">
+                    <a href="manualConvivencia.php" class="btn btn-secondary" style="padding:10px 18px; font-weight:600; border-radius:8px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+                        <i class="fas fa-book"></i>
+                        <span>Manual de Convivencia</span>
+                    </a>
+                </div>
+                <div>
+                    <h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em">
+                        <b><i class="fas fa-users"></i> CONVIVENCIA ESCOLAR </b>
+                    </h1>
+                </div>
             </div>
 
             <!-- Botones para subir documentos -->
@@ -308,7 +329,11 @@ $id_cole       = $_SESSION['id_cole'];
                 </a>
                 <a href="subirConvivenciaEscolar.php?tipo=actas" class="btn-upload actas">
                     <i class="fas fa-file-signature"></i>
-                    <span>Subir Actas</span>
+                    <span>Subir Actas comite</span>
+                </a>
+                <a href="subirConvivenciaEscolar.php?tipo=planes_accion" class="btn-upload actas">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Planes de Acción</span>
                 </a>
             </div>
 
@@ -400,44 +425,59 @@ $id_cole       = $_SESSION['id_cole'];
                 'clase' => 'conformacion'
             ],
             'reglamento' => [
-                'nombre' => 'Reglamento de Convivencia',
+                'nombre' => 'Reglamento Interno',
                 'icono' => 'fas fa-gavel',
                 'clase' => 'reglamento'
             ],
             'actas' => [
-                'nombre' => 'Actas de Reuniones',
+                'nombre' => 'Comite de convivencia',
                 'icono' => 'fas fa-file-signature',
                 'clase' => 'actas'
+            ]
+            ,
+            'planes_accion' => [
+                'nombre' => 'Planes de Acción',
+                'icono' => 'fas fa-clipboard-list',
+                'clase' => 'planes'
             ]
         ];
 
         foreach ($tipos as $tipo => $info) {
-            echo "<div class='container'>
-                    <div class='type-section'>
-                        <div class='type-header {$info['clase']}'>
-                            <i class='{$info['icono']}'></i>
-                            <span>{$info['nombre']}</span>";
-            
-            if (!empty($yearFilter)) {
-                echo " - Año $yearFilter";
-            }
-            
-            echo "   </div>
-                    <div class='documents-content'>";
-
+            // Preparar consulta y obtener resultados primero para mostrar contador
             $query = "SELECT ce.*, c.nombre_cole 
                       FROM convivencia_escolar ce 
                       INNER JOIN colegios c ON ce.id_cole = c.id_cole 
                       $whereClause AND ce.tipo_documento = '$tipo'
                       ORDER BY ce.anio_documento DESC, ce.fecha_subida DESC";
-            
             $result = $mysqli->query($query);
+            $countDocs = ($result && $result->num_rows) ? $result->num_rows : 0;
+
+            echo "<div class='container'>
+                    <div class='type-section'>
+                        <div class='type-header {$info['clase']}'>
+                            <i class='{$info['icono']}'></i>
+                            <span>{$info['nombre']}</span>";
+
+            if (!empty($yearFilter)) {
+                echo " - Año $yearFilter";
+            }
+
+            echo "<span class='count-badge'>{$countDocs} document(s)</span>";
+
+            echo "   </div>
+                    <div class='documents-content'>";
 
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $filePath = $row['ruta_archivo'];
-                    $fileExists = file_exists($filePath);
-                    $fileSize = $fileExists ? round(filesize($filePath) / 1024, 2) : 0;
+                    // Ruta almacenada en la BD (ej: files/16/2025/convivencia_escolar/archivo.pdf)
+                    $storedPath = $row['ruta_archivo'];
+                    // Ruta absoluta en el servidor para operaciones de fichero (desde el directorio actual)
+                    $serverPath = __DIR__ . '/' . $storedPath;
+                    // Ruta web relativa desde este archivo para enlaces (abrir en nueva pestaña)
+                    $webPath = $storedPath;
+
+                    $fileExists = file_exists($serverPath);
+                    $fileSize = $fileExists ? round(filesize($serverPath) / 1024, 2) : 0;
                     
                     echo "<div class='document-item'>
                             <div class='d-flex justify-content-between align-items-start flex-wrap'>
@@ -476,22 +516,23 @@ $id_cole       = $_SESSION['id_cole'];
                                 <div class='document-actions-section'>
                                     <div class='action-buttons'>";
                     
-                    // Boton de ver/descargar
-                    if ($fileExists) {
-                        echo "<a href='$filePath' target='_blank' class='btn-action btn-view' title='Ver archivo en nueva ventana'>
-                                <i class='fas fa-eye'></i>
-                                <span>Ver</span>
-                              </a>";
-                        echo "<a href='$filePath' download class='btn-action btn-download' title='Descargar archivo'>
-                                <i class='fas fa-download'></i>
-                                <span>Descargar</span>
-                              </a>";
-                    } else {
-                        echo "<span class='btn-action btn-disabled' title='Archivo no encontrado'>
-                                <i class='fas fa-exclamation-triangle'></i>
-                                <span>No disponible</span>
-                              </span>";
-                    }
+                                        // Botones de ver y descargar
+                                        if ($fileExists) {
+                                            echo "<a href='descargar_archivo.php?id=" . $row['id'] . "' class='btn-action btn-download' title='Descargar archivo'>
+                                                    <i class='fas fa-download'></i>
+                                                    <span>Descargar</span>
+                                                </a>";
+                                            
+                                            echo "<a href='$webPath' target='_blank' class='btn-action btn-view' title='Ver archivo en nueva pestaña'>
+                                                    <i class='fas fa-eye'></i>
+                                                    <span>Ver</span>
+                                                </a>";
+                                        } else {
+                                            echo "<span class='btn-action btn-disabled' title='Archivo no encontrado'>
+                                                    <i class='fas fa-exclamation-triangle'></i>
+                                                    <span>No disponible</span>
+                                                </span>";
+                                        }
                     
                     // Boton de eliminar
                     echo "<a href='eliminarConvivenciaEscolar.php?id=" . $row['id'] . "' 

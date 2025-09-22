@@ -17,7 +17,7 @@ $id_cole = $_SESSION['id_cole'];
 
 // Obtener el tipo de documento a subir desde la URL
 $tipo_documento = isset($_GET['tipo']) ? $_GET['tipo'] : '';
-$tipos_validos = ['conformacion', 'reglamento', 'actas'];
+$tipos_validos = ['conformacion', 'reglamento', 'actas', 'planes_accion'];
 
 if (!in_array($tipo_documento, $tipos_validos)) {
     header("Location: convivenciaEscolar.php?error=tipo_invalido");
@@ -40,6 +40,12 @@ $configuracion = [
         'titulo' => 'ACTAS',
         'icono' => 'fas fa-file-signature',
         'descripcion' => 'Actas de reuniones del Comite de Convivencia Escolar'
+    ]
+    ,
+    'planes_accion' => [
+        'titulo' => 'PLANES DE ACCIÓN',
+        'icono' => 'fas fa-clipboard-list',
+        'descripcion' => 'Planes de acción derivados del Comite de Convivencia Escolar'
     ]
 ];
 

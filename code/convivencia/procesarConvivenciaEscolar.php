@@ -43,7 +43,7 @@ if (empty($id_cole) || empty($tipo_documento) || empty($anio_documento)) {
 }
 
 // Validar tipo de documento
-$tipos_validos = ['conformacion', 'reglamento', 'actas'];
+$tipos_validos = ['conformacion', 'reglamento', 'actas', 'planes_accion'];
 if (!in_array($tipo_documento, $tipos_validos)) {
     mostrarError("Tipo de documento no válido.");
 }
@@ -94,7 +94,22 @@ $ruta_archivo = $directorio . $nombre_archivo;
 
 // Mover archivo al directorio de destino
 if (move_uploaded_file($tmp_name, $ruta_archivo)) {
-    // Guardar información en la base de datos
+    // Escapar valores para evitar inyección SQL
+    $id_cole_escaped = $mysqli->real_escape_string($id_cole);
+    $tipo_documento_escaped = $mysqli->real_escape_string($tipo_documento);
+    $anio_documento_escaped = $mysqli->real_escape_string($anio_documento);
+    $nombre_archivo_escaped = $mysqli->real_escape_string($nombre_archivo);
+    $nombre_original_escaped = $mysqli->real_escape_string($nombre_original);
+    $version_escaped = $mysqli->real_escape_string($version);
+    $descripcion_escaped = $mysqli->real_escape_string($descripcion);
+    $numero_acta_escaped = $numero_acta ? "'" . $mysqli->real_escape_string($numero_acta) . "'" : "NULL";
+    $fecha_reunion_escaped = $fecha_reunion ? "'" . $mysqli->real_escape_string($fecha_reunion) . "'" : "NULL";
+    $ruta_archivo_escaped = $mysqli->real_escape_string($ruta_archivo);
+    $size_escaped = $mysqli->real_escape_string($size);
+    $fecha_subida_escaped = $mysqli->real_escape_string($fecha_subida);
+    $id_usuario_escaped = $mysqli->real_escape_string($id_usuario);
+    
+    // Guardar información en la base de datos - Consulta plana
     $sql = "INSERT INTO convivencia_escolar (
                 id_cole, 
                 tipo_documento, 
@@ -109,42 +124,30 @@ if (move_uploaded_file($tmp_name, $ruta_archivo)) {
                 tamano_archivo, 
                 fecha_subida, 
                 id_usuario
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            ) VALUES (
+                '$id_cole_escaped', 
+                '$tipo_documento_escaped', 
+                '$anio_documento_escaped', 
+                '$nombre_archivo_escaped', 
+                '$nombre_original_escaped', 
+                '$version_escaped', 
+                '$descripcion_escaped', 
+                $numero_acta_escaped, 
+                $fecha_reunion_escaped, 
+                '$ruta_archivo_escaped', 
+                '$size_escaped', 
+                '$fecha_subida_escaped', 
+                '$id_usuario_escaped'
+            )";
     
-    $stmt = $mysqli->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param(
-            "isisssssssssi", 
-            $id_cole, 
-            $tipo_documento, 
-            $anio_documento, 
-            $nombre_archivo, 
-            $nombre_original, 
-            $version, 
-            $descripcion, 
-            $numero_acta, 
-            $fecha_reunion, 
-            $ruta_archivo, 
-            $size, 
-            $fecha_subida, 
-            $id_usuario
-        );
-        
-        if ($stmt->execute()) {
-            // Éxito - Redireccionar con mensaje de éxito
-            $stmt->close();
-            $mysqli->close();
-            
-            mostrarExito("Documento subido exitosamente", $tipo_documento);
-        } else {
-            // Error en la base de datos - eliminar archivo subido
-            unlink($ruta_archivo);
-            mostrarError("Error al guardar en la base de datos: " . $stmt->error);
-        }
+    if ($mysqli->query($sql)) {
+        // Éxito - Redireccionar con mensaje de éxito
+        $mysqli->close();
+        mostrarExito("Documento subido exitosamente", $tipo_documento);
     } else {
-        // Error preparando consulta - eliminar archivo subido
+        // Error en la base de datos - eliminar archivo subido
         unlink($ruta_archivo);
-        mostrarError("Error preparando la consulta: " . $mysqli->error);
+        mostrarError("Error al guardar en la base de datos: " . $mysqli->error);
     }
 } else {
     mostrarError("Error al mover el archivo al directorio de destino.");

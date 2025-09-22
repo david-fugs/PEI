@@ -207,6 +207,10 @@ $id_cole       = $_SESSION['id_cole'];
                     <i class="fas fa-upload"></i>
                     <span>Subir Manual de Convivencia</span>
                 </a>
+                <a href="convivenciaEscolar.php" class="btn btn-secondary btn-lg d-flex align-items-center gap-2 rounded-pill shadow">
+                    <i class="fas fa-users"></i>
+                    <span>Convivencia Escolar</span>
+                </a>
             </div>
 
             <!-- Filtro por año -->
