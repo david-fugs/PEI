@@ -22,6 +22,8 @@ include("./integral.php");
 include("./ie.php");
 include("./proyectoPedagogico.php");
 include("./observacion.php");
+include("./convivencia.php");
+include("./intensidadHoraria.php");
 
 
 
@@ -105,49 +107,33 @@ echo '<style>
                 echo "<table border>";
                 echo "<thead style='text-align: center;'>";
                 echo "<tr>";
-                echo "<td><b>ID</b></td>";
-                echo "<td ><b>Establecimiento Educativo</b></td>";
-                echo "<td class='encabezado encabezado1' colSpan = 2><b>Modulo 1 I.E</b></td>";
-                echo "<td class='encabezado encabezado2' colSpan = 1><b>Modulo 2 Teológico</b></td>";
-                
-                echo "<td class='encabezado encabezado3' colSpan = 2><b>Modulo 3 Pedagógico</b></td>";
-                echo "<td class='encabezado encabezado4' colSpan = 3><b>Modulo 4 Planes|proyectos</b></td>";
-                echo "<td class='encabezado encabezado5' colSpan = 3><b>Modulo 5 Transición</b></td>";
-                echo "<td ><b>Observaciones</b></td>";
-                // echo "<td></td>";
-                echo "<tr ALIGN=center>";
-                echo "<td></td>";
-                echo "<td></td>";
-                echo "<td ><b>Resolución</b></td>";
-                echo "<td ><b>Establecimiento Educativo</b></td>";
-               
-                echo "<td ><b>Mision|vision pei</b></td>";
-               
-                echo "<td ><b>Mallas Plan de estudio</b></td>";
-                
-                echo "<td ><b>SIEE</b></td>";
-               
-                echo "<td ><b>trasversales<b></td>";
-              
-
-                echo "<td ><b>Proyectos y/o planes<b></td>";
-              
-
-                echo "<td ><b>Proyectos pedagogicos<b></td>";
-                
-                //transición
-                echo "<td ><b>Educación inicial</b></td>";
-               
-                echo "<td ><b>Plan de aula</b></td>";
-               
-                echo "<td ><b>Seguimiento Desarrollo Integral</b></td>";
-               
-                
-
-               
+                echo "<td rowspan='2'><b>ID</b></td>";
+                echo "<td rowspan='2'><b>Establecimiento Educativo</b></td>";
+                echo "<td class='encabezado encabezado1' colspan='2'><b>INSTITUCIÓN EDUCATIVA</b></td>";
+                echo "<td class='encabezado encabezado2' colspan='1'><b>TELEOLÓGICO</b></td>";
+                echo "<td class='encabezado encabezado3' colspan='2'><b>PEDAGÓGICO</b></td>";
+                echo "<td class='encabezado encabezado4' colspan='4'><b>PLANES-PROGRAMAS-PROYECTOS</b></td>";
+                echo "<td class='encabezado encabezado5' colspan='3'><b>PREESCOLAR</b></td>";
+                echo "<td class='encabezado encabezado6' colspan='3'><b>CONVIVENCIA</b></td>";
+                echo "<td rowspan='2'><b>Observaciones</b></td>";
                 echo "</tr>";
-                
-               
+                echo "<tr>";
+                echo "<td><b>Resolución</b></td>";
+                echo "<td><b>Establecimiento</b></td>";
+                echo "<td><b>Teleológico</b></td>";
+                echo "<td><b>Mallas</b></td>";
+                echo "<td><b>SIEE</b></td>";
+                echo "<td><b>Transversales</b></td>";
+                echo "<td><b>Planes-Programas</b></td>";
+                echo "<td><b>Proyectos/Planes</b></td>";
+                echo "<td><b>Intensidad Horaria</b></td>";
+                echo "<td><b>Educación Inicial</b></td>";
+                echo "<td><b>Plan Estudios</b></td>";
+                echo "<td><b>Desarrollo Integral</b></td>";
+                echo "<td><b>Manual Convivencia</b></td>";
+                echo "<td><b>Convivencia Escolar</b></td>";
+                echo "<td><b>Circular</b></td>";
+                echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
 
@@ -166,95 +152,89 @@ echo '<style>
                     echo $tieneResolucion ? $tieneResolucion : 'No';
                     
                     echo '</td>';
-                    // echo "<td>" . $tieneResolucion. "</td>";
 
                     $tieneArchivoIe=tieneIe($id_cole, $mysqli);
-                    // echo "<td>" . ($tieneArchivoIe ? "Si" : "No") . "</td>";
                     echo '<td ' . ($tieneArchivoIe ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivoIe ? 'Si' : 'No';
                     echo '</td>';
                   
-
-                    
                     //Teológico
                     $tieneArchivos = tieneArchivosTeologico($id_cole);
-                    // echo "<td>" . ($tieneArchivos ? "Si" : "No") . "</td>";
                     echo '<td ' . ($tieneArchivos ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivos ? 'Si' : 'No';
                     echo '</td>';
-
-                    
 
                     //mallas
                     $tieneArchivosMallasColegio=tieneArchivosMallasColegio($id_cole, $mysqli);
                     echo '<td ' . ($tieneArchivosMallasColegio ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivosMallasColegio ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tieneArchivosMallasColegio ? "Si" : "No") . "</td>";
-                   
-                   
 
                     //siee
                     $tieneArchivosSiee = tieneArchivosSiee($id_cole);
                     echo '<td ' . ($tieneArchivosSiee ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivosSiee ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tieneArchivosSiee ? "Si" : "No") . "</td>";
-                    
-
 
                     //transversal
                     $tieneProyectoTransversal = tieneProyectoTransversal($id_cole,$mysqli);
                     echo '<td ' . ($tieneProyectoTransversal ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneProyectoTransversal ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tieneProyectoTransversal ? "Si" : "No") . "</td>";
-                    
 
-                    
+                    //proyecto pedagógico (Planes - Programas y Proyectos)
+                    $tieneArchivosEnLosCuatro = tieneArchivosEnLosCuatroProyectos($id_cole, $mysqli);
+                    echo '<td ' . ($tieneArchivosEnLosCuatro ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneArchivosEnLosCuatro ? 'Si' : 'No';
+                    echo '</td>';
+
                     //proyectos y planes
                     $tienePlanesProyectos = tienePlanesProyectos($id_cole, $mysqli);
                     echo '<td ' . ($tienePlanesProyectos ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tienePlanesProyectos ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tienePlanesProyectos ? "Si" : "No") . "</td>";
-                   
 
-                    //proyecto pedagógico
-                    $tieneArchivosEnLosCuatro = tieneArchivosEnLosCuatroProyectos($id_cole, $mysqli);
-
-                    echo '<td ' . ($tieneArchivosEnLosCuatro ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneArchivosEnLosCuatro ? 'Si' : 'No';
+                    //intensidad horaria
+                    $tieneIntensidadHoraria = tieneIntensidadHoraria($id_cole, $mysqli);
+                    echo '<td ' . ($tieneIntensidadHoraria ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneIntensidadHoraria ? 'Si' : 'No';
                     echo '</td>';
-
-                  
-                   
-
-                 
-                    
-                    //transicion
 
                     //educacion inicial
                     $tieneEducacionInicial = tieneEducacionInicial($id_cole, $mysqli);
                     echo '<td ' . ($tieneEducacionInicial ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneEducacionInicial ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tieneEducacionInicial ? "Si" : "No") . "</td>";
-                   
+
                     //plan aula
                     $tienePlanAula = tienePlanAula($id_cole,$mysqli);
                     echo '<td ' . ($tienePlanAula ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tienePlanAula ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tienePlanAula ? "Si" : "No") . "</td>";
-                   
 
                     //seguimiento desarrollo integral
                     $tieneIntegral = tieneIntegral($id_cole,$mysqli);
                     echo '<td ' . ($tieneIntegral ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneIntegral ? 'Si' : 'No';
                     echo '</td>';
-                    // echo "<td>" . ($tieneIntegral ? "Si" : "No") . "</td>";
+
+                    //manual convivencia
+                    $tieneManualConvivencia = tieneManualConvivencia($id_cole, $mysqli);
+                    echo '<td ' . ($tieneManualConvivencia ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneManualConvivencia ? 'Si' : 'No';
+                    echo '</td>';
+
+                    //convivencia escolar
+                    $tieneConvivenciaEscolar = tieneConvivenciaEscolar($id_cole, $mysqli);
+                    echo '<td ' . ($tieneConvivenciaEscolar ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneConvivenciaEscolar ? 'Si' : 'No';
+                    echo '</td>';
+
+                    //circular
+                    $tieneCircular = tieneCircular($id_cole, $mysqli);
+                    echo '<td ' . ($tieneCircular ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneCircular ? 'Si' : 'No';
+                    echo '</td>';
 
                     $contenido = MostrarInformacionObservacion($id_cole, $mysqli);
 
@@ -264,12 +244,7 @@ echo '<style>
                     // Luego, puedes imprimir el contenido en la celda de Excel
                     echo '<td>' . $contenidoParaExcel . '</td>';
                     
-
-                   
-
-
-   
-                 
+                    echo "</tr>";
                 }
 
                 echo "</tbody>";
@@ -280,13 +255,13 @@ echo '<style>
                 <?php
 
                 //reportes generales
-                // ...
 
                 $modulo1Cargado = 0;
                 $modulo2Cargado = 0;
                 $modulo3Cargado = 0;
                 $modulo4Cargado = 0;
                 $modulo5Cargado = 0;
+                $modulo6Cargado = 0;
                 $totalCargados = 0;
                 $colegiosTotales = 0;
 
@@ -327,6 +302,10 @@ echo '<style>
                         $tieneArchivosEnLosCuatro =tieneArchivosEnLosCuatroProyectos($id_cole, $mysqli);
                         $cuatroText = $tieneArchivosEnLosCuatro ? 'Si' : 'No';
 
+                        //intensidad horaria
+                        $tieneIntensidadHoraria = tieneIntensidadHoraria($id_cole, $mysqli);
+                        $intensidadText = $tieneIntensidadHoraria ? 'Si' : 'No';
+
                         //transición
                         $tieneEducacionInicial = tieneEducacionInicial($id_cole, $mysqli);
                         $educacionText = $tieneEducacionInicial ? 'Si' : 'No';
@@ -336,6 +315,16 @@ echo '<style>
 
                         $tieneIntegral = tieneIntegral($id_cole,$mysqli);
                         $integralText = $tieneIntegral ? 'Si' : 'No';
+
+                        //convivencia
+                        $tieneManualConvivencia = tieneManualConvivencia($id_cole, $mysqli);
+                        $manualConvivenciaText = $tieneManualConvivencia ? 'Si' : 'No';
+
+                        $tieneConvivenciaEscolar = tieneConvivenciaEscolar($id_cole, $mysqli);
+                        $convivenciaEscolarText = $tieneConvivenciaEscolar ? 'Si' : 'No';
+
+                        $tieneCircular = tieneCircular($id_cole, $mysqli);
+                        $circularText = $tieneCircular ? 'Si' : 'No';
 
                         // Módulo 1 I.E
                         if ($resolucionText != 'No' && $establecimientoText != 'No') {
@@ -347,7 +336,7 @@ echo '<style>
                         if ($mallasText != 'No' && $sieeText != 'No') {
                             $modulo3Cargado++;
                         }
-                        if ($transversalText != 'No' && $planesText != 'No' && $cuatroText  != 'No') {
+                        if ($transversalText != 'No' && $planesText != 'No' && $cuatroText  != 'No' && $intensidadText != 'No') {
                             $modulo4Cargado++;
                         }
 
@@ -355,7 +344,11 @@ echo '<style>
                             $modulo5Cargado++;
                         }
 
-                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No'&& $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No') {
+                        if ($manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No') {
+                            $modulo6Cargado++;
+                        }
+
+                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No' && $manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No' && $intensidadText != 'No') {
                             $totalCargados++;
                         }
 
@@ -368,11 +361,12 @@ echo '<style>
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th></th>";
-                    echo "<th>Módulo 1 I.E</th>";
-                    echo "<th>Módulo 2 Teológico</th>";
-                    echo "<th>Módulo 3 Pedagógico|Mallas</th>";
-                    echo "<th>Módulo 4 Planes|proyectos</th>";
-                    echo "<th>Módulo 5 Transición</th>";
+                    echo "<th>I.E</th>";
+                    echo "<th>Teleológico</th>";
+                    echo "<th>Pedagógico</th>";
+                    echo "<th>Planes-Programas-Proyectos</th>";
+                    echo "<th>Preescolar</th>";
+                    echo "<th>Convivencia</th>";
                     echo "<th>Todos los módulos</th>";
                     echo "</tr>";
                     echo "</thead>";
@@ -384,6 +378,7 @@ echo '<style>
                     echo "<td>{$modulo3Cargado}</td>";
                     echo "<td>{$modulo4Cargado}</td>";
                     echo "<td>{$modulo5Cargado}</td>";
+                    echo "<td>{$modulo6Cargado}</td>";
                     echo "<td>{$totalCargados}</td>";
                     echo "</tr>";
                     echo "<tr>";
@@ -393,6 +388,7 @@ echo '<style>
                     echo "<td>" . ($colegiosTotales - $modulo3Cargado) . "</td>";
                     echo "<td>" . ($colegiosTotales - $modulo4Cargado) . "</td>";
                     echo "<td>" . ($colegiosTotales - $modulo5Cargado) . "</td>";
+                    echo "<td>" . ($colegiosTotales - $modulo6Cargado) . "</td>";
                     echo "<td>" . ($colegiosTotales - $totalCargados) . "</td>";
                     echo "</tr>";
                     echo "</tbody>";
