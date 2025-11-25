@@ -1074,6 +1074,22 @@ $resultados = mysqli_query($mysqli, $consulta);
             color: var(--primary-color);
             font-weight: 600;
         }
+        /* Asegurar que las filas en hover mantengan texto legible
+           (fondo claro, texto oscuro). Reglas con alta especificidad
+           y !important para sobreescribir cualquier regla conflictiva. */
+        .table-container table tbody tr:hover,
+        .table-container table tbody tr:hover td,
+        .table-container table tbody tr:hover td * {
+            color: var(--dark-color) !important;
+        }
+
+        /* Enlaces dentro de la fila deben ser visibles y usar el color
+           principal (oscuro) al pasar el ratón. */
+        .table-container table tbody tr:hover a {
+            color: var(--primary-color) !important;
+            text-decoration: underline !important;
+            font-weight: 600 !important;
+        }
     </style>
 </head>
 <body>

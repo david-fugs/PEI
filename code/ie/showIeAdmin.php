@@ -355,6 +355,21 @@ include('../general/observacion.php');
             ADMINISTRACIÓN DE INSTITUCIONES EDUCATIVAS
         </h1>
 
+        <!-- Botón para exportar TODAS las estrategias -->
+        <div class="text-center mb-4">
+            <a href="exportar_todas_estrategias_excel.php"
+                class="btn btn-success btn-lg d-flex align-items-center gap-2 justify-content-center"
+                style="max-width: 500px; margin: 0 auto;"
+                title="Exportar todas las estrategias J.U de todas las instituciones"
+                onclick="return exportarTodasEstrategiasExcel(event);">
+                <i class="fas fa-file-excel fa-lg"></i>
+                <span>EXPORTAR TODAS LAS ESTRATEGIAS J.U</span>
+            </a>
+            <small class="text-muted d-block mt-2">
+                <i class="fas fa-info-circle"></i> Exporta las estrategias de todas las instituciones educativas (incluye sedes sin estrategia)
+            </small>
+        </div>
+
         <!-- Selector de Institución -->
         <div class="institution-selector">
             <h3><i class="fas fa-school me-2"></i>Seleccionar Institución Educativa</h3>
@@ -1312,6 +1327,33 @@ include('../general/observacion.php');
                 target.innerHTML = originalText;
                 target.style.pointerEvents = 'auto'; // Habilitar clics nuevamente
             }, 2000);
+        }, 500);
+
+        return false;
+    }
+
+    // Función para exportar TODAS las estrategias a Excel con mensaje de carga
+    function exportarTodasEstrategiasExcel(event) {
+        // Prevenir navegación inmediata
+        event.preventDefault();
+
+        const target = event.target.closest('a'); // Obtener el enlace
+        const originalText = target.innerHTML;
+        const originalHref = target.href;
+
+        // Mostrar mensaje de carga
+        target.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generando Excel Consolidado...';
+        target.style.pointerEvents = 'none'; // Deshabilitar clics
+
+        // Simular delay para mostrar el mensaje y luego navegar
+        setTimeout(() => {
+            window.location.href = originalHref;
+
+            // Restaurar botón después de un momento
+            setTimeout(() => {
+                target.innerHTML = originalText;
+                target.style.pointerEvents = 'auto'; // Habilitar clics nuevamente
+            }, 3000); // Un poco más de tiempo porque son todas las instituciones
         }, 500);
 
         return false;

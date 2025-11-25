@@ -136,10 +136,10 @@ echo '<style>
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
-
+                $consecutivo = 1;
                 while ($fila = mysqli_fetch_assoc($resultados)) {
                     echo "<tr ALIGN=center>";
-                    echo "<td>".$fila['id_cole']."</td>";
+                    echo "<td>".$consecutivo."</td>";
                     echo "<td>".$fila['nombre_cole']."</td>";
                     $id_cole = $fila['id_cole'];
                     $iconStyle = "style='width: 40px; height: 40px; max-width: 100%;'";
@@ -245,6 +245,7 @@ echo '<style>
                     echo '<td>' . $contenidoParaExcel . '</td>';
                     
                     echo "</tr>";
+                    $consecutivo++;
                 }
 
                 echo "</tbody>";

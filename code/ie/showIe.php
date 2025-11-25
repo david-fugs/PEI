@@ -727,6 +727,22 @@ include('../general/observacion.php');
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <!-- Submenú Intensidad Horaria -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#intensidadHoraria">
+                                                    Intensidad Horaria Semanal por Áreas y Asignaturas por Grados
+                                                </button>
+                                            </h2>
+                                            <div id="intensidadHoraria" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectos">
+                                                <div class="accordion-body">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item"><a href="../hours/intensidad_horaria.php">Configurar Intensidad Horaria</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Submenú SIEE -->
@@ -823,24 +839,6 @@ include('../general/observacion.php');
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Submenú Intensidad Horaria -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#intensidadHoraria">
-                                                    Intensidad Horaria Semanal por Áreas y Asignaturas por Grados
-                                                </button>
-                                            </h2>
-                                            <div id="intensidadHoraria" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectos">
-                                                <div class="accordion-body">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item"><a href="../hours/intensidad_horaria.php">Configurar Intensidad Horaria</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                     </div> <!-- Fin Submenús Pedagogico -->
                                 </div>
 
@@ -1390,7 +1388,7 @@ include('../general/observacion.php');
                     <i class="fas fa-clipboard-check me-3"></i>
                     OBSERVACIONES ADMINISTRACION
                 </h1>
-                
+
                 <div class="section-card">
                     <div class="row">
                         <div class="col-12">
@@ -1398,15 +1396,15 @@ include('../general/observacion.php');
                             // Obtener las observaciones para este establecimiento educativo
                             $contenido_observacion = MostrarInformacionObservacion($id_cole, $mysqli);
                             ?>
-                            
+
                             <div class="mb-3">
                                 <label for="observacion_admin" class="form-label">
                                     <i class="fas fa-edit me-2"></i>Observaciones para este Establecimiento Educativo
                                 </label>
-                                <textarea 
-                                    id="observacion_admin" 
-                                    class="form-control" 
-                                    rows="6" 
+                                <textarea
+                                    id="observacion_admin"
+                                    class="form-control"
+                                    rows="6"
                                     readonly
                                     placeholder="Observaciones administrativas (solo lectura)"><?php echo htmlspecialchars($contenido_observacion); ?></textarea>
                             </div>
