@@ -20,6 +20,7 @@ $query = "SELECT
     c.id_cole,
     c.nombre_cole,
     c.cod_dane_cole,
+    m.nombre_mun,
     s.cod_dane_sede,
     s.nombre_sede,
     s.estado as estado_sede,
@@ -45,6 +46,7 @@ $query = "SELECT
     COALESCE(ej.cantidad_11, 0) as cantidad_11,
     COALESCE(ej.total_estudiantes, 0) as total_estudiantes
 FROM colegios c
+INNER JOIN municipios m ON c.id_mun = m.id_mun
 INNER JOIN sedes s ON c.id_cole = s.id_cole
 LEFT JOIN estrategia_ju ej ON s.cod_dane_sede = ej.cod_dane_sede
 ORDER BY c.nombre_cole ASC, s.nombre_sede ASC, ej.aliado ASC, ej.eje ASC";
@@ -223,6 +225,7 @@ $totalInstituciones = count($institucionesUnicas);
             <tr>
                 <th rowspan="2">Cód. DANE Colegio</th>
                 <th rowspan="2">Institución Educativa</th>
+                <th rowspan="2">Municipio</th>
                 <th rowspan="2">Cód. DANE Sede</th>
                 <th rowspan="2">Sede</th>
                 <th rowspan="2">Estado Sede</th>
@@ -264,7 +267,7 @@ $totalInstituciones = count($institucionesUnicas);
                 if ($institucionActual !== '' && $institucionActual !== $row['nombre_cole']) {
                     ?>
                     <tr class="institucion-total">
-                        <td colspan="7">TOTAL <?php echo htmlspecialchars($institucionActual); ?></td>
+                        <td colspan="8">TOTAL <?php echo htmlspecialchars($institucionActual); ?></td>
                         <td><?php echo $totalesInstitucion['prejardin']; ?></td>
                         <td><?php echo $totalesInstitucion['jardin']; ?></td>
                         <td><?php echo $totalesInstitucion['transicion']; ?></td>
@@ -281,7 +284,7 @@ $totalInstituciones = count($institucionesUnicas);
                         <td><?php echo $totalesInstitucion['11']; ?></td>
                         <td><?php echo $totalesInstitucion['total_estudiantes']; ?></td>
                     </tr>
-                    <tr><td colspan="22" style="height: 5px; background-color: #fff;"></td></tr>
+                    <tr><td colspan="23" style="height: 5px; background-color: #fff;"></td></tr>
                     <?php
                     // Reiniciar totales
                     $totalesInstitucion = array_fill_keys(array_keys($totalesInstitucion), 0);
@@ -315,6 +318,7 @@ $totalInstituciones = count($institucionesUnicas);
                 <tr class="<?php echo $rowClass; ?>">
                     <td style="mso-number-format:'\@';"><?php echo "'" . htmlspecialchars($row['cod_dane_cole']); ?></td>
                     <td style="text-align: left;"><?php echo htmlspecialchars($row['nombre_cole']); ?></td>
+                    <td style="text-align: left;"><?php echo htmlspecialchars($row['nombre_mun']); ?></td>
                     <td style="mso-number-format:'\@';"><?php echo "'" . htmlspecialchars($row['cod_dane_sede']); ?></td>
                     <td style="text-align: left;"><?php echo htmlspecialchars($row['nombre_sede']); ?></td>
                     <td><?php echo $estadoBadge; ?></td>
@@ -352,7 +356,7 @@ $totalInstituciones = count($institucionesUnicas);
             if ($institucionActual !== '') {
             ?>
                 <tr class="institucion-total">
-                    <td colspan="7">TOTAL <?php echo htmlspecialchars($institucionActual); ?></td>
+                    <td colspan="8">TOTAL <?php echo htmlspecialchars($institucionActual); ?></td>
                     <td><?php echo $totalesInstitucion['prejardin']; ?></td>
                     <td><?php echo $totalesInstitucion['jardin']; ?></td>
                     <td><?php echo $totalesInstitucion['transicion']; ?></td>
@@ -372,9 +376,9 @@ $totalInstituciones = count($institucionesUnicas);
             <?php } ?>
             
             <!-- Fila de totales generales -->
-            <tr><td colspan="22" style="height: 10px; background-color: #fff;"></td></tr>
+            <tr><td colspan="23" style="height: 10px; background-color: #fff;"></td></tr>
             <tr class="general-total">
-                <td colspan="7">TOTAL GENERAL (TODAS LAS INSTITUCIONES)</td>
+                <td colspan="8">TOTAL GENERAL (TODAS LAS INSTITUCIONES)</td>
                 <td><?php echo $totalGeneral['prejardin']; ?></td>
                 <td><?php echo $totalGeneral['jardin']; ?></td>
                 <td><?php echo $totalGeneral['transicion']; ?></td>
