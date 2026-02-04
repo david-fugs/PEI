@@ -60,7 +60,7 @@ function mostrarListaArchivosTransversales($id_proy_trans) {
             if (!is_dir($archivo)) {
                 $archivoPath = $path . "/" . $archivo;
                 $nro++;
-                $html .= "<a href='" . $archivoPath . "' title='Ver/Archivo' target='_blank'>".$nro."-" . $archivo . "</a><br>";
+                $html .= "<div style='margin-bottom:5px;'><a href='" . $archivoPath . "' title='Ver/Archivo' target='_blank'>" . $nro . "-" . $archivo . "</a></div>";
             }
         }
 
@@ -78,7 +78,10 @@ function mostrarListaArchivosTransversales($id_proy_trans) {
 
 
 function mostrarArchivosTransversales($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     $transversalesArchivos = "";
+    $totalArchivos = 0;
 
     // Luego, recorre todas las mallas curriculares y muestra sus archivos
     $sql = "SELECT * FROM `proyectos_transversales` WHERE id_cole = $id_cole";
@@ -87,12 +90,16 @@ function mostrarArchivosTransversales($id_cole, $mysqli) {
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $id_proy_trans = $row['id_proy_trans'];
+            
+            // Contar archivos
+            $path = "./../proyect_transv/files/" . $id_proy_trans;
+            $totalArchivos += contarArchivosEnDirectorio($path);
 
             // Llama a la función para mostrar la lista de archivos de la malla
             $archivosTransversales = mostrarListaArchivosTransversales($id_proy_trans);
 
             // Agrega la información de la malla y archivos a la variable
-            $transversalesArchivos .= "proyecto transversal $id_proy_trans: $archivosTransversales";
+            $transversalesArchivos .= "<div style='margin-bottom:8px;'><strong>Proyecto transversal $id_proy_trans:</strong> $archivosTransversales</div>";
             
         }
     } else {
@@ -101,7 +108,7 @@ function mostrarArchivosTransversales($id_cole, $mysqli) {
     }
 
     // Muestra las celdas de mallas y archivos en una sola celda
-    return $transversalesArchivos;
+    return generarArchivosColapsables($transversalesArchivos, $totalArchivos, $id_cole, 'transversal');
 }
 
 

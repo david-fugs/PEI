@@ -15,11 +15,14 @@ function obtenerArchivosProyecto($id_cole, $nroProject) {
 
 
 function mostrarArchivosDeProyectos($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     $sql = "SELECT * FROM proyec_pedag_transv WHERE id_cole = $id_cole";
     $result = mysqli_query($mysqli, $sql);
+    $totalArchivos = 0;
 
     if ($result && mysqli_num_rows($result) > 0) {
-        $resultados = "Archivos Cargados para los Proyectos:<br>";
+        $resultados = "<div style='margin-bottom:10px;'><strong>Archivos Cargados para los Proyectos:</strong></div>";
 
         while ($row = mysqli_fetch_assoc($result)) {
             $nameProject = $row['selec_proyec_transv'];
@@ -27,23 +30,26 @@ function mostrarArchivosDeProyectos($id_cole, $mysqli) {
 
             $archivos = obtenerArchivosProyecto($id_cole, $nroProject);
 
-            $resultados .= "$nameProject<br>";
+            $resultados .= "<div style='margin-bottom:8px;'><strong>$nameProject</strong><br>";
             $path = './../proyect_transv/projectFiles/' . $id_cole . '/' . $nroProject;
            
+            // Contar archivos
+            $totalArchivos += count($archivos);
 
             if (empty($archivos)) {
-                $resultados .= "Sin archivos cargados<br>";
+                $resultados .= "Sin archivos cargados</div>";
             } else {
                 foreach ($archivos as $archivo) {
-                    $resultados .= "<a href='$path/$archivo' target='_blank'>$archivo</a><br>";
+                    $resultados .= "<div style='margin-bottom:5px;'><a href='$path/$archivo' target='_blank'>$archivo</a></div>";
                 }
+                $resultados .= "</div>";
             }
         }
     } else {
         $resultados = "No se encontraron proyectos para este colegio.";
     }
 
-    return $resultados;
+    return generarArchivosColapsables($resultados, $totalArchivos, $id_cole, 'proyectos');
 }
 
 

@@ -29,7 +29,10 @@ function tieneIntensidadHoraria($id_cole, $mysqli) {
 }
 
 function mostrarArchivosIntensidadHoraria($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     $archivos = "";
+    $totalArchivos = 0;
     
     // Verificar si existe tabla de intensidad horaria
     $sql = "SHOW TABLES LIKE 'intensidad_horaria'";
@@ -65,10 +68,12 @@ function mostrarArchivosIntensidadHoraria($id_cole, $mysqli) {
                     if (isset($row['horas'])) $descripcion .= " (" . $row['horas'] . "h)";
                     
                     if (isset($row['archivo']) && !empty($row['archivo'])) {
-                        $archivos .= "<a href='../hours/" . htmlspecialchars($row['archivo']) . "' target='_blank'>" . 
-                                   htmlspecialchars($descripcion) . "</a><br>";
+                        $archivos .= "<div style='margin-bottom:5px;'><a href='../hours/" . htmlspecialchars($row['archivo']) . "' target='_blank'>" . 
+                                   htmlspecialchars($descripcion) . "</a></div>";
+                        $totalArchivos++;
                     } else {
-                        $archivos .= htmlspecialchars($descripcion) . " (Configurado)<br>";
+                        $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($descripcion) . " (Configurado)</div>";
+                        $totalArchivos++;
                     }
                 }
             }
@@ -80,13 +85,18 @@ function mostrarArchivosIntensidadHoraria($id_cole, $mysqli) {
             $files = scandir($hours_path);
             foreach ($files as $file) {
                 if ($file !== '.' && $file !== '..' && is_file($hours_path . '/' . $file)) {
-                    $archivos .= "<a href='../../uploads/hours/" . $id_cole . "/" . htmlspecialchars($file) . "' target='_blank'>" . 
-                               htmlspecialchars($file) . "</a><br>";
+                    $archivos .= "<div style='margin-bottom:5px;'><a href='../../uploads/hours/" . $id_cole . "/" . htmlspecialchars($file) . "' target='_blank'>" . 
+                               htmlspecialchars($file) . "</a></div>";
+                    $totalArchivos++;
                 }
             }
         }
     }
     
-    return $archivos ?: "No hay configuración de intensidad horaria";
+    if (empty($archivos)) {
+        return "No hay configuración de intensidad horaria";
+    }
+    
+    return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'intensidad_horaria');
 }
 ?>

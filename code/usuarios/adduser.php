@@ -46,7 +46,7 @@
 					<h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em">*** <i class="fas fa-user-cog"></i> USUARIOS REGISTRADOS <i class="fas fa-user-cog"></i> ***</h1>
 					
 					<h2 style="color: #412fd1; text-shadow: #FFFFFF 0.1em 0.1em 0.2em">
-						<a href="./../../accessAdmin.php" class="btn solid">Atrás</a>
+						<a href="./../../access.php" class="btn solid">Atrás</a>
 	                    <a href="../../logout.php" class="btn solid">Salir</a>
 	                    <a href="../../reset-password.php" class="btn solid">Cambiar Contraseña</a>
 	               </h1>
@@ -122,7 +122,7 @@
 ?>
 
 		<center>
-		<br/><a href="<?=$_SERVER["HTTP_REFERER"]?>"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
+		<br/><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
 		</center>
 
 			</div>

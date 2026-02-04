@@ -1,6 +1,7 @@
 <?php
 include("./../../conexion.php");
 include("./../../sessionCheck.php");
+include("./archivosHelper.php");
 include("./teologico.php");
 include("./mallas.php");
 include("./siee.php");
@@ -39,6 +40,8 @@ $resultados = mysqli_query($mysqli, $consulta);
     <link rel="stylesheet" href="./../../css/generalReport.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SheetJS para exportar a Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <style>
         /* Variables CSS para consistencia */
@@ -298,7 +301,259 @@ $resultados = mysqli_query($mysqli, $consulta);
             border-bottom: 1px solid #dee2e6;
             vertical-align: middle;
             white-space: nowrap;
+        }
+
+        /* Estilos para el modal de información del colegio */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .modal-section h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .modal-info-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .modal-info-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .modal-info-value {
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+
+        .modal-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .modal-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .modal-checkbox-item.checked {
+            background: #d4edda;
+            border: 1px solid #28a745;
+        }
+
+        .modal-checkbox-item.unchecked {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            opacity: 0.6;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-export-excel {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-export-excel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .clickable-colegio:hover {
+            color: #2980b9 !important;
+            text-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
             min-width: 80px;
+        }
+
+        /* Estilos para archivos colapsables */
+        .archivos-container {
+            max-height: 80px;
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.3s ease;
+        }
+
+        .archivos-container.expanded {
+            max-height: none;
+        }
+
+        .archivos-lista {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .toggle-archivos {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toggle-archivos:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .archivos-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        .archivos-preview {
+            color: #666;
+            font-style: italic;
+            font-size: 0.8rem;
+            margin-top: 3px;
         }
 
         td:last-child {
@@ -1209,24 +1464,29 @@ $resultados = mysqli_query($mysqli, $consulta);
                 while ($fila = mysqli_fetch_assoc($resultados)) {
                     echo "<tr ALIGN=center>";
                     echo "<td>".$fila['id_cole']."</td>";
-                    echo "<td>".$fila['nombre_cole']."</td>";
+                    echo "<td class='clickable-colegio' data-cod-dane='".$fila['cod_dane_cole']."' style='cursor: pointer; color: #3498db; font-weight: 600; text-decoration: underline;' title='Click para ver detalles'>".$fila['nombre_cole']."</td>";
                     $id_cole = $fila['id_cole'];
                     $iconStyle = "style='width: 40px; height: 40px; max-width: 100%;'";
                     $icon = "./../../../../img/visualizar.png";
                     $icon_excel = "./../../../../img/excel.png";
                 
                     //IE
-                    $tieneResolucion=tieneResolucion($id_cole, $mysqli);
-                    echo '<td ' . ($tieneResolucion ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneResolucion ? $tieneResolucion : 'No';
+                    $tieneArchivoResolucion=tieneArchivoResolucion($id_cole, $mysqli);
+                    $archivoResolucion = obtenerArchivoResolucion($id_cole, $mysqli);
+                    echo '<td ' . ($tieneArchivoResolucion ? 'class="verde"' : 'class="rojo"') . '>';
+                    if ($tieneArchivoResolucion && $archivoResolucion) {
+                        echo '<a href="' . $archivoResolucion . '" target="_blank" download>Descargar</a>';
+                    } else {
+                        echo 'No';
+                    }
                     
                     echo '</td>';
                     // echo "<td>" . $tieneResolucion. "</td>";
 
-                    $tieneArchivoIe=tieneIe($id_cole, $mysqli);
+                    $tieneEstablecimientoCompleto=tieneEstablecimientoCompleto($id_cole, $mysqli);
                     // echo "<td>" . ($tieneArchivoIe ? "Si" : "No") . "</td>";
-                    echo '<td ' . ($tieneArchivoIe ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneArchivoIe ? 'Si' : 'No';
+                    echo '<td ' . ($tieneEstablecimientoCompleto ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneEstablecimientoCompleto ? 'Si' : 'No';
                     echo '</td>';
                     echo "<td class='oculto'>" .mostrarArchivosIe($id_cole, $mysqli). "</td>";
 
@@ -1250,7 +1510,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                    
 
                     //siee
-                    $tieneArchivosSiee = tieneArchivosSiee($id_cole);
+                    $tieneArchivosSiee = tieneArchivosSiee($id_cole, $mysqli);
                     echo '<td ' . ($tieneArchivosSiee ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivosSiee ? 'Si' : 'No';
                     echo '</td>';
@@ -1392,10 +1652,10 @@ $resultados = mysqli_query($mysqli, $consulta);
                         $id_cole = $fila['id_cole'];
                         //IE
 
-                        $tieneResolucion = tieneResolucion($id_cole, $mysqli);
-                        $resolucionText = $tieneResolucion ? $tieneResolucion : 'No';
+                        $tieneResolucion = tieneArchivoResolucion($id_cole, $mysqli);
+                        $resolucionText = $tieneResolucion ? 'Si' : 'No';
 
-                        $tieneArchivoIe=tieneIe($id_cole, $mysqli);
+                        $tieneArchivoIe=tieneEstablecimientoCompleto($id_cole, $mysqli);
                         $establecimientoText = $tieneArchivoIe ? 'Si' : 'No';
 
                         //Teológico
@@ -1406,7 +1666,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                         $tieneArchivosMallasColegio=tieneArchivosMallasColegio($id_cole, $mysqli);
                         $mallasText = $tieneArchivosMallasColegio ? 'Si' : 'No';
 
-                        $tieneArchivosSiee = tieneArchivosSiee($id_cole);
+                        $tieneArchivosSiee = tieneArchivosSiee($id_cole, $mysqli);
                         $sieeText = $tieneArchivosSiee ? 'Si' : 'No';
 
                         //planes|proyectos
@@ -1679,6 +1939,544 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         }
     });
+
+    // Modal para mostrar información del colegio
+    $(document).ready(function() {
+        // Agregar el HTML del modal al body
+        if ($('#modal-colegio-info').length === 0) {
+            const modalHTML = `
+                <div id="modal-overlay" class="modal-overlay"></div>
+                <div id="modal-colegio-info" class="modal-container">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-school"></i> Información del Establecimiento Educativo</h2>
+                        <button class="modal-close" onclick="cerrarModalColegio()">&times;</button>
+                    </div>
+                    <div class="modal-body" id="modal-content-body">
+                        <div style="text-align: center; padding: 40px;">
+                            <div class="loading-spinner"></div>
+                            <p>Cargando información...</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-export-excel" onclick="exportarColegioExcel()">
+                            <i class="fas fa-file-excel"></i> Exportar a Excel
+                        </button>
+                    </div>
+                </div>
+            `;
+            $('body').append(modalHTML);
+        }
+
+        // Click en el nombre del colegio
+        $(document).on('click', '.clickable-colegio', function() {
+            const codDane = $(this).data('cod-dane');
+            mostrarModalColegio(codDane);
+        });
+
+        // Cerrar modal al hacer click en el overlay
+        $(document).on('click', '#modal-overlay', function() {
+            cerrarModalColegio();
+        });
+    });
+
+    // Variable global para almacenar los datos del colegio actual
+    let colegioActualData = null;
+
+    // Función para expandir/colapsar archivos
+    function toggleArchivos(uniqueId, event) {
+        // Prevenir la propagación del evento para evitar activar enlaces
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        
+        const container = document.getElementById('container_' + uniqueId);
+        const fullContent = document.getElementById('full_content_' + uniqueId);
+        const btnText = document.getElementById('btn_text_' + uniqueId);
+        const btn = event ? event.target.closest('.toggle-archivos') : null;
+        
+        if (container.classList.contains('expanded')) {
+            // Colapsar
+            const preview = fullContent.innerHTML.substring(0, 200);
+            container.innerHTML = '<div class="archivos-lista">' + preview + '...</div>';
+            container.classList.remove('expanded');
+            if (btnText) btnText.textContent = 'Ver todos';
+            if (btn) {
+                const icon = btn.querySelector('i');
+                if (icon) icon.className = 'fas fa-eye';
+            }
+        } else {
+            // Expandir
+            container.innerHTML = '<div class="archivos-lista">' + fullContent.innerHTML + '</div>';
+            container.classList.add('expanded');
+            if (btnText) btnText.textContent = 'Ver menos';
+            if (btn) {
+                const icon = btn.querySelector('i');
+                if (icon) icon.className = 'fas fa-eye-slash';
+            }
+        }
+    }
+
+    function mostrarModalColegio(codDane) {
+        $('#modal-overlay').fadeIn(300);
+        $('#modal-colegio-info').fadeIn(300);
+        
+        // Cargar los datos del colegio
+        $.ajax({
+            url: 'getColegioInfo.php',
+            type: 'GET',
+            data: { cod_dane_cole: codDane },
+            dataType: 'json',
+            success: function(data) {
+                if (data.error) {
+                    $('#modal-content-body').html('<div class="alert alert-error">' + data.error + '</div>');
+                    return;
+                }
+                colegioActualData = data;
+                renderizarInfoColegio(data);
+            },
+            error: function(xhr, status, error) {
+                $('#modal-content-body').html('<div class="alert alert-error">Error al cargar la información del colegio</div>');
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function cerrarModalColegio() {
+        $('#modal-overlay').fadeOut(300);
+        $('#modal-colegio-info').fadeOut(300);
+    }
+
+    function renderizarInfoColegio(data) {
+        const jornadas = [
+            { key: 'jor_1_cole', label: 'Jornada Única' },
+            { key: 'jor_2_cole', label: 'Completa' },
+            { key: 'jor_3_cole', label: 'Completa y Fin de Semana' },
+            { key: 'jor_4_cole', label: 'Completa y Nocturna' },
+            { key: 'jor_5_cole', label: 'Completa, Nocturna y Fin de Semana' },
+            { key: 'jor_6_cole', label: 'Mañana' },
+            { key: 'jor_7_cole', label: 'Mañana y Fin de Semana' },
+            { key: 'jor_8_cole', label: 'Mañana y Nocturna' },
+            { key: 'jor_9_cole', label: 'Mañana, Nocturna y Fin de Semana' },
+            { key: 'jor_10_cole', label: 'Otra' }
+        ];
+
+        const niveles = [
+            { key: 'niv_1_cole', label: 'Preescolar' },
+            { key: 'niv_2_cole', label: 'Básica Primaria' },
+            { key: 'niv_3_cole', label: 'Básica Secundaria' },
+            { key: 'niv_4_cole', label: 'Media' }
+        ];
+
+        const ciclos = [
+            { key: 'ciclo_0', label: 'Ciclo 0 (Preescolar Adultos)' },
+            { key: 'ciclo_1', label: 'Ciclo I (1°, 2° y 3°)' },
+            { key: 'ciclo_2', label: 'Ciclo II (4° y 5°)' },
+            { key: 'ciclo_3', label: 'Ciclo III (6° y 7°)' },
+            { key: 'ciclo_4', label: 'Ciclo IV (8° y 9°)' },
+            { key: 'ciclo_5', label: 'Ciclo V (10°)' },
+            { key: 'ciclo_6', label: 'Ciclo VI (11°)' }
+        ];
+
+        const modelos = [
+            { key: 'modelo_escuela_nueva', label: 'Escuela Nueva' },
+            { key: 'modelo_aceleracion', label: 'Aceleración del Aprendizaje' },
+            { key: 'modelo_post_primaria', label: 'Post Primaria' },
+            { key: 'modelo_caminar_secundaria', label: 'Caminar en Secundaria' },
+            { key: 'modelo_pensar_secundaria', label: 'Modelo Pedagógico Pensar Secundaria' },
+            { key: 'modelo_media_rural', label: 'Media Rural' },
+            { key: 'modelo_pensar_media', label: 'Modelo Pedagógico Pensar Media' }
+        ];
+
+        let html = `
+            <div class="modal-section">
+                <h3><i class="fas fa-info-circle"></i> Información General</h3>
+                <div class="modal-info-grid">
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Código DANE</div>
+                        <div class="modal-info-value">${data.cod_dane_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">NIT</div>
+                        <div class="modal-info-value">${data.nit_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Nombre del Establecimiento</div>
+                        <div class="modal-info-value">${data.nombre_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Dirección</div>
+                        <div class="modal-info-value">${data.direccion_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Municipio</div>
+                        <div class="modal-info-value">${data.nombre_mun || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Corregimiento</div>
+                        <div class="modal-info-value">${data.corregimiento_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Nombre del Rector</div>
+                        <div class="modal-info-value">${data.nombre_rector_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Teléfono Rector</div>
+                        <div class="modal-info-value">${data.tel_rector_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Teléfono Contacto</div>
+                        <div class="modal-info-value">${data.tel1_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Otro Teléfono</div>
+                        <div class="modal-info-value">${data.tel2_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Email</div>
+                        <div class="modal-info-value">${data.email_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Número Acto Administrativo</div>
+                        <div class="modal-info-value">${data.num_act_adm_cole || 'N/A'}</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Fecha Resolución</div>
+                        <div class="modal-info-value">${data.fec_res_cole || 'N/A'}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-section" style="border-left-color: #e74c3c;">
+                <h3><i class="fas fa-clock"></i> Jornadas</h3>
+                <div class="modal-checkbox-grid">
+                    ${jornadas.map(j => `
+                        <div class="modal-checkbox-item ${data[j.key] == 1 ? 'checked' : 'unchecked'}">
+                            <i class="fas fa-${data[j.key] == 1 ? 'check-circle' : 'times-circle'}"></i>
+                            ${j.label}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="modal-section" style="border-left-color: #f39c12;">
+                <h3><i class="fas fa-graduation-cap"></i> Niveles que Ofrece</h3>
+                <div class="modal-checkbox-grid">
+                    ${niveles.map(n => `
+                        <div class="modal-checkbox-item ${data[n.key] == 1 ? 'checked' : 'unchecked'}">
+                            <i class="fas fa-${data[n.key] == 1 ? 'check-circle' : 'times-circle'}"></i>
+                            ${n.label}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        // Ciclos (si tiene ciclos)
+        if (data.tiene_ciclos == 1) {
+            html += `
+                <div class="modal-section" style="border-left-color: #9b59b6;">
+                    <h3><i class="fas fa-layer-group"></i> Ciclos</h3>
+                    <div class="modal-checkbox-grid">
+                        ${ciclos.map(c => `
+                            <div class="modal-checkbox-item ${data[c.key] == 1 ? 'checked' : 'unchecked'}">
+                                <i class="fas fa-${data[c.key] == 1 ? 'check-circle' : 'times-circle'}"></i>
+                                ${c.label}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modelos Educativos Flexibles
+        const tieneModelos = modelos.some(m => data[m.key] == 1) || data.modelo_otro == 1;
+        if (tieneModelos) {
+            html += `
+                <div class="modal-section" style="border-left-color: #1abc9c;">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Modelos Educativos Flexibles</h3>
+                    <div class="modal-checkbox-grid">
+                        ${modelos.map(m => `
+                            <div class="modal-checkbox-item ${data[m.key] == 1 ? 'checked' : 'unchecked'}">
+                                <i class="fas fa-${data[m.key] == 1 ? 'check-circle' : 'times-circle'}"></i>
+                                ${m.label}
+                            </div>
+                        `).join('')}
+                        ${data.modelo_otro == 1 ? `
+                            <div class="modal-checkbox-item checked">
+                                <i class="fas fa-check-circle"></i>
+                                Otro: ${data.modelo_otro_cual || 'N/A'}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Carácter de la Media
+        html += `
+            <div class="modal-section" style="border-left-color: #34495e;">
+                <h3><i class="fas fa-user-graduate"></i> Carácter de la Media</h3>
+                <div class="modal-info-grid">
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Técnica</div>
+                        <div class="modal-info-value">${data.car_med_1_cole == 1 ? 'SÍ' : 'NO'}</div>
+                    </div>
+                    ${data.car_med_1_cole == 1 && data.especialidades_tecnica ? `
+                        <div class="modal-info-item" style="grid-column: 1 / -1;">
+                            <div class="modal-info-label">Especialidades Técnicas</div>
+                            <div class="modal-info-value">${data.especialidades_tecnica}</div>
+                        </div>
+                    ` : ''}
+                    <div class="modal-info-item">
+                        <div class="modal-info-label">Académica</div>
+                        <div class="modal-info-value">${data.car_med_2_cole == 1 ? 'SÍ' : 'NO'}</div>
+                    </div>
+                    ${data.car_med_2_cole == 1 && data.especialidad_academica ? `
+                        <div class="modal-info-item" style="grid-column: 1 / -1;">
+                            <div class="modal-info-label">Especialidad Académica</div>
+                            <div class="modal-info-value">${data.especialidad_academica}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+
+        // Observaciones
+        if (data.obs_cole) {
+            html += `
+                <div class="modal-section" style="border-left-color: #95a5a6;">
+                    <h3><i class="fas fa-comment-alt"></i> Observaciones</h3>
+                    <div style="background: white; padding: 15px; border-radius: 6px;">
+                        ${data.obs_cole}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fecha de última actualización
+        if (data.fecha_edit_cole) {
+            html += `
+                <div style="text-align: center; color: #7f8c8d; font-size: 0.9rem; margin-top: 20px;">
+                    <i class="fas fa-calendar-alt"></i> Última actualización: ${data.fecha_edit_cole}
+                </div>
+            `;
+        }
+
+        $('#modal-content-body').html(html);
+    }
+
+    function exportarColegioExcel() {
+        if (!colegioActualData) {
+            alert('No hay datos para exportar');
+            return;
+        }
+
+        // Crear un libro de Excel con estilos
+        const wb = XLSX.utils.book_new();
+        
+        // Preparar datos para la hoja
+        const excelData = [
+            ['INFORMACIÓN DEL ESTABLECIMIENTO EDUCATIVO'],
+            [''],
+            ['INFORMACIÓN GENERAL'],
+            ['Código DANE', colegioActualData.cod_dane_cole],
+            ['NIT', colegioActualData.nit_cole],
+            ['Nombre del Establecimiento', colegioActualData.nombre_cole],
+            ['Dirección', colegioActualData.direccion_cole],
+            ['Municipio', colegioActualData.nombre_mun],
+            ['Corregimiento', colegioActualData.corregimiento_cole],
+            ['Nombre del Rector', colegioActualData.nombre_rector_cole],
+            ['Teléfono Rector', colegioActualData.tel_rector_cole],
+            ['Teléfono Contacto', colegioActualData.tel1_cole],
+            ['Otro Teléfono', colegioActualData.tel2_cole],
+            ['Email', colegioActualData.email_cole],
+            ['Número Acto Administrativo', colegioActualData.num_act_adm_cole],
+            ['Fecha Resolución', colegioActualData.fec_res_cole],
+            [''],
+            ['JORNADAS'],
+            ['Jornada Única', colegioActualData.jor_1_cole == 1 ? 'SÍ' : 'NO'],
+            ['Completa', colegioActualData.jor_2_cole == 1 ? 'SÍ' : 'NO'],
+            ['Completa y Fin de Semana', colegioActualData.jor_3_cole == 1 ? 'SÍ' : 'NO'],
+            ['Completa y Nocturna', colegioActualData.jor_4_cole == 1 ? 'SÍ' : 'NO'],
+            ['Completa, Nocturna y Fin de Semana', colegioActualData.jor_5_cole == 1 ? 'SÍ' : 'NO'],
+            ['Mañana', colegioActualData.jor_6_cole == 1 ? 'SÍ' : 'NO'],
+            ['Mañana y Fin de Semana', colegioActualData.jor_7_cole == 1 ? 'SÍ' : 'NO'],
+            ['Mañana y Nocturna', colegioActualData.jor_8_cole == 1 ? 'SÍ' : 'NO'],
+            ['Mañana, Nocturna y Fin de Semana', colegioActualData.jor_9_cole == 1 ? 'SÍ' : 'NO'],
+            ['Otra', colegioActualData.jor_10_cole == 1 ? 'SÍ' : 'NO'],
+            [''],
+            ['NIVELES QUE OFRECE'],
+            ['Preescolar', colegioActualData.niv_1_cole == 1 ? 'SÍ' : 'NO'],
+            ['Básica Primaria', colegioActualData.niv_2_cole == 1 ? 'SÍ' : 'NO'],
+            ['Básica Secundaria', colegioActualData.niv_3_cole == 1 ? 'SÍ' : 'NO'],
+            ['Media', colegioActualData.niv_4_cole == 1 ? 'SÍ' : 'NO'],
+        ];
+
+        // Ciclos (si tiene)
+        if (colegioActualData.tiene_ciclos == 1) {
+            excelData.push(['']);
+            excelData.push(['CICLOS']);
+            excelData.push(['Ciclo 0 (Preescolar Adultos)', colegioActualData.ciclo_0 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo I (1°, 2° y 3°)', colegioActualData.ciclo_1 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo II (4° y 5°)', colegioActualData.ciclo_2 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo III (6° y 7°)', colegioActualData.ciclo_3 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo IV (8° y 9°)', colegioActualData.ciclo_4 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo V (10°)', colegioActualData.ciclo_5 == 1 ? 'SÍ' : 'NO']);
+            excelData.push(['Ciclo VI (11°)', colegioActualData.ciclo_6 == 1 ? 'SÍ' : 'NO']);
+        }
+
+        // Modelos Educativos
+        excelData.push(['']);
+        excelData.push(['MODELOS EDUCATIVOS FLEXIBLES']);
+        excelData.push(['Escuela Nueva', colegioActualData.modelo_escuela_nueva == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Aceleración del Aprendizaje', colegioActualData.modelo_aceleracion == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Post Primaria', colegioActualData.modelo_post_primaria == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Caminar en Secundaria', colegioActualData.modelo_caminar_secundaria == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Modelo Pedagógico Pensar Secundaria', colegioActualData.modelo_pensar_secundaria == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Media Rural', colegioActualData.modelo_media_rural == 1 ? 'SÍ' : 'NO']);
+        excelData.push(['Modelo Pedagógico Pensar Media', colegioActualData.modelo_pensar_media == 1 ? 'SÍ' : 'NO']);
+        if (colegioActualData.modelo_otro == 1) {
+            excelData.push(['Otro', colegioActualData.modelo_otro_cual || 'N/A']);
+        }
+
+        // Carácter de la Media
+        excelData.push(['']);
+        excelData.push(['CARÁCTER DE LA MEDIA']);
+        excelData.push(['Técnica', colegioActualData.car_med_1_cole == 1 ? 'SÍ' : 'NO']);
+        if (colegioActualData.car_med_1_cole == 1 && colegioActualData.especialidades_tecnica) {
+            excelData.push(['Especialidades Técnicas', colegioActualData.especialidades_tecnica]);
+        }
+        excelData.push(['Académica', colegioActualData.car_med_2_cole == 1 ? 'SÍ' : 'NO']);
+        if (colegioActualData.car_med_2_cole == 1 && colegioActualData.especialidad_academica) {
+            excelData.push(['Especialidad Académica', colegioActualData.especialidad_academica]);
+        }
+
+        // Observaciones
+        if (colegioActualData.obs_cole) {
+            excelData.push(['']);
+            excelData.push(['OBSERVACIONES']);
+            excelData.push([colegioActualData.obs_cole]);
+        }
+
+        // Crear hoja de trabajo
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+        
+        // Ajustar ancho de columnas
+        ws['!cols'] = [
+            { wch: 45 },
+            { wch: 60 }
+        ];
+
+        // Aplicar estilos a las celdas
+        const range = XLSX.utils.decode_range(ws['!ref']);
+        
+        // Estilos para diferentes secciones
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                if (!ws[cellAddress]) continue;
+                
+                // Inicializar objeto de estilo
+                ws[cellAddress].s = {};
+                
+                // Título principal (primera fila)
+                if (R === 0) {
+                    ws[cellAddress].s = {
+                        fill: { fgColor: { rgb: "667EEA" } },
+                        font: { bold: true, sz: 16, color: { rgb: "FFFFFF" } },
+                        alignment: { horizontal: "center", vertical: "center" }
+                    };
+                }
+                // Encabezados de sección (filas con solo un valor en columna A)
+                else if (C === 0 && ws[cellAddress].v && 
+                         (ws[cellAddress].v.includes('INFORMACIÓN') || 
+                          ws[cellAddress].v.includes('JORNADAS') || 
+                          ws[cellAddress].v.includes('NIVELES') || 
+                          ws[cellAddress].v.includes('CICLOS') || 
+                          ws[cellAddress].v.includes('MODELOS') || 
+                          ws[cellAddress].v.includes('CARÁCTER') || 
+                          ws[cellAddress].v.includes('OBSERVACIONES'))) {
+                    ws[cellAddress].s = {
+                        fill: { fgColor: { rgb: "3498DB" } },
+                        font: { bold: true, sz: 12, color: { rgb: "FFFFFF" } },
+                        alignment: { horizontal: "left", vertical: "center" }
+                    };
+                }
+                // Etiquetas (columna A)
+                else if (C === 0) {
+                    ws[cellAddress].s = {
+                        fill: { fgColor: { rgb: "ECF0F1" } },
+                        font: { bold: true, sz: 10 },
+                        alignment: { horizontal: "left", vertical: "center" }
+                    };
+                }
+                // Valores (columna B)
+                else if (C === 1) {
+                    // Colorear según el valor
+                    let fillColor = "FFFFFF";
+                    if (ws[cellAddress].v === 'SÍ' || ws[cellAddress].v === 'Si') {
+                        fillColor = "D4EDDA"; // Verde claro
+                    } else if (ws[cellAddress].v === 'NO' || ws[cellAddress].v === 'No') {
+                        fillColor = "F8D7DA"; // Rojo claro
+                    }
+                    
+                    ws[cellAddress].s = {
+                        fill: { fgColor: { rgb: fillColor } },
+                        font: { sz: 10 },
+                        alignment: { horizontal: "left", vertical: "center", wrapText: true }
+                    };
+                }
+            }
+        }
+
+        // Altura de las filas
+        ws['!rows'] = [];
+        for (let R = 0; R <= range.e.r; ++R) {
+            if (R === 0) {
+                ws['!rows'][R] = { hpt: 30 }; // Título principal más alto
+            } else {
+                ws['!rows'][R] = { hpt: 20 }; // Filas normales
+            }
+        }
+
+        // Agregar bordes a todas las celdas
+        const borderStyle = {
+            style: 'thin',
+            color: { rgb: "CCCCCC" }
+        };
+        
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                if (ws[cellAddress] && ws[cellAddress].s) {
+                    ws[cellAddress].s.border = {
+                        top: borderStyle,
+                        bottom: borderStyle,
+                        left: borderStyle,
+                        right: borderStyle
+                    };
+                }
+            }
+        }
+
+        // Fusionar celdas para el título
+        ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
+
+        // Agregar la hoja al libro
+        XLSX.utils.book_append_sheet(wb, ws, 'Información IE');
+
+        // Descargar el archivo con notificación
+        const nombreArchivo = `${colegioActualData.nombre_cole}_${colegioActualData.cod_dane_cole}.xlsx`;
+        XLSX.writeFile(wb, nombreArchivo);
+        
+        // Mostrar notificación de éxito
+        const notification = $('<div class="alert alert-success" style="position: fixed; top: 20px; right: 20px; z-index: 10000; padding: 15px; border-radius: 8px; background: #27ae60; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"><i class="fas fa-file-excel"></i> Excel exportado exitosamente</div>');
+        $('body').append(notification);
+        setTimeout(function() {
+            notification.fadeOut(function() { $(this).remove(); });
+        }, 3000);
+    }
 
     // Funcionalidad mejorada para observaciones con AJAX
     $(document).ready(function () {

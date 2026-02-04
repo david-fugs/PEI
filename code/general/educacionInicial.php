@@ -66,25 +66,50 @@ function mostrarListaArchivosEducacionInicial($id_edu_ini) {
 
 
 function mostrarArchivosEducacionInicial($id_cole, $mysqli) {
-    $educacionInicial = ""; // Inicializamos una cadena vacía
+    include_once("archivosHelper.php");
+    
+    $educacionInicial = "";
+    $totalArchivos = 0;
     $sql = "SELECT * FROM educa_inicial WHERE id_cole = $id_cole";
     $result = mysqli_query($mysqli, $sql);
 
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $id_edu_ini = $row['id_edu_ini'];
-           
-            $archivosEducacionInicial = mostrarListaArchivosEducacionInicial($id_edu_ini);
-            if (!empty($archivosEducacionInicial)) {
-              
-                $educacionInicial .= "Educacion inicial archivo $id_edu_ini: $archivosEducacionInicial<br>";
+    if (mysqli_num_rows($result) == 0) {
+        return "No hay registros de educación inicial disponibles";
+    }
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id_edu_ini = $row['id_edu_ini'];
+        $path = "./../initial/files/" . $id_edu_ini;
+        
+        // Contar archivos reales
+        $numArchivos = 0;
+        $archivosHtml = "";
+        if (file_exists($path)) {
+            $directorio = opendir($path);
+            $nro = 0;
+            while ($archivo = readdir($directorio)) {
+                if (!is_dir($archivo)) {
+                    $archivoPath = $path . "/" . $archivo;
+                    $nro++;
+                    $numArchivos++;
+                    $archivosHtml .= "<div style='margin-bottom:5px;'><a href='" . $archivoPath . "' title='Ver/Archivo' target='_blank'>".($nro)."-" . $archivo . "</a></div>";
+                }
             }
+            closedir($directorio);
         }
-    } else {
-        $educacionInicial = "No hay proyectos disponibles";
+        
+        // Solo agregar si hay archivos reales
+        if ($numArchivos > 0) {
+            $totalArchivos += $numArchivos;
+            $educacionInicial .= "Educación Inicial $id_edu_ini: $archivosHtml<br>";
+        }
+    }
+    
+    if ($totalArchivos == 0) {
+        return "Sin archivos cargados";
     }
 
-    return $educacionInicial;
+    return generarArchivosColapsables($educacionInicial, $totalArchivos, $id_cole, 'educa_inicial');
 }
 
 

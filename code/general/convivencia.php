@@ -48,49 +48,42 @@ function tieneManualConvivencia($id_cole, $mysqli) {
 }
 
 function tieneConvivenciaEscolar($id_cole, $mysqli) {
-    // Verificar si la tabla existe
-    $sql = "SHOW TABLES LIKE 'convivencia_escolar'";
-    $result = mysqli_query($mysqli, $sql);
+    // Los 4 tipos de archivos requeridos
+    $tipos_requeridos = ['conformacion', 'reglamento', 'actas', 'planes_accion'];
+    $tipos_encontrados = [];
     
-    if (mysqli_num_rows($result) > 0) {
-        // Verificar qué columnas tiene la tabla
-        $sql_describe = "DESCRIBE convivencia_escolar";
-        $result_describe = mysqli_query($mysqli, $sql_describe);
-        $columns = array();
-        while ($row = mysqli_fetch_assoc($result_describe)) {
-            $columns[] = $row['Field'];
-        }
+    // Buscar en los directorios de convivencia escolar
+    $base_path = "./../convivencia/files/" . $id_cole;
+    
+    if (!file_exists($base_path)) {
+        return false;
+    }
+    
+    // Recorrer los años (subdirectorios)
+    $anios = scandir($base_path);
+    foreach ($anios as $anio) {
+        if ($anio == '.' || $anio == '..') continue;
         
-        // Determinar qué columna usar para id_cole
-        $id_column = '';
-        if (in_array('id_cole', $columns)) {
-            $id_column = 'id_cole';
-        } elseif (in_array('colegio_id', $columns)) {
-            $id_column = 'colegio_id';
-        } elseif (in_array('institucion_id', $columns)) {
-            $id_column = 'institucion_id';
-        } elseif (in_array('id_institucion', $columns)) {
-            $id_column = 'id_institucion';
-        }
+        $path_anio = $base_path . '/' . $anio . '/convivencia_escolar';
         
-        if ($id_column) {
-            $sql_count = "SELECT COUNT(*) as count FROM convivencia_escolar WHERE $id_column = '$id_cole'";
-            $result_count = mysqli_query($mysqli, $sql_count);
-            if ($result_count) {
-                $row = mysqli_fetch_assoc($result_count);
-                return $row['count'] > 0;
-            }
-        } else {
-            // Si no hay columna de ID, verificar si hay registros en general
-            $sql_count = "SELECT COUNT(*) as count FROM convivencia_escolar";
-            $result_count = mysqli_query($mysqli, $sql_count);
-            if ($result_count) {
-                $row = mysqli_fetch_assoc($result_count);
-                return $row['count'] > 0;
+        if (file_exists($path_anio)) {
+            $archivos = scandir($path_anio);
+            
+            foreach ($archivos as $archivo) {
+                if ($archivo == '.' || $archivo == '..') continue;
+                
+                // Verificar qué tipo de archivo es basándose en el nombre
+                foreach ($tipos_requeridos as $tipo) {
+                    if (stripos($archivo, $tipo) !== false && !in_array($tipo, $tipos_encontrados)) {
+                        $tipos_encontrados[] = $tipo;
+                    }
+                }
             }
         }
     }
-    return false;
+    
+    // Retorna true solo si se encontraron los 4 tipos
+    return count($tipos_encontrados) >= 4;
 }
 
 function tieneCircular($id_cole, $mysqli) {
@@ -140,6 +133,8 @@ function tieneCircular($id_cole, $mysqli) {
 }
 
 function mostrarArchivosManualConvivencia($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     // Verificar si la tabla existe
     $sql_check = "SHOW TABLES LIKE 'manual_convivencia'";
     $result_check = mysqli_query($mysqli, $sql_check);
@@ -184,6 +179,7 @@ function mostrarArchivosManualConvivencia($id_cole, $mysqli) {
     $sql = "SELECT " . implode(', ', $select_fields) . " FROM manual_convivencia $where_clause";
     $result = mysqli_query($mysqli, $sql);
     $archivos = "";
+    $totalArchivos = 0;
     
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -209,18 +205,26 @@ function mostrarArchivosManualConvivencia($id_cole, $mysqli) {
             }
             
             if (!empty($archivo_campo)) {
-                $archivos .= "<a href='../convivencia/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
-                           htmlspecialchars($titulo_campo) . "</a><br>";
+                $archivos .= "<div style='margin-bottom:5px;'><a href='../convivencia/uploads/circulares/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
+                           htmlspecialchars($titulo_campo) . "</a></div>";
+                $totalArchivos++;
             } else {
-                $archivos .= htmlspecialchars($titulo_campo) . " (Registrado)<br>";
+                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo_campo) . " (Registrado)</div>";
+                $totalArchivos++;
             }
         }
     }
     
-    return $archivos ?: "No hay archivos";
+    if (empty($archivos)) {
+        return "No hay archivos";
+    }
+    
+    return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'manual_convivencia');
 }
 
 function mostrarArchivosConvivenciaEscolar($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     // Verificar si la tabla existe
     $sql_check = "SHOW TABLES LIKE 'convivencia_escolar'";
     $result_check = mysqli_query($mysqli, $sql_check);
@@ -265,6 +269,7 @@ function mostrarArchivosConvivenciaEscolar($id_cole, $mysqli) {
     $sql = "SELECT " . implode(', ', $select_fields) . " FROM convivencia_escolar $where_clause";
     $result = mysqli_query($mysqli, $sql);
     $archivos = "";
+    $totalArchivos = 0;
     
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -290,18 +295,26 @@ function mostrarArchivosConvivenciaEscolar($id_cole, $mysqli) {
             }
             
             if (!empty($archivo_campo)) {
-                $archivos .= "<a href='../convivencia/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
-                           htmlspecialchars($titulo_campo) . "</a><br>";
+                $archivos .= "<div style='margin-bottom:5px;'><a href='../convivencia/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
+                           htmlspecialchars($titulo_campo) . "</a></div>";
+                $totalArchivos++;
             } else {
-                $archivos .= htmlspecialchars($titulo_campo) . " (Registrado)<br>";
+                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo_campo) . " (Registrado)</div>";
+                $totalArchivos++;
             }
         }
     }
     
-    return $archivos ?: "No hay archivos";
+    if (empty($archivos)) {
+        return "No hay archivos";
+    }
+    
+    return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'convivencia_escolar');
 }
 
 function mostrarArchivosCircular($id_cole, $mysqli) {
+    include_once("archivosHelper.php");
+    
     // Verificar si la tabla existe
     $sql_check = "SHOW TABLES LIKE 'circulares'";
     $result_check = mysqli_query($mysqli, $sql_check);
@@ -347,6 +360,7 @@ function mostrarArchivosCircular($id_cole, $mysqli) {
     $sql = "SELECT " . implode(', ', $select_fields) . " FROM circulares $where_clause";
     $result = mysqli_query($mysqli, $sql);
     $archivos = "";
+    $totalArchivos = 0;
     
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -374,14 +388,20 @@ function mostrarArchivosCircular($id_cole, $mysqli) {
             }
             
             if (!empty($archivo_campo)) {
-                $archivos .= "<a href='../convivencia/uploads/circulares/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
-                           htmlspecialchars($titulo_campo) . "</a><br>";
+                $archivos .= "<div style='margin-bottom:5px;'><a href='../convivencia/uploads/circulares/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
+                           htmlspecialchars($titulo_campo) . "</a></div>";
+                $totalArchivos++;
             } else {
-                $archivos .= htmlspecialchars($titulo_campo) . " (Registrado)<br>";
+                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo_campo) . " (Registrado)</div>";
+                $totalArchivos++;
             }
         }
     }
     
-    return $archivos ?: "No hay archivos";
+    if (empty($archivos)) {
+        return "No hay archivos";
+    }
+    
+    return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'circulares');
 }
 ?>

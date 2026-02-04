@@ -775,13 +775,7 @@ include('../general/observacion.php');
                                     Evidencias
                                 </button>
                             </h2>
-                            <div id="evidencias" class="accordion-collapse collapse" data-bs-parent="#menuAccordion">
-                                <div class="accordion-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><a href="https://www.mineducacion.gov.co/portal/men/Publicaciones/Guias/339480:Guia-No-49-Guias-pedagogicas-para-la-convivencia-escolar" target="_blank" rel="noopener">Gui 49 ministerio de educacio</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <!-- PLANES PROYECTOS -->
@@ -920,6 +914,9 @@ include('../general/observacion.php');
                                     </ul>
                                     <ul class="list-group">
                                         <li class="list-group-item"><a href="../convivencia/circular.php">Circular</a></li>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="https://www.mineducacion.gov.co/portal/men/Publicaciones/Guias/339480:Guia-No-49-Guias-pedagogicas-para-la-convivencia-escolar" target="_blank" rel="noopener">Gui 49 ministerio de educacion</a></li>
                                     </ul>
                                 </div>
                             </div>

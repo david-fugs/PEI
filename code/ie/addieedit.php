@@ -177,6 +177,88 @@
             </div>
             <hr style="border: 4px solid #04547c; border-radius: 5px;">
 
+            <h4><b><CENTER>MODELOS EDUCATIVOS FLEXIBLES</h4></CENTER></b>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label><b>Modelos (puede seleccionar uno o varios):</b></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_escuela_nueva" id="modelo_escuela_nueva" value="1" <?php if(isset($row['modelo_escuela_nueva']) && $row['modelo_escuela_nueva']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_escuela_nueva">
+                                Escuela Nueva
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_aceleracion" id="modelo_aceleracion" value="1" <?php if(isset($row['modelo_aceleracion']) && $row['modelo_aceleracion']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_aceleracion">
+                                Aceleración del Aprendizaje
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_post_primaria" id="modelo_post_primaria" value="1" <?php if(isset($row['modelo_post_primaria']) && $row['modelo_post_primaria']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_post_primaria">
+                                Post Primaria
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_caminar_secundaria" id="modelo_caminar_secundaria" value="1" <?php if(isset($row['modelo_caminar_secundaria']) && $row['modelo_caminar_secundaria']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_caminar_secundaria">
+                                Caminar en Secundaria
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_pensar_secundaria" id="modelo_pensar_secundaria" value="1" <?php if(isset($row['modelo_pensar_secundaria']) && $row['modelo_pensar_secundaria']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_pensar_secundaria">
+                                Modelo Pedagógico Pensar Secundaria
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_media_rural" id="modelo_media_rural" value="1" <?php if(isset($row['modelo_media_rural']) && $row['modelo_media_rural']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_media_rural">
+                                Media Rural
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_pensar_media" id="modelo_pensar_media" value="1" <?php if(isset($row['modelo_pensar_media']) && $row['modelo_pensar_media']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_pensar_media">
+                                Modelo Pedagógico Pensar Media
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="modelo_otro" id="modelo_otro" value="1" onchange="toggleModeloOtro()" <?php if(isset($row['modelo_otro']) && $row['modelo_otro']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="modelo_otro">
+                                Otro
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" id="modelo_otro_cual_div" style="display: none;">
+                    <div class="col-12 col-sm-6">
+                        <label for="modelo_otro_cual">¿Cuál?:</label>
+                        <input type="text" name="modelo_otro_cual" id="modelo_otro_cual" class="form-control" style="text-transform:uppercase;" value='<?php if(isset($row['modelo_otro_cual'])){echo $row['modelo_otro_cual'];} ?>' />
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 4px solid #04547c; border-radius: 5px;">
+
             <h4><b><CENTER>NIVELES QUE OFRECE</h4></CENTER></b>
             <div class="form-group">
                 <div class="row">
@@ -214,6 +296,87 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SECCIÓN DE CICLOS -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12 col-sm-3">
+                        <label class="containerCheck">CICLOS:</label>
+                        <select class="form-control" name="tiene_ciclos" id="tiene_ciclos" required onchange="toggleCiclos()">
+                            <option value=""></option>   
+                            <option value=1 <?php if(isset($row['tiene_ciclos']) && utf8_encode($row['tiene_ciclos'])==1){echo 'selected';} ?>>SI</option>
+                            <option value=0 <?php if(isset($row['tiene_ciclos']) && utf8_encode($row['tiene_ciclos'])==0){echo 'selected';} ?>>NO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPCIONES DE CICLOS (se muestra cuando tiene_ciclos = SI) -->
+            <div class="form-group" id="opciones_ciclos" style="display: none;">
+                <div class="row">
+                    <div class="col-12">
+                        <label><b>Tipo de Ciclos (seleccione uno o varios):</b></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_0" id="ciclo_0" value="1" <?php if(isset($row['ciclo_0']) && $row['ciclo_0']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_0">
+                                Ciclo 0 (Preescolar Adultos)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_1" id="ciclo_1" value="1" <?php if(isset($row['ciclo_1']) && $row['ciclo_1']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_1">
+                                Ciclo I (1°, 2° y 3°)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_2" id="ciclo_2" value="1" <?php if(isset($row['ciclo_2']) && $row['ciclo_2']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_2">
+                                Ciclo II (4° y 5°)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_3" id="ciclo_3" value="1" <?php if(isset($row['ciclo_3']) && $row['ciclo_3']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_3">
+                                Ciclo III (6° y 7°)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_4" id="ciclo_4" value="1" <?php if(isset($row['ciclo_4']) && $row['ciclo_4']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_4">
+                                Ciclo IV (8° y 9°)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_5" id="ciclo_5" value="1" <?php if(isset($row['ciclo_5']) && $row['ciclo_5']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_5">
+                                Ciclo V (10°)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ciclo_6" id="ciclo_6" value="1" <?php if(isset($row['ciclo_6']) && $row['ciclo_6']==1){echo 'checked';} ?>>
+                            <label class="form-check-label" for="ciclo_6">
+                                Ciclo VI (11°)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <hr style="border: 4px solid #04547c; border-radius: 5px;">
 
             <h4><b><CENTER>CARACTER DE LA MEDIA</h4></CENTER></b>
@@ -221,7 +384,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <label class="containerCheck">TÉCNICA:</label>
-                        <select class="form-control" name="car_med_1_cole" required/>
+                        <select class="form-control" name="car_med_1_cole" id="car_med_1_cole" required onchange="toggleTecnica()">
                             <option value=""></option>   
                             <option value=1 <?php if(utf8_encode($row['car_med_1_cole'])==1){echo 'selected';} ?>>SI</option>
                             <option value=0 <?php if(utf8_encode($row['car_med_1_cole'])==0){echo 'selected';} ?>>NO</option>
@@ -229,11 +392,71 @@
                     </div>
                     <div class="col-12 col-sm-6">
                         <label class="containerCheck">ACADÉMICA:</label>
-                        <select class="form-control" name="car_med_2_cole" required/>
+                        <select class="form-control" name="car_med_2_cole" id="car_med_2_cole" required onchange="toggleAcademica()">
                             <option value=""></option>   
                             <option value=1 <?php if(utf8_encode($row['car_med_2_cole'])==1){echo 'selected';} ?>>SI</option>
                             <option value=0 <?php if(utf8_encode($row['car_med_2_cole'])==0){echo 'selected';} ?>>NO</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAMPOS DINÁMICOS PARA ESPECIALIDADES TÉCNICAS -->
+            <div class="form-group" id="especialidades_tecnica_div" style="display: none;">
+                <div class="row">
+                    <div class="col-12">
+                        <label><b>Especialidades de Media Técnica:</b></label>
+                        <p style="color: #666; font-size: 0.9em;">Agregue una o más especialidades técnicas que ofrece la institución</p>
+                    </div>
+                </div>
+                <div id="especialidades_tecnica_container">
+                    <?php 
+                    if(isset($row['especialidades_tecnica']) && !empty($row['especialidades_tecnica'])) {
+                        $especialidades = explode(',', $row['especialidades_tecnica']);
+                        foreach($especialidades as $index => $especialidad) {
+                            $especialidad = trim($especialidad);
+                            echo "
+                            <div class='row mb-2 especialidad-tecnica-row' id='especialidad_tecnica_row_$index'>
+                                <div class='col-12 col-sm-10'>
+                                    <input type='text' name='especialidades_tecnica[]' class='form-control' style='text-transform:uppercase;' value='$especialidad' placeholder='Ingrese la especialidad técnica' />
+                                </div>
+                                <div class='col-12 col-sm-2'>
+                                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadTecnica(\"especialidad_tecnica_row_$index\")'>
+                                        <i class='fas fa-trash'></i> Eliminar
+                                    </button>
+                                </div>
+                            </div>";
+                        }
+                    } else {
+                        echo "
+                        <div class='row mb-2 especialidad-tecnica-row' id='especialidad_tecnica_row_0'>
+                            <div class='col-12 col-sm-10'>
+                                <input type='text' name='especialidades_tecnica[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese la especialidad técnica' />
+                            </div>
+                            <div class='col-12 col-sm-2'>
+                                <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadTecnica(\"especialidad_tecnica_row_0\")'>
+                                    <i class='fas fa-trash'></i> Eliminar
+                                </button>
+                            </div>
+                        </div>";
+                    }
+                    ?>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success btn-sm" onclick="agregarEspecialidadTecnica()">
+                            <i class="fas fa-plus"></i> Agregar otra especialidad técnica
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAMPO DINÁMICO PARA ESPECIALIDAD ACADÉMICA -->
+            <div class="form-group" id="especialidad_academica_div" style="display: none;">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <label for="especialidad_academica"><b>Especialidad de Media Académica:</b></label>
+                        <input type="text" name="especialidad_academica" id="especialidad_academica" class="form-control" style="text-transform:uppercase;" value='<?php if(isset($row['especialidad_academica'])){echo $row['especialidad_academica'];} ?>' placeholder='Ingrese la especialidad académica' />
                     </div>
                 </div>
             </div>
@@ -312,6 +535,38 @@
                 <div class="row">
                     <div class="col-12">
                         <label for="archivo"><i class="fas fa-file-pdf"></i> ADJUNTAR RESOLUCIÓN VIGENTE:</label>
+                        
+                        <?php
+                        // Mostrar archivos existentes
+                        $nit_cole = $row['nit_cole'];
+                        $cod_dane_cole = $row['cod_dane_cole'];
+                        $directorio_archivos = 'files/' . $nit_cole;
+                        
+                        if(file_exists($directorio_archivos)) {
+                            $archivos = array_diff(scandir($directorio_archivos), array('.', '..'));
+                            
+                            if(count($archivos) > 0) {
+                                echo '<div style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">';
+                                echo '<p style="margin-bottom: 10px;"><strong>Archivos cargados:</strong></p>';
+                                echo '<ul style="list-style: none; padding: 0;">';
+                                
+                                foreach($archivos as $archivo) {
+                                    $ruta_descarga = 'files/' . $nit_cole . '/' . $archivo;
+                                    echo '<li style="margin-bottom: 8px; padding: 8px; background-color: white; border-radius: 3px; display: flex; align-items: center; justify-content: space-between;">';
+                                    echo '<span><i class="fas fa-file-pdf" style="color: #dc3545; margin-right: 8px;"></i>' . htmlspecialchars($archivo) . '</span>';
+                                    echo '<div>';
+                                    echo '<a href="' . $ruta_descarga . '" download class="btn btn-sm btn-success" style="margin-right: 5px;" title="Descargar"><i class="fas fa-download"></i> Descargar</a>';
+                                    echo '<a href="eliminar_resolucion.php?archivo=' . urlencode($archivo) . '&nit_cole=' . urlencode($nit_cole) . '&cod_dane_cole=' . urlencode($cod_dane_cole) . '" class="btn btn-sm btn-danger" onclick="return confirm(\'¿Está seguro que desea eliminar este archivo?\');" title="Eliminar"><i class="fas fa-trash"></i> Eliminar</a>';
+                                    echo '</div>';
+                                    echo '</li>';
+                                }
+                                
+                                echo '</ul>';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
+                        
                         <input type="file" id="archivo[]" name="archivo[]" multiple="" accept="application/pdf">
                         <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;"><b><u>Solamente adicione documentos siempre y cuando este paso no se haya realizado anteriormente. </b></u>Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez estén seleccionados presione el botón abrir. Utilice archivos de tipo: PDF</p>
                     </div>
@@ -326,5 +581,114 @@
             </button>
         </form>
     </div>
+
+    <script>
+        // Contador global para especialidades técnicas
+        let contadorEspecialidadesTecnicas = <?php 
+            if(isset($row['especialidades_tecnica']) && !empty($row['especialidades_tecnica'])) {
+                echo count(explode(',', $row['especialidades_tecnica']));
+            } else {
+                echo "1";
+            }
+        ?>;
+
+        // Función para mostrar/ocultar opciones de ciclos
+        function toggleCiclos() {
+            const tieneCiclos = document.getElementById('tiene_ciclos').value;
+            const opcionesCiclos = document.getElementById('opciones_ciclos');
+            
+            if (tieneCiclos == '1') {
+                opcionesCiclos.style.display = 'block';
+            } else {
+                opcionesCiclos.style.display = 'none';
+                // Desmarcar todos los checkboxes de ciclos
+                document.querySelectorAll('[id^="ciclo_"]').forEach(function(checkbox) {
+                    checkbox.checked = false;
+                });
+            }
+        }
+
+        // Función para mostrar/ocultar campo "Otro modelo"
+        function toggleModeloOtro() {
+            const modeloOtro = document.getElementById('modelo_otro').checked;
+            const modeloOtroCualDiv = document.getElementById('modelo_otro_cual_div');
+            
+            if (modeloOtro) {
+                modeloOtroCualDiv.style.display = 'block';
+            } else {
+                modeloOtroCualDiv.style.display = 'none';
+                document.getElementById('modelo_otro_cual').value = '';
+            }
+        }
+
+        // Función para mostrar/ocultar especialidades técnicas
+        function toggleTecnica() {
+            const tecnica = document.getElementById('car_med_1_cole').value;
+            const especialidadesTecnicaDiv = document.getElementById('especialidades_tecnica_div');
+            
+            if (tecnica == '1') {
+                especialidadesTecnicaDiv.style.display = 'block';
+            } else {
+                especialidadesTecnicaDiv.style.display = 'none';
+            }
+        }
+
+        // Función para mostrar/ocultar especialidad académica
+        function toggleAcademica() {
+            const academica = document.getElementById('car_med_2_cole').value;
+            const especialidadAcademicaDiv = document.getElementById('especialidad_academica_div');
+            
+            if (academica == '1') {
+                especialidadAcademicaDiv.style.display = 'block';
+            } else {
+                especialidadAcademicaDiv.style.display = 'none';
+                document.getElementById('especialidad_academica').value = '';
+            }
+        }
+
+        // Función para agregar una nueva especialidad técnica
+        function agregarEspecialidadTecnica() {
+            const container = document.getElementById('especialidades_tecnica_container');
+            const newRow = document.createElement('div');
+            newRow.className = 'row mb-2 especialidad-tecnica-row';
+            newRow.id = 'especialidad_tecnica_row_' + contadorEspecialidadesTecnicas;
+            
+            newRow.innerHTML = `
+                <div class='col-12 col-sm-10'>
+                    <input type='text' name='especialidades_tecnica[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese la especialidad técnica' />
+                </div>
+                <div class='col-12 col-sm-2'>
+                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadTecnica("especialidad_tecnica_row_${contadorEspecialidadesTecnicas}")'>
+                        <i class='fas fa-trash'></i> Eliminar
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+            contadorEspecialidadesTecnicas++;
+        }
+
+        // Función para eliminar una especialidad técnica
+        function eliminarEspecialidadTecnica(rowId) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                // Verificar que no sea la única fila
+                const totalRows = document.querySelectorAll('.especialidad-tecnica-row').length;
+                if (totalRows > 1) {
+                    row.remove();
+                } else {
+                    alert('Debe mantener al menos una especialidad técnica');
+                }
+            }
+        }
+
+        // Ejecutar al cargar la página para mostrar campos según valores guardados
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleCiclos();
+            toggleModeloOtro();
+            toggleTecnica();
+            toggleAcademica();
+        });
+    </script>
 </body>
 </html>

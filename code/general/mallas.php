@@ -81,37 +81,54 @@ function mostrarListaArchivosMallas($id_mc) {
 
 
 function mostrarMallasYArchivos($id_cole, $mysqli) {
-    // Llama a la función para verificar si el colegio tiene archivos en sus mallas curriculares
-    $tieneArchivosMallasColegio = tieneArchivosMallasColegio($id_cole, $mysqli);
-
-    // Muestra el resultado de si el colegio tiene archivos o no en una celda
-    // echo "<td>" . ($tieneArchivosMallasColegio ? "Sí" : "No") . "</td>";
-
-    // Inicializa una variable para almacenar las celdas de las mallas y archivos
-    $mallasYArchivos = "";
-
-    // Luego, recorre todas las mallas curriculares y muestra sus archivos
+    include_once("archivosHelper.php");
+    
     $sql = "SELECT * FROM `mallas_curriculares` WHERE id_cole = $id_cole";
     $result = mysqli_query($mysqli, $sql);
 
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $id_mc = $row['id_mc'];
-
-            // Llama a la función para mostrar la lista de archivos de la malla
-            $archivosMalla = mostrarListaArchivosMallas($id_mc);
-
-            // Agrega la información de la malla y archivos a la variable
-            $mallasYArchivos .= "Malla $id_mc: $archivosMalla";
-            
-        }
-    } else {
-        // Si no hay mallas curriculares, muestra un mensaje
-        $mallasYArchivos = "No hay mallas curriculares disponibles";
+    if (mysqli_num_rows($result) == 0) {
+        return "No hay mallas curriculares disponibles";
     }
-
-    // Muestra las celdas de mallas y archivos en una sola celda
-    return $mallasYArchivos;
+    
+    $allContent = "";
+    $totalArchivos = 0;
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id_mc = $row['id_mc'];
+        
+        // Contar archivos reales
+        $path = "./../mallas/files/" . $id_mc;
+        $numArchivos = 0;
+        $archivosHtml = "";
+        
+        if (file_exists($path)) {
+            $directorio = opendir($path);
+            $nro = 0;
+            while ($archivo = readdir($directorio)) {
+                if (!is_dir($archivo)) {
+                    $archivoPath = $path . "/" . $archivo;
+                    $nro++;
+                    $numArchivos++;
+                    $archivosHtml .= "<div style='margin-bottom:5px;'><a href='" . $archivoPath . "' title='Ver/Archivo' target='_blank'>".($nro)."-" . $archivo . "</a></div>";
+                }
+            }
+            closedir($directorio);
+        }
+        
+        // Solo agregar si hay archivos reales
+        if ($numArchivos > 0) {
+            $totalArchivos += $numArchivos;
+            $allContent .= "<div style='margin-bottom:8px;'><strong>Malla $id_mc:</strong> $archivosHtml</div>";
+        }
+    }
+    
+    // Si no hay archivos en ninguna malla
+    if ($totalArchivos == 0) {
+        return "Sin archivos cargados";
+    }
+    
+    // Usar el helper para generar el HTML colapsable
+    return generarArchivosColapsables($allContent, $totalArchivos, $id_cole, 'mallas');
 }
 
 

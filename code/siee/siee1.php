@@ -326,7 +326,7 @@
                 	<div class="row">
 	                    <div class="col-12">
 	                        <label for="archivo"><i class="fas fa-file-pdf"></i> ADJUNTAR ACTOS, ACTO ADMINISTRATIVO y/o EVIDENCIAS</label>
-	                         <input type="file" id="archivo[]" name="archivo[]" multiple="" accept="*.*">
+	                         <input type="file" id="archivo[]" name="archivo[]" multiple="" accept="*.*" required >
 	                        <p style="font-family: 'Rajdhani', sans-serif; color: #c68615; text-align: justify;"><b><u>Solamente adicione documentos siempre y cuando este paso no se haya realizado anteriormente. </b></u>Recuerde que puede adjuntar varios archivos a la vez, simplemente mantenga presionado la tecla "CTRL" y de clic sobre cada archivo a adjuntar, una vez estén seleccionados presione el botón abrir. Utilice archivos de tipo: PDF</p>
 	                    </div>
                 	</div>

@@ -111,28 +111,27 @@ echo '<style>
                 echo "<td rowspan='2'><b>Establecimiento Educativo</b></td>";
                 echo "<td class='encabezado encabezado1' colspan='2'><b>INSTITUCIÓN EDUCATIVA</b></td>";
                 echo "<td class='encabezado encabezado2' colspan='1'><b>TELEOLÓGICO</b></td>";
-                echo "<td class='encabezado encabezado3' colspan='2'><b>PEDAGÓGICO</b></td>";
-                echo "<td class='encabezado encabezado4' colspan='4'><b>PLANES-PROGRAMAS-PROYECTOS</b></td>";
+                echo "<td class='encabezado encabezado3' colspan='3'><b>PEDAGÓGICO</b></td>";
+                echo "<td class='encabezado encabezado4' colspan='3'><b>PLANES-PROGRAMAS-PROYECTOS</b></td>";
                 echo "<td class='encabezado encabezado5' colspan='3'><b>PREESCOLAR</b></td>";
-                echo "<td class='encabezado encabezado6' colspan='3'><b>CONVIVENCIA</b></td>";
+                echo "<td class='encabezado encabezado6' colspan='2'><b>CONVIVENCIA</b></td>";
                 echo "<td rowspan='2'><b>Observaciones</b></td>";
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td><b>Resolución</b></td>";
-                echo "<td><b>Establecimiento</b></td>";
+                echo "<td><b>Actualizacion I.E.</b></td>";
                 echo "<td><b>Teleológico</b></td>";
                 echo "<td><b>Mallas</b></td>";
+                echo "<td><b>Intensidad Horaria</b></td>";
                 echo "<td><b>SIEE</b></td>";
                 echo "<td><b>Transversales</b></td>";
                 echo "<td><b>Planes-Programas</b></td>";
                 echo "<td><b>Proyectos/Planes</b></td>";
-                echo "<td><b>Intensidad Horaria</b></td>";
                 echo "<td><b>Educación Inicial</b></td>";
                 echo "<td><b>Plan Estudios</b></td>";
                 echo "<td><b>Desarrollo Integral</b></td>";
                 echo "<td><b>Manual Convivencia</b></td>";
                 echo "<td><b>Convivencia Escolar</b></td>";
-                echo "<td><b>Circular</b></td>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -147,13 +146,13 @@ echo '<style>
                     $icon_excel = "./../../../../img/excel.png";
                 
                     //IE
-                    $tieneResolucion=tieneResolucion($id_cole, $mysqli);
+                    $tieneResolucion=tieneArchivoResolucion($id_cole, $mysqli);
                     echo '<td ' . ($tieneResolucion ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneResolucion ? $tieneResolucion : 'No';
+                    echo $tieneResolucion ? 'Si' : 'No';
                     
                     echo '</td>';
 
-                    $tieneArchivoIe=tieneIe($id_cole, $mysqli);
+                    $tieneArchivoIe=tieneEstablecimientoCompleto($id_cole, $mysqli);
                     echo '<td ' . ($tieneArchivoIe ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivoIe ? 'Si' : 'No';
                     echo '</td>';
@@ -170,8 +169,14 @@ echo '<style>
                     echo $tieneArchivosMallasColegio ? 'Si' : 'No';
                     echo '</td>';
 
+                    //intensidad horaria
+                    $tieneIntensidadHoraria = tieneIntensidadHoraria($id_cole, $mysqli);
+                    echo '<td ' . ($tieneIntensidadHoraria ? 'class="verde"' : 'class="rojo"') . '>';
+                    echo $tieneIntensidadHoraria ? 'Si' : 'No';
+                    echo '</td>';
+
                     //siee
-                    $tieneArchivosSiee = tieneArchivosSiee($id_cole);
+                    $tieneArchivosSiee = tieneArchivosSiee($id_cole, $mysqli);
                     echo '<td ' . ($tieneArchivosSiee ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneArchivosSiee ? 'Si' : 'No';
                     echo '</td>';
@@ -192,12 +197,6 @@ echo '<style>
                     $tienePlanesProyectos = tienePlanesProyectos($id_cole, $mysqli);
                     echo '<td ' . ($tienePlanesProyectos ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tienePlanesProyectos ? 'Si' : 'No';
-                    echo '</td>';
-
-                    //intensidad horaria
-                    $tieneIntensidadHoraria = tieneIntensidadHoraria($id_cole, $mysqli);
-                    echo '<td ' . ($tieneIntensidadHoraria ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneIntensidadHoraria ? 'Si' : 'No';
                     echo '</td>';
 
                     //educacion inicial
@@ -228,12 +227,6 @@ echo '<style>
                     $tieneConvivenciaEscolar = tieneConvivenciaEscolar($id_cole, $mysqli);
                     echo '<td ' . ($tieneConvivenciaEscolar ? 'class="verde"' : 'class="rojo"') . '>';
                     echo $tieneConvivenciaEscolar ? 'Si' : 'No';
-                    echo '</td>';
-
-                    //circular
-                    $tieneCircular = tieneCircular($id_cole, $mysqli);
-                    echo '<td ' . ($tieneCircular ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneCircular ? 'Si' : 'No';
                     echo '</td>';
 
                     $contenido = MostrarInformacionObservacion($id_cole, $mysqli);
@@ -275,10 +268,10 @@ echo '<style>
                         $id_cole = $fila['id_cole'];
                         //IE
 
-                        $tieneResolucion = tieneResolucion($id_cole, $mysqli);
-                        $resolucionText = $tieneResolucion ? $tieneResolucion : 'No';
+                        $tieneResolucion = tieneArchivoResolucion($id_cole, $mysqli);
+                        $resolucionText = $tieneResolucion ? 'Si' : 'No';
 
-                        $tieneArchivoIe=tieneIe($id_cole, $mysqli);
+                        $tieneArchivoIe=tieneEstablecimientoCompleto($id_cole, $mysqli);
                         $establecimientoText = $tieneArchivoIe ? 'Si' : 'No';
 
                         //Teológico
@@ -289,7 +282,7 @@ echo '<style>
                         $tieneArchivosMallasColegio=tieneArchivosMallasColegio($id_cole, $mysqli);
                         $mallasText = $tieneArchivosMallasColegio ? 'Si' : 'No';
 
-                        $tieneArchivosSiee = tieneArchivosSiee($id_cole);
+                        $tieneArchivosSiee = tieneArchivosSiee($id_cole, $mysqli);
                         $sieeText = $tieneArchivosSiee ? 'Si' : 'No';
 
                         //planes|proyectos
@@ -324,9 +317,6 @@ echo '<style>
                         $tieneConvivenciaEscolar = tieneConvivenciaEscolar($id_cole, $mysqli);
                         $convivenciaEscolarText = $tieneConvivenciaEscolar ? 'Si' : 'No';
 
-                        $tieneCircular = tieneCircular($id_cole, $mysqli);
-                        $circularText = $tieneCircular ? 'Si' : 'No';
-
                         // Módulo 1 I.E
                         if ($resolucionText != 'No' && $establecimientoText != 'No') {
                             $modulo1Cargado++;
@@ -345,11 +335,11 @@ echo '<style>
                             $modulo5Cargado++;
                         }
 
-                        if ($manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No') {
+                        if ($manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No') {
                             $modulo6Cargado++;
                         }
 
-                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No' && $manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No' && $intensidadText != 'No') {
+                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No' && $manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $intensidadText != 'No') {
                             $totalCargados++;
                         }
 

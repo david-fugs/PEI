@@ -1,19 +1,35 @@
 <?php 
 
 
-function tieneArchivosSiee($id_cole) {
+function tieneArchivosSiee($id_cole, $mysqli = null) {
+    // Validar que tenga archivos
+    $tieneArchivos = false;
     $path = "./../siee/files/" . $id_cole;
 
     if (file_exists($path)) {
         $directorio = opendir($path);
         while ($archivo = readdir($directorio)) {
             if (!is_dir($archivo)) {
-                return true; 
+                $tieneArchivos = true;
+                break;
             }
+        }
+        closedir($directorio);
+    }
+
+    // Validar que tenga datos en el formulario
+    $tieneDatos = false;
+    if ($mysqli) {
+        $sql = "SELECT * FROM siee WHERE id_cole = '$id_cole'";
+        $result = mysqli_query($mysqli, $sql);
+        
+        if ($result && mysqli_num_rows($result) > 0) {
+            $tieneDatos = true;
         }
     }
 
-    return false; 
+    // Solo retorna true si tiene AMBOS: archivos Y datos
+    return ($tieneArchivos && $tieneDatos);
 }
 
 
