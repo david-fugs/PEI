@@ -79,7 +79,7 @@ function mostrarArchivosEducacionInicial($id_cole, $mysqli) {
     
     while ($row = mysqli_fetch_assoc($result)) {
         $id_edu_ini = $row['id_edu_ini'];
-        $path = "./../initial/files/" . $id_edu_ini;
+        $path = "./../initial/educa/files/" . $id_edu_ini;
         
         // Contar archivos reales
         $numArchivos = 0;
