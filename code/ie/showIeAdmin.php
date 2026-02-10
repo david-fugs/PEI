@@ -484,6 +484,7 @@ include('../general/observacion.php');
                         <th><i class='fas fa-file-contract me-2'></i>RESOLUCION</th>
                         <th><i class='fas fa-folder me-2'></i>ARCHIVOS</th>
                         <th><i class='fas fa-edit me-2'></i>EDITAR</th>
+                        <th><i class='fas fa-bars me-2'></i>MENÚ</th>
                     </tr>
                 </thead>
                 <tbody>";
@@ -518,6 +519,11 @@ include('../general/observacion.php');
             <a href="addieedit.php?cod_dane_cole=' . $row['cod_dane_cole'] . '" class="btn btn-action btn-warning" title="Editar">
                 <i class="fas fa-edit"></i>
             </a>
+        </td>
+        <td data-label="MENÚ" class="text-center">
+            <button type="button" class="btn btn-action btn-info" data-bs-toggle="modal" data-bs-target="#modalMenusAdmin" data-id-cole="' . $row['id_cole'] . '" title="Ver Menús del Establecimiento">
+                <i class="fas fa-bars"></i>
+            </button>
         </td>
         </tr>';
             $i++;
@@ -1358,6 +1364,359 @@ include('../general/observacion.php');
 
         return false;
     }
+</script>
+
+<!-- MODAL MENUS ADMINISTRADOR -->
+<div class="modal fade" id="modalMenusAdmin" tabindex="-1" aria-labelledby="modalMenusAdminLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h1 class="modal-title fs-5" id="modalMenusAdminLabel">
+                    <i class="fas fa-bars me-2"></i>Menús del Establecimiento Educativo
+                </h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Modo Visualización Administrador:</strong> Podrás acceder a todos los módulos del establecimiento educativo seleccionado en modo lectura.
+                </div>
+                <div class="accordion" id="menuAccordionAdmin">
+
+                    <!-- Teleológico -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#teleologicoAdmin">
+                                <i class="fas fa-bullseye me-2"></i>Teleológico
+                            </button>
+                        </h2>
+                        <div id="teleologicoAdmin" class="accordion-collapse collapse" data-bs-parent="#menuAccordionAdmin">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="#" class="menu-link-admin" data-url="../teleologico/addteleologico.php">
+                                            <i class="fas fa-arrow-right me-2"></i>Ingresar a menú Teleológico
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pedagógico -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pedagogicoAdmin">
+                                <i class="fas fa-graduation-cap me-2"></i>Pedagógico
+                            </button>
+                        </h2>
+                        <div id="pedagogicoAdmin" class="accordion-collapse collapse" data-bs-parent="#menuAccordionAdmin">
+                            <div class="accordion-body">
+                                <!-- Submenú Mallas -->
+                                <div class="accordion" id="subMenuPedagogicoAdmin">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mallasAdmin">
+                                                <i class="fas fa-th-large me-2"></i>Mallas
+                                            </button>
+                                        </h2>
+                                        <div id="mallasAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogicoAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../mallas/addmallas.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar a Mallas
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú Intensidad Horaria -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#intensidadHorariaAdmin">
+                                                <i class="fas fa-clock me-2"></i>Intensidad Horaria
+                                            </button>
+                                        </h2>
+                                        <div id="intensidadHorariaAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogicoAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../hours/intensidad_horaria.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Configurar Intensidad Horaria
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú SIEE -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sieeAdmin">
+                                                <i class="fas fa-chart-bar me-2"></i>SIEE
+                                            </button>
+                                        </h2>
+                                        <div id="sieeAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuPedagogicoAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../siee/siee.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar a SIEE
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PLANES PROYECTOS -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#planesproyectosAdmin">
+                                <i class="fas fa-project-diagram me-2"></i>Planes - Programas - Proyectos
+                            </button>
+                        </h2>
+                        <div id="planesproyectosAdmin" class="accordion-collapse collapse" data-bs-parent="#menuAccordionAdmin">
+                            <div class="accordion-body">
+                                <div class="accordion" id="subMenuplanesproyectosAdmin">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#transversalesAdmin">
+                                                <i class="fas fa-arrows-alt me-2"></i>Transversales Obligatorios
+                                            </button>
+                                        </h2>
+                                        <div id="transversalesAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectosAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../project/addproject.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar Transversales
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú Proyectos pedagógicos -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#proPedagogicosAdmin">
+                                                <i class="fas fa-clipboard me-2"></i>Planes - Programas y Proyectos
+                                            </button>
+                                        </h2>
+                                        <div id="proPedagogicosAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectosAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../proyect_transv/management/userViewProject.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar a proyectos
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú Proyectos y/o Planes -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#proyectosplanesAdmin">
+                                                <i class="fas fa-tasks me-2"></i>Proyectos y/o Planes
+                                            </button>
+                                        </h2>
+                                        <div id="proyectosplanesAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenuplanesproyectosAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../plans/addplans.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar proyectos planes
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preescolar -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#transicionAdmin">
+                                <i class="fas fa-child me-2"></i>Preescolar
+                            </button>
+                        </h2>
+                        <div id="transicionAdmin" class="accordion-collapse collapse" data-bs-parent="#menuAccordionAdmin">
+                            <div class="accordion-body">
+                                <div class="accordion" id="subMenutransicionAdmin">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#CapituloEducacionInicialAdmin">
+                                                <i class="fas fa-baby me-2"></i>Capítulo Educación Inicial
+                                            </button>
+                                        </h2>
+                                        <div id="CapituloEducacionInicialAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenutransicionAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../initial/educa/addeduca.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar a educación inicial
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú Plan de Estudios -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#planaulaAdmin">
+                                                <i class="fas fa-book me-2"></i>Plan de Estudios
+                                            </button>
+                                        </h2>
+                                        <div id="planaulaAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenutransicionAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../initial/aula/addaula.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar Plan de Estudios
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submenú Desarrollo Integral -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#desarrolloIntegralAdmin">
+                                                <i class="fas fa-chart-line me-2"></i>Seguimiento al Desarrollo Integral
+                                            </button>
+                                        </h2>
+                                        <div id="desarrolloIntegralAdmin" class="accordion-collapse collapse" data-bs-parent="#subMenutransicionAdmin">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <a href="#" class="menu-link-admin" data-url="../initial/integral/addintegral.php">
+                                                            <i class="fas fa-arrow-right me-2"></i>Ingresar desarrollo integral
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONVIVENCIA -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#convivenciaAdmin">
+                                <i class="fas fa-handshake me-2"></i>Convivencia
+                            </button>
+                        </h2>
+                        <div id="convivenciaAdmin" class="accordion-collapse collapse" data-bs-parent="#menuAccordionAdmin">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="#" class="menu-link-admin" data-url="../convivencia/manualConvivencia.php">
+                                            <i class="fas fa-arrow-right me-2"></i>Manual Convivencia
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="menu-link-admin" data-url="../convivencia/convivenciaEscolar.php">
+                                            <i class="fas fa-arrow-right me-2"></i>Convivencia Escolar
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="menu-link-admin" data-url="../convivencia/circular.php">
+                                            <i class="fas fa-arrow-right me-2"></i>Circular
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="https://www.mineducacion.gov.co/portal/men/Publicaciones/Guias/339480:Guia-No-49-Guias-pedagogicas-para-la-convivencia-escolar" target="_blank" rel="noopener">
+                                            <i class="fas fa-external-link-alt me-2"></i>Guía 49 Ministerio de Educación
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script para manejar el modal de menús del administrador
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalMenusAdmin = document.getElementById('modalMenusAdmin');
+        let selectedIdCole = null;
+
+        // Cuando se abre el modal, capturar el id_cole
+        modalMenusAdmin.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget; // Botón que activó el modal
+            selectedIdCole = button.getAttribute('data-id-cole');
+            console.log('ID Cole seleccionado:', selectedIdCole);
+        });
+
+        // Manejar clicks en los enlaces del menú
+        const menuLinksAdmin = document.querySelectorAll('.menu-link-admin');
+        menuLinksAdmin.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('data-url');
+                
+                if (selectedIdCole) {
+                    // Crear un formulario temporal para enviar el id_cole via POST
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    form.target = '_blank'; // Abrir en nueva pestaña
+                    
+                    const inputIdCole = document.createElement('input');
+                    inputIdCole.type = 'hidden';
+                    inputIdCole.name = 'admin_id_cole';
+                    inputIdCole.value = selectedIdCole;
+                    
+                    const inputViewMode = document.createElement('input');
+                    inputViewMode.type = 'hidden';
+                    inputViewMode.name = 'admin_view_mode';
+                    inputViewMode.value = '1';
+                    
+                    form.appendChild(inputIdCole);
+                    form.appendChild(inputViewMode);
+                    document.body.appendChild(form);
+                    form.submit();
+                    document.body.removeChild(form);
+                } else {
+                    alert('No se ha seleccionado un establecimiento educativo');
+                }
+            });
+        });
+    });
 </script>
 
 </body>

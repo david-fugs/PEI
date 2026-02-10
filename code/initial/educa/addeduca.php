@@ -11,6 +11,14 @@ $nombre 		= $_SESSION['nombre'];
 $tipo_usuario 	= $_SESSION['tipo_usuario'];
 $id_cole        = $_SESSION['id_cole'];
 
+// Incluir helper de administrador
+include_once(__DIR__ . '/../../../adminViewHelper.php');
+
+// Si está en modo administrador, usar el id_cole efectivo
+if (isAdminViewMode() && $tipo_usuario == "1") {
+    $id_cole = getEfectivoIdCole();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +47,12 @@ $id_cole        = $_SESSION['id_cole'];
 </head>
 
 <body>
+
+	<?php 
+	// Mostrar banner si está en modo administrador
+	include("../../../conexion.php");
+	showAdminViewBanner(); 
+	?>
 
 	<center>
 		<img src="../../../img/logo_educacion_fondo_azul.png" width="945" height="175" class="responsive">

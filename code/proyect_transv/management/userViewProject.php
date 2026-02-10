@@ -1,19 +1,14 @@
 <?php
 include("./../../../conexion.php");
 require_once './../../../sessionCheck.php';
+include_once(__DIR__ . '/../../../adminViewHelper.php'); // Asegurar que esté disponible
 
-$id_usu = $_SESSION['user']['id'];
+// El $id_cole ya está definido correctamente en sessionCheck.php
+// que incluye el adminViewHelper.php y maneja el modo administrador
 
-$sql_id_cole = "SELECT id_cole FROM usuarios WHERE id = $id_usu";
-$result = mysqli_query($mysqli, $sql_id_cole);
-
-if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $id_cole = $row['id_cole'];
-
-    // echo "Cole_id: " . $id_cole;
-} else {
-    echo "No se encontró el id_cole asociado a este usuario.";
+// Validar que tengamos un id_cole válido
+if (empty($id_cole)) {
+    die("Error: No se pudo determinar la institución educativa. Por favor, contacte al administrador.");
 }
 
 
@@ -66,12 +61,21 @@ if ($result && mysqli_num_rows($result) > 0) {
 </head>
 
 <body>
+    <?php 
+    // Mostrar banner si está en modo administrador
+    showAdminViewBanner(); 
+    ?>
+    
     <center style="margin-top: 20px;">
         <img src='../../../img/logo_educacion_fondo_azul.png' width="500" height="200" class="responsive">
     </center>
     <br />
     <center>
-        <a href="../../ie/showIe.php"><img src='../../../img/atras.png' width="72" height="72" title="Regresar" /></a><br>
+        <?php if (isAdminViewMode()): ?>
+            <a href="javascript:window.close();"><img src='../../../img/atras.png' width="72" height="72" title="Cerrar Ventana" /></a><br>
+        <?php else: ?>
+            <a href="../../ie/showIe.php"><img src='../../../img/atras.png' width="72" height="72" title="Regresar" /></a><br>
+        <?php endif; ?>
     </center>
 
     <?php
