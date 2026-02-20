@@ -55,6 +55,7 @@ $result_intensidad = mysqli_query($mysqli, $sql_intensidad);
     <table>
         <thead>
             <tr>
+                <th rowspan="2" >INSTITUCION</th>
                 <th rowspan="2">ÁREA</th>
                 <th rowspan="2">ASIGNATURA</th>
                 <th colspan="11">GRADOS</th>

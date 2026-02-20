@@ -768,16 +768,6 @@ include('../general/observacion.php');
                             </div>
                         </div>
 
-                        <!-- EVIDENCIAS -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#evidencias">
-                                    Evidencias
-                                </button>
-                            </h2>
-                            
-                        </div>
-
                         <!-- PLANES PROYECTOS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
