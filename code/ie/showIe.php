@@ -945,7 +945,7 @@ include('../general/observacion.php');
                     title="Exportar Estrategia J.U a Excel"
                     onclick="return exportarEstrategiaExcel(event);">
                     <i class="fas fa-file-excel"></i>
-                    <span>Exportar Estrategia J.U</span>
+                    <span>Exportar Tiempo Escolar</span>
                 </a>
                 <button type="button" class="btn btn-add-sede btn-lg d-flex align-items-center gap-2"
                     data-bs-toggle="modal" data-bs-target="#modalAgregarSede">
@@ -1061,7 +1061,7 @@ include('../general/observacion.php');
                     <th><i class='fas fa-building me-2'></i>SEDE</th>
                     <th><i class='fas fa-map-pin me-2'></i>ZONA</th>
                     <th><i class='fas fa-info-circle me-2'></i>ESTADO</th>
-                    <th><i class='fas fa-chess-board me-2'></i>ESTRATEGIA J.U</th>
+                    <th><i class='fas fa-chess-board me-2'></i>O. TIEMPO ESCOLAR</th>
                     <th><i class='fas fa-cogs me-2'></i>OPCIONES</th>
                 </tr>
             </thead>
@@ -1086,10 +1086,10 @@ include('../general/observacion.php');
                 <td data-label="SEDE" class="text-uppercase fw-semibold">' . $row['nombre_sede'] . '</td>
                 <td data-label="ZONA">' . $row['zona_sede'] . '</td>
                 <td data-label="ESTADO" class="text-center">' . $estadoBadge . '</td>
-                <td data-label="ESTRATEGIA J.U" class="text-center">
+                <td data-label="TIEMPO ESCOLAR" class="text-center">
                     <button class="btn btn-success btn-sm rounded-pill d-flex align-items-center gap-2" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')" ' . ($estado === 'suspendido' ? 'disabled title="Sede suspendida"' : '') . '>
                         <i class="fas fa-chart-line"></i>
-                        <span>Estrategia J.U</span>
+                        <span>Tiempo Escolar</span>
                     </button>
                 </td>
                 <td data-label="OPCIONES" class="text-center">
