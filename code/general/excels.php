@@ -1,16 +1,29 @@
 <?php
+include("./../../conexion.php");
+include("./../../sessionCheck.php");
+
 date_default_timezone_set("America/Bogota");
 $fecha = date("d/m/Y");
+
+// Personalizar nombre del archivo según el tipo de usuario
+if ($tipo_usuario == "2") {
+    // Obtener el nombre de la institución del usuario
+    $query_colegio = "SELECT nombre_cole FROM colegios WHERE id_cole = '$id_cole'";
+    $result_colegio = mysqli_query($mysqli, $query_colegio);
+    $nombre_institucion = "Mi_Institucion";
+    if ($result_colegio && $row = mysqli_fetch_assoc($result_colegio)) {
+        $nombre_institucion = str_replace(" ", "_", $row['nombre_cole']);
+    }
+    $filename = "Informe_PEI_" . $nombre_institucion . "_" . $fecha . ".xls";
+} else {
+    $filename = "Informe cargue de archivos PEI "."-" . $fecha . ".xls";
+}
+
 header("Content-Type: text/html;charset=utf-8");
 header("Content-Type: application/vnd.ms-excel charset=iso-8859-1");
-$filename = "Informe cargue de archivos PEI "."-" . $fecha . ".xls";
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Disposition: attachment; filename=" . $filename . "");
 ?>
-
-<?php
-include("./../../conexion.php");
-include("./../../sessionCheck.php");
 include("./teologico.php");
 include("./mallas.php");
 include("./siee.php");
@@ -29,7 +42,10 @@ include("./intensidadHoraria.php");
 
 $consulta = "SELECT * FROM colegios";
 
-if (isset($_POST['filtrar'])) {
+// Si el usuario es tipo 2, filtrar automáticamente por su institución
+if ($tipo_usuario == "2") {
+    $consulta = "SELECT * FROM colegios WHERE id_cole = '$id_cole'";
+} elseif (isset($_POST['filtrar'])) {
     $filtro = $_POST['filtro'];
     $consulta = "SELECT * FROM colegios WHERE nombre_cole LIKE '%$filtro%' OR id_cole = '$filtro'";
 }

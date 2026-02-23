@@ -98,8 +98,23 @@
                 $especialidades_tecnica = implode(', ', $especialidades_array);
             }
 
-            // Especialidad académica
-            $especialidad_academica = isset($_POST['especialidad_academica']) ? $_POST['especialidad_academica'] : '';
+            // Especialidad académica (ahora puede ser múltiple, se guardan separadas por comas)
+            $especialidad_academica = '';
+            if(isset($_POST['especialidad_academica']) && is_array($_POST['especialidad_academica'])) {
+                $especialidades_acad_array = array_filter($_POST['especialidad_academica'], function($value) {
+                    return !empty(trim($value));
+                });
+                $especialidad_academica = implode(', ', $especialidades_acad_array);
+            }
+
+            // Modelos educativos flexibles adicionales (pueden ser múltiples, se guardan separados por comas)
+            $modelos_flexibles_adicionales = '';
+            if(isset($_POST['modelos_flexibles_adicionales']) && is_array($_POST['modelos_flexibles_adicionales'])) {
+                $modelos_array = array_filter($_POST['modelos_flexibles_adicionales'], function($value) {
+                    return !empty(trim($value));
+                });
+                $modelos_flexibles_adicionales = implode(', ', $modelos_array);
+            }
            
             $update = "UPDATE colegios SET 
                 nit_cole='".$nit_cole."', 
@@ -150,6 +165,7 @@
                 modelo_otro_cual='".$modelo_otro_cual."',
                 especialidades_tecnica='".$especialidades_tecnica."',
                 especialidad_academica='".$especialidad_academica."',
+                modelos_flexibles_adicionales='".$modelos_flexibles_adicionales."',
                 fecha_edit_cole='".$fecha_edit_cole."', 
                 id_usu='".$id_usu."' 
                 WHERE cod_dane_cole='".$cod_dane_cole."'";

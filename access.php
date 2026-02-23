@@ -85,6 +85,18 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </span>
+                            <span class="navlink">OBSERVACIONES INSTITUCIONALES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/observaciones/observaciones.php" class="nav_link sublink">Gestionar Observaciones</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
                                 <i class="fa-solid fa-person-chalkboard"></i>
                             </span>
                             <span class="navlink">PROYECTOS PEDAGÓGICOS</span>
@@ -172,6 +184,30 @@ $id_cole = $_SESSION['id_cole'];
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
+                                <i class="fa-solid fa-bell"></i>
+                            </span>
+                            <span class="navlink">SEGUMIENTO PEI</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/general/generalReport.php" class="nav_link sublink">Ver Seguimiento PEI</a>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </span>
+                            <span class="navlink">OBSERVACIONES INSTITUCIONALES</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/observaciones/observaciones.php" class="nav_link sublink">Ver Mis Observaciones</a>
+                        </ul>
+                    </li>
+                    <!-- <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
                                 <i class="fa-solid fa-note-sticky"></i>
                             </span>
                             <span class="navlink">OBSERVACIONES</span>
@@ -192,7 +228,7 @@ $id_cole = $_SESSION['id_cole'];
                         <ul class="menu_items submenu">
                             <a href="code/anotaciones/addsolicitudes.php" class="nav_link sublink">Consultar Solicitudes</a>
                         </ul>
-                    </li>
+                    </li> -->
                     <hr style="border: 1px solid #F3840D; border-radius: 5px;">
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">

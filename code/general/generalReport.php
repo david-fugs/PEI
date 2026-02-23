@@ -23,7 +23,10 @@ include("./intensidadHoraria.php");
 
 $consulta = "SELECT * FROM colegios";
 
-if (isset($_POST['filtrar'])) {
+// Si el usuario es tipo 2, filtrar automáticamente por su institución
+if ($tipo_usuario == "2") {
+    $consulta = "SELECT * FROM colegios WHERE id_cole = '$id_cole'";
+} elseif (isset($_POST['filtrar'])) {
     $filtro = $_POST['filtro'];
     $consulta = "SELECT * FROM colegios WHERE nombre_cole LIKE '%$filtro%' OR id_cole = '$filtro'";
 }
@@ -1370,7 +1373,8 @@ $resultados = mysqli_query($mysqli, $consulta);
             </a>
         </div>
 
-        <!-- Formulario de búsqueda mejorado -->
+        <!-- Formulario de búsqueda mejorado (solo para usuarios que no sean tipo 2) -->
+        <?php if ($tipo_usuario != "2"): ?>
         <div class="search-form">
             <form action="#" method="post">
                 <h2><i class="fas fa-file-chart-line"></i> Informe General PEI - Seguimiento de Archivos</h2>
@@ -1382,6 +1386,11 @@ $resultados = mysqli_query($mysqli, $consulta);
                 </div>
             </form>
         </div>
+        <?php else: ?>
+        <div class="search-form">
+            <h2><i class="fas fa-file-chart-line"></i> Informe General PEI - Mi Institución</h2>
+        </div>
+        <?php endif; ?>
 
         <!-- Controles y opciones -->
         <div class="controls-section">

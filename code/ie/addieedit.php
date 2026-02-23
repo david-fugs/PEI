@@ -256,6 +256,54 @@
                         <input type="text" name="modelo_otro_cual" id="modelo_otro_cual" class="form-control" style="text-transform:uppercase;" value='<?php if(isset($row['modelo_otro_cual'])){echo $row['modelo_otro_cual'];} ?>' />
                     </div>
                 </div>
+
+                <!-- CAMPOS DINÁMICOS PARA MODELOS ADICIONALES -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <label><b>Modelos Adicionales:</b></label>
+                        <p style="color: #666; font-size: 0.9em;">Agregue modelos educativos flexibles adicionales que no estén en la lista anterior</p>
+                    </div>
+                </div>
+                <div id="modelos_adicionales_container">
+                    <?php 
+                    if(isset($row['modelos_flexibles_adicionales']) && !empty($row['modelos_flexibles_adicionales'])) {
+                        $modelos = explode(',', $row['modelos_flexibles_adicionales']);
+                        foreach($modelos as $index => $modelo) {
+                            $modelo = trim($modelo);
+                            echo "
+                            <div class='row mb-2 modelo-adicional-row' id='modelo_adicional_row_$index'>
+                                <div class='col-12 col-sm-10'>
+                                    <input type='text' name='modelos_flexibles_adicionales[]' class='form-control' style='text-transform:uppercase;' value='$modelo' placeholder='Ingrese el nombre del modelo' />
+                                </div>
+                                <div class='col-12 col-sm-2'>
+                                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarModeloAdicional(\"modelo_adicional_row_$index\")'>
+                                        <i class='fas fa-trash'></i> Eliminar
+                                    </button>
+                                </div>
+                            </div>";
+                        }
+                    } else {
+                        echo "
+                        <div class='row mb-2 modelo-adicional-row' id='modelo_adicional_row_0'>
+                            <div class='col-12 col-sm-10'>
+                                <input type='text' name='modelos_flexibles_adicionales[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese el nombre del modelo' />
+                            </div>
+                            <div class='col-12 col-sm-2'>
+                                <button type='button' class='btn btn-danger btn-sm' onclick='eliminarModeloAdicional(\"modelo_adicional_row_0\")'>
+                                    <i class='fas fa-trash'></i> Eliminar
+                                </button>
+                            </div>
+                        </div>";
+                    }
+                    ?>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success btn-sm" onclick="agregarModeloAdicional()">
+                            <i class="fas fa-plus"></i> Agregar otro modelo
+                        </button>
+                    </div>
+                </div>
             </div>
             <hr style="border: 4px solid #04547c; border-radius: 5px;">
 
@@ -451,12 +499,52 @@
                 </div>
             </div>
 
-            <!-- CAMPO DINÁMICO PARA ESPECIALIDAD ACADÉMICA -->
+            <!-- CAMPOS DINÁMICOS PARA ESPECIALIDADES ACADÉMICAS -->
             <div class="form-group" id="especialidad_academica_div" style="display: none;">
                 <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <label for="especialidad_academica"><b>Especialidad de Media Académica:</b></label>
-                        <input type="text" name="especialidad_academica" id="especialidad_academica" class="form-control" style="text-transform:uppercase;" value='<?php if(isset($row['especialidad_academica'])){echo $row['especialidad_academica'];} ?>' placeholder='Ingrese la especialidad académica' />
+                    <div class="col-12">
+                        <label><b>Especialidades de Media Académica:</b></label>
+                        <p style="color: #666; font-size: 0.9em;">Agregue una o más especialidades académicas que ofrece la institución</p>
+                    </div>
+                </div>
+                <div id="especialidades_academica_container">
+                    <?php 
+                    if(isset($row['especialidad_academica']) && !empty($row['especialidad_academica'])) {
+                        $especialidades_acad = explode(',', $row['especialidad_academica']);
+                        foreach($especialidades_acad as $index => $especialidad) {
+                            $especialidad = trim($especialidad);
+                            echo "
+                            <div class='row mb-2 especialidad-academica-row' id='especialidad_academica_row_$index'>
+                                <div class='col-12 col-sm-10'>
+                                    <input type='text' name='especialidad_academica[]' class='form-control' style='text-transform:uppercase;' value='$especialidad' placeholder='Ingrese la especialidad académica' />
+                                </div>
+                                <div class='col-12 col-sm-2'>
+                                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadAcademica(\"especialidad_academica_row_$index\")'>
+                                        <i class='fas fa-trash'></i> Eliminar
+                                    </button>
+                                </div>
+                            </div>";
+                        }
+                    } else {
+                        echo "
+                        <div class='row mb-2 especialidad-academica-row' id='especialidad_academica_row_0'>
+                            <div class='col-12 col-sm-10'>
+                                <input type='text' name='especialidad_academica[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese la especialidad académica' />
+                            </div>
+                            <div class='col-12 col-sm-2'>
+                                <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadAcademica(\"especialidad_academica_row_0\")'>
+                                    <i class='fas fa-trash'></i> Eliminar
+                                </button>
+                            </div>
+                        </div>";
+                    }
+                    ?>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success btn-sm" onclick="agregarEspecialidadAcademica()">
+                            <i class="fas fa-plus"></i> Agregar otra especialidad académica
+                        </button>
                     </div>
                 </div>
             </div>
@@ -592,6 +680,24 @@
             }
         ?>;
 
+        // Contador global para modelos adicionales
+        let contadorModelosAdicionales = <?php 
+            if(isset($row['modelos_flexibles_adicionales']) && !empty($row['modelos_flexibles_adicionales'])) {
+                echo count(explode(',', $row['modelos_flexibles_adicionales']));
+            } else {
+                echo "1";
+            }
+        ?>;
+
+        // Contador global para especialidades académicas
+        let contadorEspecialidadesAcademicas = <?php 
+            if(isset($row['especialidad_academica']) && !empty($row['especialidad_academica'])) {
+                echo count(explode(',', $row['especialidad_academica']));
+            } else {
+                echo "1";
+            }
+        ?>;
+
         // Función para mostrar/ocultar opciones de ciclos
         function toggleCiclos() {
             const tieneCiclos = document.getElementById('tiene_ciclos').value;
@@ -678,6 +784,82 @@
                     row.remove();
                 } else {
                     alert('Debe mantener al menos una especialidad técnica');
+                }
+            }
+        }
+
+        // Función para agregar un nuevo modelo adicional
+        function agregarModeloAdicional() {
+            const container = document.getElementById('modelos_adicionales_container');
+            const newRow = document.createElement('div');
+            newRow.className = 'row mb-2 modelo-adicional-row';
+            newRow.id = 'modelo_adicional_row_' + contadorModelosAdicionales;
+            
+            newRow.innerHTML = `
+                <div class='col-12 col-sm-10'>
+                    <input type='text' name='modelos_flexibles_adicionales[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese el nombre del modelo' />
+                </div>
+                <div class='col-12 col-sm-2'>
+                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarModeloAdicional("modelo_adicional_row_${contadorModelosAdicionales}")'>
+                        <i class='fas fa-trash'></i> Eliminar
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+            contadorModelosAdicionales++;
+        }
+
+        // Función para eliminar un modelo adicional
+        function eliminarModeloAdicional(rowId) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                // Verificar que no sea la única fila
+                const totalRows = document.querySelectorAll('.modelo-adicional-row').length;
+                if (totalRows > 1) {
+                    row.remove();
+                } else {
+                    // Si es la única fila, solo limpiar el input
+                    const input = row.querySelector('input');
+                    if (input) {
+                        input.value = '';
+                    }
+                }
+            }
+        }
+
+        // Función para agregar una nueva especialidad académica
+        function agregarEspecialidadAcademica() {
+            const container = document.getElementById('especialidades_academica_container');
+            const newRow = document.createElement('div');
+            newRow.className = 'row mb-2 especialidad-academica-row';
+            newRow.id = 'especialidad_academica_row_' + contadorEspecialidadesAcademicas;
+            
+            newRow.innerHTML = `
+                <div class='col-12 col-sm-10'>
+                    <input type='text' name='especialidad_academica[]' class='form-control' style='text-transform:uppercase;' placeholder='Ingrese la especialidad académica' />
+                </div>
+                <div class='col-12 col-sm-2'>
+                    <button type='button' class='btn btn-danger btn-sm' onclick='eliminarEspecialidadAcademica("especialidad_academica_row_${contadorEspecialidadesAcademicas}")'>
+                        <i class='fas fa-trash'></i> Eliminar
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+            contadorEspecialidadesAcademicas++;
+        }
+
+        // Función para eliminar una especialidad académica
+        function eliminarEspecialidadAcademica(rowId) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                // Verificar que no sea la única fila
+                const totalRows = document.querySelectorAll('.especialidad-academica-row').length;
+                if (totalRows > 1) {
+                    row.remove();
+                } else {
+                    alert('Debe mantener al menos una especialidad académica');
                 }
             }
         }
