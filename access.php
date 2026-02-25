@@ -79,7 +79,7 @@ $id_cole = $_SESSION['id_cole'];
                             <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
                         <ul class="menu_items submenu">
-                            <a href="./code/ie/showIeAdmin.php" class="nav_link sublink">Ver Seguimiento Jornada Unica</a>
+                            <a href="./code/ie/showIeAdmin.php" class="nav_link sublink">Ver seguimiento Tiempo Escolar</a>
                         </ul>
                     </li>
                     <li class="item">

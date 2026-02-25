@@ -231,7 +231,7 @@ $totalInstituciones = count($institucionesUnicas);
                 <th rowspan="2">Estado Sede</th>
                 <th rowspan="2">Aliado</th>
                 <th rowspan="2">Eje Movilizador</th>
-                <th colspan="3">Preescolar</th>
+                <th colspan="4">Preescolar</th>
                 <th colspan="11">Básica y Media</th>
                 <th rowspan="2">Total Estudiantes</th>
             </tr>
@@ -239,6 +239,7 @@ $totalInstituciones = count($institucionesUnicas);
                 <th>Prejardín</th>
                 <th>Jardín</th>
                 <th>Transición</th>
+                <th>Total Preesco</th>
                 <th>1º</th>
                 <th>2º</th>
                 <th>3º</th>
@@ -271,6 +272,7 @@ $totalInstituciones = count($institucionesUnicas);
                         <td><?php echo $totalesInstitucion['prejardin']; ?></td>
                         <td><?php echo $totalesInstitucion['jardin']; ?></td>
                         <td><?php echo $totalesInstitucion['transicion']; ?></td>
+                        <td><?php echo $totalesInstitucion['prejardin'] + $totalesInstitucion['jardin'] + $totalesInstitucion['transicion']; ?></td>
                         <td><?php echo $totalesInstitucion['1']; ?></td>
                         <td><?php echo $totalesInstitucion['2']; ?></td>
                         <td><?php echo $totalesInstitucion['3']; ?></td>
@@ -284,7 +286,7 @@ $totalInstituciones = count($institucionesUnicas);
                         <td><?php echo $totalesInstitucion['11']; ?></td>
                         <td><?php echo $totalesInstitucion['total_estudiantes']; ?></td>
                     </tr>
-                    <tr><td colspan="23" style="height: 5px; background-color: #fff;"></td></tr>
+                    <tr><td colspan="24" style="height: 5px; background-color: #fff;"></td></tr>
                     <?php
                     // Reiniciar totales
                     $totalesInstitucion = array_fill_keys(array_keys($totalesInstitucion), 0);
@@ -336,6 +338,7 @@ $totalInstituciones = count($institucionesUnicas);
                     <td><?php echo intval($row['cantidad_prejardin']); ?></td>
                     <td><?php echo intval($row['cantidad_jardin']); ?></td>
                     <td><?php echo intval($row['cantidad_transicion']); ?></td>
+                    <td><?php echo intval($row['cantidad_prejardin']) + intval($row['cantidad_jardin']) + intval($row['cantidad_transicion']); ?></td>
                     <td><?php echo intval($row['cantidad_1']); ?></td>
                     <td><?php echo intval($row['cantidad_2']); ?></td>
                     <td><?php echo intval($row['cantidad_3']); ?></td>
@@ -360,6 +363,7 @@ $totalInstituciones = count($institucionesUnicas);
                     <td><?php echo $totalesInstitucion['prejardin']; ?></td>
                     <td><?php echo $totalesInstitucion['jardin']; ?></td>
                     <td><?php echo $totalesInstitucion['transicion']; ?></td>
+                    <td><?php echo $totalesInstitucion['prejardin'] + $totalesInstitucion['jardin'] + $totalesInstitucion['transicion']; ?></td>
                     <td><?php echo $totalesInstitucion['1']; ?></td>
                     <td><?php echo $totalesInstitucion['2']; ?></td>
                     <td><?php echo $totalesInstitucion['3']; ?></td>
@@ -376,12 +380,13 @@ $totalInstituciones = count($institucionesUnicas);
             <?php } ?>
             
             <!-- Fila de totales generales -->
-            <tr><td colspan="23" style="height: 10px; background-color: #fff;"></td></tr>
+            <tr><td colspan="24" style="height: 10px; background-color: #fff;"></td></tr>
             <tr class="general-total">
                 <td colspan="8">TOTAL GENERAL (TODAS LAS INSTITUCIONES)</td>
                 <td><?php echo $totalGeneral['prejardin']; ?></td>
                 <td><?php echo $totalGeneral['jardin']; ?></td>
                 <td><?php echo $totalGeneral['transicion']; ?></td>
+                <td><?php echo $totalGeneral['prejardin'] + $totalGeneral['jardin'] + $totalGeneral['transicion']; ?></td>
                 <td><?php echo $totalGeneral['1']; ?></td>
                 <td><?php echo $totalGeneral['2']; ?></td>
                 <td><?php echo $totalGeneral['3']; ?></td>

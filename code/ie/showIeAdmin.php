@@ -363,7 +363,7 @@ include('../general/observacion.php');
                 title="Exportar todas las estrategias J.U de todas las instituciones"
                 onclick="return exportarTodasEstrategiasExcel(event);">
                 <i class="fas fa-file-excel fa-lg"></i>
-                <span>EXPORTAR TODAS LAS ESTRATEGIAS J.U</span>
+                <span>EXPORTAR TODA LA INFORMACION DE LOS I.E. TIEMPO ESCOLAR</span>
             </a>
             <small class="text-muted d-block mt-2">
                 <i class="fas fa-info-circle"></i> Exporta las estrategias de todas las instituciones educativas (incluye sedes sin estrategia)
@@ -382,10 +382,10 @@ include('../general/observacion.php');
                         // Conectar a la base de datos para obtener todas las instituciones
                         include("../../conexion.php");
                         mysqli_set_charset($mysqli, 'utf8');
-                        
+
                         $query_instituciones = "SELECT id_cole, nombre_cole, cod_dane_cole FROM colegios ORDER BY nombre_cole ASC";
                         $result_instituciones = $mysqli->query($query_instituciones);
-                        
+
                         while ($inst = mysqli_fetch_array($result_instituciones)) {
                             $selected = ($id_cole_seleccionado == $inst['id_cole']) ? 'selected' : '';
                             echo "<option value='{$inst['id_cole']}' $selected>{$inst['nombre_cole']} - DANE: {$inst['cod_dane_cole']}</option>";
@@ -397,81 +397,81 @@ include('../general/observacion.php');
         </div>
     </div>
 
-                            <!-- Seccion de Observaciones Administracion (solo lectura) -->
-                            <div class="mt-5">
-                                <h1 class="main-title text-center mb-4">
-                                    <i class="fas fa-clipboard-check me-3"></i>
-                                    OBSERVACIONES ADMINISTRACION
-                                </h1>
+    <!-- Seccion de Observaciones Administracion (solo lectura) -->
+    <div class="mt-5">
+        <h1 class="main-title text-center mb-4">
+            <i class="fas fa-clipboard-check me-3"></i>
+            OBSERVACIONES ADMINISTRACION
+        </h1>
 
-                                <div class="section-card">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <?php
-                                            // Determinar el id_cole a usar (parámetro admin o null)
-                                            $id_cole_to_show = $id_cole_seleccionado ?: 0;
-                                            $contenido_observacion = MostrarInformacionObservacion($id_cole_to_show, $mysqli);
-                                            ?>
+        <div class="section-card">
+            <div class="row">
+                <div class="col-12">
+                    <?php
+                    // Determinar el id_cole a usar (parámetro admin o null)
+                    $id_cole_to_show = $id_cole_seleccionado ?: 0;
+                    $contenido_observacion = MostrarInformacionObservacion($id_cole_to_show, $mysqli);
+                    ?>
 
-                                            <div class="mb-3">
-                                                <label for="observacion_admin" class="form-label">
-                                                    <i class="fas fa-edit me-2"></i>Observaciones para este Establecimiento Educativo
-                                                </label>
-                                                <textarea
-                                                    id="observacion_admin"
-                                                    class="form-control"
-                                                    rows="6"
-                                                    readonly
-                                                    placeholder="Observaciones administrativas (solo lectura)"><?php echo htmlspecialchars($contenido_observacion); ?></textarea>
-                                            </div>
+                    <div class="mb-3">
+                        <label for="observacion_admin" class="form-label">
+                            <i class="fas fa-edit me-2"></i>Observaciones para este Establecimiento Educativo
+                        </label>
+                        <textarea
+                            id="observacion_admin"
+                            class="form-control"
+                            rows="6"
+                            readonly
+                            placeholder="Observaciones administrativas (solo lectura)"><?php echo htmlspecialchars($contenido_observacion); ?></textarea>
+                    </div>
 
-                                            <div class="alert alert-info mt-3">
-                                                <i class="fas fa-info-circle me-2"></i>Esta sección es de solo lectura. Para editar observaciones contacte al administrador del sistema.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>Esta sección es de solo lectura. Para editar observaciones contacte al administrador del sistema.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Contenido de la institución seleccionada -->
     <div id="contenidoInstitucion" class="content-section <?php echo $id_cole_seleccionado ? 'active' : ''; ?>">
         <?php if ($id_cole_seleccionado): ?>
-        
-        <!-- Botones de acciones modernizados -->
-        <div class="d-flex justify-content-end mb-4 gap-3">
-            <a href="exportar_estrategia_excel.php?id_cole=<?php echo $id_cole_seleccionado; ?>"
-                class="btn btn-success btn-lg d-flex align-items-center gap-2"
-                title="Exportar Tiempo Escolar a Excel"
-                onclick="return exportarEstrategiaExcel(event);">
-                <i class="fas fa-file-excel"></i>
-                <span>Exportar Tiempo Escolar</span>
-            </a>
-            <button type="button" class="btn btn-add-sede btn-lg d-flex align-items-center gap-2"
-                data-bs-toggle="modal" data-bs-target="#modalAgregarSede">
-                <i class="fas fa-plus-circle"></i>
-                <span>Agregar Sede</span>
-            </button>
-        </div>
 
-        <?php
-        date_default_timezone_set("America/Bogota");
-        require_once("../../zebra.php");
+            <!-- Botones de acciones modernizados -->
+            <div class="d-flex justify-content-end mb-4 gap-3">
+                <a href="exportar_estrategia_excel.php?id_cole=<?php echo $id_cole_seleccionado; ?>"
+                    class="btn btn-success btn-lg d-flex align-items-center gap-2"
+                    title="Exportar Tiempo Escolar a Excel"
+                    onclick="return exportarEstrategiaExcel(event);">
+                    <i class="fas fa-file-excel"></i>
+                    <span>Exportar Tiempo Escolar</span>
+                </a>
+                <button type="button" class="btn btn-add-sede btn-lg d-flex align-items-center gap-2"
+                    data-bs-toggle="modal" data-bs-target="#modalAgregarSede">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Agregar Sede</span>
+                </button>
+            </div>
 
-        // Configurar charset UTF-8 para la conexion
-        mysqli_set_charset($mysqli, 'utf8');
+            <?php
+            date_default_timezone_set("America/Bogota");
+            require_once("../../zebra.php");
 
-        // Inicializa la consulta base
-        $query = "SELECT * FROM colegios WHERE id_cole=$id_cole_seleccionado";
+            // Configurar charset UTF-8 para la conexion
+            mysqli_set_charset($mysqli, 'utf8');
 
-        // Ejecuta la consulta
-        $res = $mysqli->query($query);
-        if (!$res) {
-            die("Error en la consulta: " . $mysqli->error);
-        }
+            // Inicializa la consulta base
+            $query = "SELECT * FROM colegios WHERE id_cole=$id_cole_seleccionado";
 
-        $num_registros = mysqli_num_rows($res);
-        $resul_x_pagina = 500;
-        echo "<section class='content'>
+            // Ejecuta la consulta
+            $res = $mysqli->query($query);
+            if (!$res) {
+                die("Error en la consulta: " . $mysqli->error);
+            }
+
+            $num_registros = mysqli_num_rows($res);
+            $resul_x_pagina = 500;
+            echo "<section class='content'>
         <div class='table-responsive'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -489,21 +489,21 @@ include('../general/observacion.php');
                 </thead>
                 <tbody>";
 
-        $paginacion = new Zebra_Pagination();
-        $paginacion->records($num_registros);
-        $paginacion->records_per_page($resul_x_pagina);
-        // Agrega el LIMIT con paginacion
-        $query .= " LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . ", $resul_x_pagina";
-        // Ejecuta la consulta con paginacion
-        $result = $mysqli->query($query);
-        if (!$result) {
-            die("Error en la consulta: " . $mysqli->error);
-        }
-        $paginacion->render();
-        $i = 1;
-        while ($row = mysqli_fetch_array($result)) {
-            // Formatear los valores como moneda
-            echo '<tr>
+            $paginacion = new Zebra_Pagination();
+            $paginacion->records($num_registros);
+            $paginacion->records_per_page($resul_x_pagina);
+            // Agrega el LIMIT con paginacion
+            $query .= " LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . ", $resul_x_pagina";
+            // Ejecuta la consulta con paginacion
+            $result = $mysqli->query($query);
+            if (!$result) {
+                die("Error en la consulta: " . $mysqli->error);
+            }
+            $paginacion->render();
+            $i = 1;
+            while ($row = mysqli_fetch_array($result)) {
+                // Formatear los valores como moneda
+                echo '<tr>
         <td data-label="no." class="fw-bold text-primary">' . $row['id_cole'] . '</td>
         <td data-label="DANE" class="fw-semibold">' . $row['cod_dane_cole'] . '</td>
         <td data-label="nit">' . $row['nit_cole'] . '</td>
@@ -526,25 +526,25 @@ include('../general/observacion.php');
             </button>
         </td>
         </tr>';
-            $i++;
-        }
-        echo '</tbody></table>
+                $i++;
+            }
+            echo '</tbody></table>
         </div>
     </section>';
-        ?>
+            ?>
 
-        <!-- Seccion de Sedes -->
-        <div class="mt-5">
-            <h1 class="main-title text-center mb-4">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                SEDES EDUCATIVAS
-            </h1>
-            <?php
-            // Inicializa consulta SEDES
-            $query = "SELECT * FROM colegios INNER JOIN sedes ON colegios.id_cole=sedes.id_cole WHERE colegios.id_cole=$id_cole_seleccionado ORDER BY sedes.nombre_sede ASC";
-            $res = $mysqli->query($query);
+            <!-- Seccion de Sedes -->
+            <div class="mt-5">
+                <h1 class="main-title text-center mb-4">
+                    <i class="fas fa-map-marker-alt me-3"></i>
+                    SEDES EDUCATIVAS
+                </h1>
+                <?php
+                // Inicializa consulta SEDES
+                $query = "SELECT * FROM colegios INNER JOIN sedes ON colegios.id_cole=sedes.id_cole WHERE colegios.id_cole=$id_cole_seleccionado ORDER BY sedes.nombre_sede ASC";
+                $res = $mysqli->query($query);
 
-            echo "<div class='table-responsive'>
+                echo "<div class='table-responsive'>
         <table class='table table-striped table-hover'>
             <thead>
                 <tr>
@@ -559,19 +559,19 @@ include('../general/observacion.php');
             </thead>
             <tbody>";
 
-            $consulta = "SELECT * FROM colegios INNER JOIN sedes ON colegios.id_cole=sedes.id_cole WHERE colegios.id_cole=$id_cole_seleccionado ORDER BY sedes.nombre_sede ASC";
-            $result = $mysqli->query($consulta);
+                $consulta = "SELECT * FROM colegios INNER JOIN sedes ON colegios.id_cole=sedes.id_cole WHERE colegios.id_cole=$id_cole_seleccionado ORDER BY sedes.nombre_sede ASC";
+                $result = $mysqli->query($consulta);
 
-            $i = 1;
-            while ($row = mysqli_fetch_array($result)) {
-                // Determinar estado y clase CSS
-                $estado = isset($row['estado']) ? $row['estado'] : 'activo';
-                $estadoClass = $estado === 'suspendido' ? 'table-danger' : '';
-                $estadoBadge = $estado === 'suspendido' ?
-                    '<span class="badge bg-danger"><i class="fas fa-pause me-1"></i>Suspendido</span>' :
-                    '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Activo</span>';
+                $i = 1;
+                while ($row = mysqli_fetch_array($result)) {
+                    // Determinar estado y clase CSS
+                    $estado = isset($row['estado']) ? $row['estado'] : 'activo';
+                    $estadoClass = $estado === 'suspendido' ? 'table-danger' : '';
+                    $estadoBadge = $estado === 'suspendido' ?
+                        '<span class="badge bg-danger"><i class="fas fa-pause me-1"></i>Suspendido</span>' :
+                        '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Activo</span>';
 
-                echo '
+                    echo '
             <tr class="' . $estadoClass . '">
                 <td data-label="No." class="fw-bold text-primary">' . $i++ . '</td>
                 <td data-label="DANE" class="fw-semibold">' . $row['cod_dane_sede'] . '</td>
@@ -595,22 +595,22 @@ include('../general/observacion.php');
                             <i class="fas fa-edit"></i>
                         </button>';
 
-                // Boton de suspender/activar
-                if ($estado === 'activo') {
-                    echo '<button class="btn btn-action btn-warning btn-suspender-sede" 
+                    // Boton de suspender/activar
+                    if ($estado === 'activo') {
+                        echo '<button class="btn btn-action btn-warning btn-suspender-sede" 
                     data-cod="' . $row['cod_dane_sede'] . '" 
                     title="Suspender Sede">
                     <i class="fas fa-pause"></i>
                 </button>';
-                } else {
-                    echo '<button class="btn btn-action btn-success btn-activar-sede" 
+                    } else {
+                        echo '<button class="btn btn-action btn-success btn-activar-sede" 
                     data-cod="' . $row['cod_dane_sede'] . '" 
                     title="Activar Sede">
                     <i class="fas fa-play"></i>
                 </button>';
-                }
+                    }
 
-                echo '  <a href="eliminar_sede.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" 
+                    echo '  <a href="eliminar_sede.php?cod_dane_sede=' . $row['cod_dane_sede'] . '" 
                            class="btn btn-action btn-danger" 
                            onclick="return confirm(\'¿Estas seguro de eliminar esta sede?\')"
                            title="Eliminar Sede">
@@ -619,138 +619,144 @@ include('../general/observacion.php');
                     </div>
                 </td>
             </tr>';
-            }
+                }
 
-            echo '</tbody>
+                echo '</tbody>
         </table>
     </div>
     </div>';
-            ?>
+                ?>
 
-        <?php endif; ?>
+            <?php endif; ?>
+            </div>
     </div>
-</div>
 
-<!-- Modal Editar Sede -->
-<div class="modal fade" id="modalEditarSede" tabindex="-1" aria-labelledby="modalEditarSedeLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="formEditarSede">
+    <!-- Modal Editar Sede -->
+    <div class="modal fade" id="modalEditarSede" tabindex="-1" aria-labelledby="modalEditarSedeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formEditarSede">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarSedeLabel">Editar Sede</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="nombre_sede" class="form-label">Codigo Dane</label>
+                        <input type="number" class="form-control" name="cod_dane_sede" id="cod_dane_sede" min="0">
+                        <input type="hidden" class="form-control" name="cod_dane_sede_old" id="cod_dane_sede1">
+
+                        <div class="mb-3 mt-3">
+                            <label for="nombre_sede" class="form-label">Nombre de la Sede</label>
+                            <input type="text" class="form-control" name="nombre_sede" id="nombre_sede1">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="zona_sede" class="form-label">Zona</label>
+                            <select class="form-control" name="zona_sede" id="zona_sede">
+                                <option value="">Seleccione...</option>
+                                <option value="URBANO">URBANO</option>
+                                <option value="RURAL">RURAL</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="estado_sede" class="form-label">Estado</label>
+                            <select class="form-control" name="estado_sede" id="estado_sede">
+                                <option value="activo">Activo</option>
+                                <option value="suspendido">Suspendido</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Sede -->
+    <div class="modal fade" id="modalAgregarSede" tabindex="-1" aria-labelledby="modalAgregarSedeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="procesar_sede.php" method="POST" class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditarSedeLabel">Editar Sede</h5>
+                    <h5 class="modal-title" id="modalAgregarSedeLabel">Agregar Sede</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <label for="nombre_sede" class="form-label">Codigo Dane</label>
-                    <input type="number" class="form-control" name="cod_dane_sede" id="cod_dane_sede" min="0">
-                    <input type="hidden" class="form-control" name="cod_dane_sede_old" id="cod_dane_sede1">
+                    <input type="hidden" name="id_cole" value="<?= $id_cole_seleccionado ?>">
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3">
+                        <label for="codigo_dane" class="form-label">Codigo DANE Sede</label>
+                        <input type="text" class="form-control" id="codigo_dane" name="codigo_dane" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="nombre_sede" class="form-label">Nombre de la Sede</label>
-                        <input type="text" class="form-control" name="nombre_sede" id="nombre_sede1">
+                        <input type="text" class="form-control" id="nombre_sede" name="nombre_sede" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="zona_sede" class="form-label">Zona</label>
-                        <select class="form-control" name="zona_sede" id="zona_sede">
+                        <label for="zona" class="form-label">Zona</label>
+                        <select class="form-select" id="zona" name="zona" required>
                             <option value="">Seleccione...</option>
-                            <option value="URBANO">URBANO</option>
-                            <option value="RURAL">RURAL</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="estado_sede" class="form-label">Estado</label>
-                        <select class="form-control" name="estado_sede" id="estado_sede">
-                            <option value="activo">Activo</option>
-                            <option value="suspendido">Suspendido</option>
+                            <option value="RURAL">Rural</option>
+                            <option value="URBANO">Urbano</option>
+                            <option value="N/A">N/A</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-dark">Guardar Sede</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
-<!-- Modal Agregar Sede -->
-<div class="modal fade" id="modalAgregarSede" tabindex="-1" aria-labelledby="modalAgregarSedeLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="procesar_sede.php" method="POST" class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAgregarSedeLabel">Agregar Sede</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" name="id_cole" value="<?= $id_cole_seleccionado ?>">
+    <!-- Modal Estrategia JU - Diseño Moderno -->
+    <div class="modal fade" id="estrategiaModal" tabindex="-1" aria-labelledby="estrategiaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form action="guardar_estrategia.php" id="formEstrategia" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="estrategiaModalLabel">
+                            <i class="fas fa-chess-board me-2"></i>Configurar Estrategia Jornada Unica
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="codigo_dane" class="form-label">Codigo DANE Sede</label>
-                    <input type="text" class="form-control" id="codigo_dane" name="codigo_dane" required>
-                </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="cod_dane_sede" id="cod_dane_sede_estrategia">
 
-                <div class="mb-3">
-                    <label for="nombre_sede" class="form-label">Nombre de la Sede</label>
-                    <input type="text" class="form-control" id="nombre_sede" name="nombre_sede" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="zona" class="form-label">Zona</label>
-                    <select class="form-select" id="zona" name="zona" required>
-                        <option value="">Seleccione...</option>
-                        <option value="RURAL">Rural</option>
-                        <option value="URBANO">Urbano</option>
-                        <option value="N/A">N/A</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-dark">Guardar Sede</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal Estrategia JU - Diseño Moderno -->
-<div class="modal fade" id="estrategiaModal" tabindex="-1" aria-labelledby="estrategiaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <form action="guardar_estrategia.php" id="formEstrategia" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="estrategiaModalLabel">
-                        <i class="fas fa-chess-board me-2"></i>Configurar Estrategia Jornada Unica
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-
-                <div class="modal-body">
-                    <input type="hidden" name="cod_dane_sede" id="cod_dane_sede_estrategia">
-
-                    <!-- Seccion: Informacion Principal -->
-                    <div class="section-card">
-                        <h6 class="section-title">
-                            <i class="fas fa-handshake me-2 text-primary"></i>Alianzas y Responsabilidades
-                        </h6>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="aliado" class="form-label">
-                                    <i class="fas fa-users me-1"></i>Aliado Responsable
-                                </label>
-                                <select name="aliado" class="form-select" required>
-                                    <option value="">── Seleccione un aliado ──</option>
-                                    <option value="COMFAMILIAR">🏢 COMFAMILIAR</option>
-                                    <option value="CRESE">🎓 CRESE</option>
-                                    <option value="ONDAS">🌊 ONDAS</option>
-                                    <option value="ICBF">👨‍👩‍👧‍👦 ICBF</option>
-                                    <option value="SENA">🏢 SENA</option>
-                                    <option value="Ministerios">🏛️ Ministerios</option>
-                                    <option value="Alcaldias">🏛️ Alcaldias</option>
-                                    <option value="Chef_Fundeca">👨‍🍳 Chef Fundeca</option>
-                                    <option value="Entre Otros">📋 Entre Otros</option>
+                        <!-- Seccion: Informacion Principal -->
+                        <div class="section-card">
+                            <h6 class="section-title">
+                                <i class="fas fa-handshake me-2 text-primary"></i>Alianzas y Responsabilidades
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="aliado" class="form-label">
+                                        <i class="fas fa-users me-1"></i>Aliado Responsable
+                                    </label>
+                                    <select name="aliado" class="form-select" required>
+                                        <option value="">── Seleccione un aliado ──</option>
+                                        <option value="COMFAMILIAR">🏢 COMFAMILIAR</option>
+                                        <option value="CRESE">🎓 CRESE</option>
+                                        <option value="ONDAS">🌊 ONDAS</option>
+                                        <option value="ICBF">👨‍👩‍👧‍👦 ICBF</option>
+                                        <option value="SENA">🏢 SENA</option>
+                                        <option value="Ministerios">🏛️ Ministerios</option>
+                                        <option value="Alcaldias">🏛️ Alcaldias</option>
+                                        <option value="Chef_Fundeca">👨‍🍳 Chec Fundeca</option>
+                                        <option value="Secretaria Cultura Departamental">🎭 Secretaria de Cultura Departamental - EPA</option>
+                                        <option value="Secretaria Cultura Municipal">🎭 Secretaria de Cultura Municipal</option>
+                                        <option value="Universidad de Caldas">🎓 Universidad de Caldas</option>
+                                        <option value="CIAF">🏢 CIAF</option>
+                                        <option value="Fundacion Politecnico Minuto de Dios">🏢 Fundación Politécnico Minuto de Dios</option>
+                                </div>
+                                <option value="Entre Otros">📋 Entre Otros</option>
                                 </select>
 
                                 <!-- Campo para especificar "Entre Otros" -->
@@ -852,16 +858,16 @@ include('../general/observacion.php');
                             <div class="total-number" id="totalEstudiantes">0</div>
                         </div>
                     </div>
-                </div>
+            </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>Guardar Estrategia
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>Cancelar
-                    </button>
-                </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Guardar Estrategia
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Cancelar
+                </button>
+            </div>
             </form>
         </div>
     </div>
@@ -871,7 +877,7 @@ include('../general/observacion.php');
     function cargarInstitucion() {
         const select = document.getElementById('selectInstitucion');
         const idCole = select.value;
-        
+
         if (idCole) {
             // Redirigir con el parámetro de la institución seleccionada
             window.location.href = `showIeAdmin.php?id_cole=${idCole}`;
@@ -1040,7 +1046,7 @@ include('../general/observacion.php');
     // Event listeners para el modal de estrategia
     document.addEventListener('DOMContentLoaded', function() {
         // Event listeners para los botones de edición y estado de sedes
-        
+
         // Modal para editar sede
         document.querySelectorAll('.btn-editar-sede').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -1152,7 +1158,7 @@ include('../general/observacion.php');
         document.getElementById('formEstrategia').addEventListener('submit', function(e) {
             e.preventDefault();
             console.log('Formulario enviado');
-            
+
             // Validar que cod_dane_sede esté presente
             const codDaneSede = document.getElementById('cod_dane_sede_estrategia').value;
             console.log('Codigo DANE sede:', codDaneSede);
@@ -1688,24 +1694,24 @@ include('../general/observacion.php');
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const url = this.getAttribute('data-url');
-                
+
                 if (selectedIdCole) {
                     // Crear un formulario temporal para enviar el id_cole via POST
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = url;
                     form.target = '_blank'; // Abrir en nueva pestaña
-                    
+
                     const inputIdCole = document.createElement('input');
                     inputIdCole.type = 'hidden';
                     inputIdCole.name = 'admin_id_cole';
                     inputIdCole.value = selectedIdCole;
-                    
+
                     const inputViewMode = document.createElement('input');
                     inputViewMode.type = 'hidden';
                     inputViewMode.name = 'admin_view_mode';
                     inputViewMode.value = '1';
-                    
+
                     form.appendChild(inputIdCole);
                     form.appendChild(inputViewMode);
                     document.body.appendChild(form);
@@ -1720,4 +1726,5 @@ include('../general/observacion.php');
 </script>
 
 </body>
+
 </html>

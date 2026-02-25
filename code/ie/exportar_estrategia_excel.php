@@ -193,7 +193,7 @@ while ($row = $result->fetch_assoc()) {
                 <th rowspan="2">Sede</th>
                 <th rowspan="2">Aliado</th>
                 <th rowspan="2">Eje Movilizador</th>
-                <th colspan="3">Preescolar</th>
+                <th colspan="4">Preescolar</th>
                 <th colspan="11">Básica y Media</th>
                 <th rowspan="2">Total Estudiantes</th>
             </tr>
@@ -201,6 +201,7 @@ while ($row = $result->fetch_assoc()) {
                 <th>Prejardín</th>
                 <th>Jardín</th>
                 <th>Transición</th>
+                <th>Total Preesco</th>
                 <th>1-</th>
                 <th>2-</th>
                 <th>3-</th>
@@ -232,6 +233,7 @@ while ($row = $result->fetch_assoc()) {
                         <td><?php echo intval($row['cantidad_prejardin']); ?></td>
                         <td><?php echo intval($row['cantidad_jardin']); ?></td>
                         <td><?php echo intval($row['cantidad_transicion']); ?></td>
+                        <td><?php echo intval($row['cantidad_prejardin']) + intval($row['cantidad_jardin']) + intval($row['cantidad_transicion']); ?></td>
                         <td><?php echo intval($row['cantidad_1']); ?></td>
                         <td><?php echo intval($row['cantidad_2']); ?></td>
                         <td><?php echo intval($row['cantidad_3']); ?></td>
@@ -253,6 +255,7 @@ while ($row = $result->fetch_assoc()) {
                     <td><?php echo $totalGeneral['prejardin']; ?></td>
                     <td><?php echo $totalGeneral['jardin']; ?></td>
                     <td><?php echo $totalGeneral['transicion']; ?></td>
+                    <td><?php echo $totalGeneral['prejardin'] + $totalGeneral['jardin'] + $totalGeneral['transicion']; ?></td>
                     <td><?php echo $totalGeneral['1']; ?></td>
                     <td><?php echo $totalGeneral['2']; ?></td>
                     <td><?php echo $totalGeneral['3']; ?></td>
@@ -268,7 +271,7 @@ while ($row = $result->fetch_assoc()) {
                 </tr>
             <?php else: ?>
                 <tr>
-                    <td colspan="18">No hay datos de estrategia J.U registrados para esta institución.</td>
+                    <td colspan="19">No hay datos de estrategia J.U registrados para esta institución.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -284,6 +287,7 @@ while ($row = $result->fetch_assoc()) {
                     <th>Prejardín</th>
                     <th>Jardín</th>
                     <th>Transición</th>
+                    <th>Total Preesco</th>
                     <th>1-</th>
                     <th>2-</th>
                     <th>3-</th>
@@ -305,6 +309,7 @@ while ($row = $result->fetch_assoc()) {
                         <td><?php echo $totales['prejardin']; ?></td>
                         <td><?php echo $totales['jardin']; ?></td>
                         <td><?php echo $totales['transicion']; ?></td>
+                        <td><?php echo $totales['prejardin'] + $totales['jardin'] + $totales['transicion']; ?></td>
                         <td><?php echo $totales['1']; ?></td>
                         <td><?php echo $totales['2']; ?></td>
                         <td><?php echo $totales['3']; ?></td>

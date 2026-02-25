@@ -1251,7 +1251,12 @@ include('../general/observacion.php');
                                                 <option value="SENA">🏢 SENA</option>
                                                 <option value="Ministerios">🏛️ Ministerios</option>
                                                 <option value="Alcaldias">🏛️ Alcaldias</option>
-                                                <option value="Chef_Fundeca">👨‍🍳 Chef Fundeca</option>
+                                                <option value="Chef_Fundeca">👨‍🍳 Chec Fundeca</option>
+                                                <option value="Secretaria Cultura Departamental">🎭 Secretaria de Cultura Departamental - EPA</option>
+                                                <option value="Secretaria Cultura Municipal">🎭 Secretaria de Cultura Municipal</option>
+                                                <option value="Universidad de Caldas">🎓 Universidad de Caldas</option>
+                                                <option value="CIAF">🏢 CIAF</option>
+                                                <option value="Fundacion Politecnico Minuto de Dios">🏢 Fundación Politécnico Minuto de Dios</option>
                                                 <option value="Entre Otros">📋 Entre Otros</option>
                                             </select>
 
