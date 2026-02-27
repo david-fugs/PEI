@@ -76,7 +76,11 @@
                     //Validamos si la ruta de destino existe, en caso de no existir la creamos
                     if(!file_exists($directorio))
                     {
-                        mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");    
+                        if (!mkdir($directorio, 0777, true)) {
+                            $error = error_get_last();
+                            die("No se puede crear el directorio de extracci&oacute;n. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
+                        }
+                        chmod($directorio, 0777);
                     }
                     
                     $dir=opendir($directorio); //Abrimos el directorio de destino

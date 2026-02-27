@@ -45,15 +45,19 @@
             // Asegura que la carpeta base 'files/' exista
             if (!file_exists($base_dir_abs)) {
                 if (!mkdir($base_dir_abs, 0777, true)) {
-                    die("No se puede crear el directorio base de archivos");
+                    $error = error_get_last();
+                    die("No se puede crear el directorio base de archivos. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
                 }
+                chmod($base_dir_abs, 0777);
             }
 
             // Crea el subdirectorio del id si no existe
             if (!file_exists($directorio_abs)) {
                 if (!mkdir($directorio_abs, 0777, true)) {
-                    die("No se puede crear el directorio de extracci&oacute;n");
+                    $error = error_get_last();
+                    die("No se puede crear el directorio de extracci&oacute;n. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
                 }
+                chmod($directorio_abs, 0777);
             }
 
             // Ruta absoluta de destino para mover el archivo

@@ -33,8 +33,14 @@ if ($resultado) {
             $source = $_FILES["archivo"]["tmp_name"][$key];
 
             $directorio = 'files/' . $id_insert . '/';
+            
+            // Crear el directorio de manera recursiva si no existe
             if (!file_exists($directorio)) {
-                mkdir($directorio, 0777) or die("No se puede crear el directorio de extracción");
+                if (!mkdir($directorio, 0777, true)) {
+                    $error = error_get_last();
+                    die("No se puede crear el directorio de extracción. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
+                }
+                chmod($directorio, 0777); // Intentar ajustar permisos explícitamente
             }
 
             $dir = opendir($directorio);

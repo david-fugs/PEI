@@ -1,4 +1,5 @@
-<style type="text/css">
+<?php
+echo '<style type="text/css">
 .Zebra_Pagination {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -86,8 +87,8 @@
 .Zebra_Pagination a.previous {
     padding-left: 5px !important;
 }
-</style>
-<?php
+</style>';
+
 
 /**
  *  A generic pagination script that automatically generates navigation links as well as next/previous page links, given

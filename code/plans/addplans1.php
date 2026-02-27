@@ -114,7 +114,6 @@
 	                        <select name='id_cole' class='form-control' disabled/>
 		                        <option value=''></option>
 		                            <?php
-		                                header('Content-Type: text/html;charset=utf-8');
 		                                $consulta='SELECT * FROM colegios';
 		                                $res = mysqli_query($mysqli,$consulta);
 		                                $num_reg = mysqli_num_rows($res);
@@ -122,7 +121,7 @@
 		                                {
 		                                ?>
 		                        <option value='<?php echo $row1['id_cole']; ?>'<?php if($id_cole==$row1['id_cole']){echo 'selected';} ?>>
-		                            <?php echo utf8_encode($row1['nombre_cole']); ?>
+		                            <?php echo $row1['nombre_cole']; ?>
 		                        </option>
 		                                <?php
 		                                }

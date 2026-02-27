@@ -64,12 +64,20 @@ if ($resultado) {
 
             // Asegura que la carpeta base 'files/' exista
             if (!file_exists($base_dir)) {
-                mkdir($base_dir, 0777, true) or die("No se puede crear el directorio base");
+                if (!mkdir($base_dir, 0777, true)) {
+                    $error = error_get_last();
+                    die("No se puede crear el directorio base. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
+                }
+                chmod($base_dir, 0777);
             }
 
             // Ahora crea el subdirectorio del proyecto
             if(!file_exists($directorio)) {
-                mkdir($directorio, 0777, true) or die("No se puede crear el directorio del proyecto");
+                if (!mkdir($directorio, 0777, true)) {
+                    $error = error_get_last();
+                    die("No se puede crear el directorio del proyecto. Error: " . ($error['message'] ?? 'Permisos insuficientes'));
+                }
+                chmod($directorio, 0777);
             }
 
             $target_path = $directorio . $filename;
