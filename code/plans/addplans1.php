@@ -10,6 +10,9 @@
     $nombre 		= $_SESSION['nombre'];
     $tipo_usuario 	= $_SESSION['tipo_usuario'];
     $id_cole        = $_SESSION['id_cole'];
+    
+    // DEBUG: Verificar el id_cole en el formulario
+    error_log("DEBUG addplans1.php - id_cole de SESSION: " . $id_cole);
 
 ?>
 
@@ -94,6 +97,23 @@
 	    	<img src='../../img/logo_educacion_fondo_azul.png' width="600" height="111" class="responsive">
 		</center>
 		<br />
+		
+		<?php
+		// Mostrar mensajes de error si existen
+		if (isset($_SESSION['message'])): ?>
+		    <div class="container">
+		        <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+		            <?php echo $_SESSION['message']; ?>
+		            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>
+		        </div>
+		    </div>
+		    <?php 
+		    unset($_SESSION['message']);
+		    unset($_SESSION['message_type']);
+		endif; ?>
+		
 <?php
 
 	date_default_timezone_set("America/Bogota");
@@ -105,6 +125,11 @@
 		<div class="container">
 			<h1><b><i class="fas fa-project-diagram"></i>REGISTRO PROYECTOS y/o PLANES</b></h1>
 			<p><i><b><font size=3 color=#c68615>*Datos obligatorios</i></b></font></p>
+			
+			<!-- DEBUG: Mostrar id_cole -->
+			<div class="alert alert-info">
+				<strong>DEBUG:</strong> ID Colegio de la sesión: <?php echo $id_cole; ?>
+			</div>
 
 			<form action='addplans2.php' enctype="multipart/form-data" method="POST">
 				

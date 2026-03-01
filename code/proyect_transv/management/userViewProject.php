@@ -11,7 +11,6 @@ if (empty($id_cole)) {
     die("Error: No se pudo determinar la institución educativa. Por favor, contacte al administrador.");
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,26 +32,32 @@ if (empty($id_cole)) {
             text-align: center;
             vertical-align: middle;
         }
+
         .table td {
             vertical-align: middle;
             text-align: center;
         }
+
         .table-hover tbody tr:hover {
             background-color: #f8f9fa;
         }
+
         .btn-group .btn {
             margin: 0 2px;
         }
+
         .college h2 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
         }
+
         .project-name {
             text-align: left !important;
             font-weight: 500;
         }
+
         .leader-name {
             text-align: left !important;
         }
@@ -61,11 +66,11 @@ if (empty($id_cole)) {
 </head>
 
 <body>
-    <?php 
+    <?php
     // Mostrar banner si está en modo administrador
-    showAdminViewBanner(); 
+    showAdminViewBanner();
     ?>
-    
+
     <center style="margin-top: 20px;">
         <img src='../../../img/logo_educacion_fondo_azul.png' width="500" height="200" class="responsive">
     </center>
@@ -92,7 +97,7 @@ if (empty($id_cole)) {
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
-        <?php 
+    <?php
         unset($_SESSION['message']);
         unset($_SESSION['message_type']);
     endif; ?>
@@ -124,7 +129,7 @@ if (empty($id_cole)) {
         echo '<div class="college" style="margin-top: 25px;">';
         echo '<h2>' . $nombre_cole . '</h2>';
         echo '</div>';
-        
+
         // Botones de acción
         echo '<div class="d-flex justify-content-center align-items-center p-3 gap-3" style="margin: 0 45px;">';
         echo '<a href="../proyect_transv1.php" class="btn btn-success btn-lg d-flex align-items-center gap-2 rounded-pill shadow px-4">';
@@ -165,7 +170,7 @@ if (empty($id_cole)) {
             $lider = $row['nomb_lid_proy'] ?? 'No asignado';
             $anos_implementacion = $row['num_anos_implem'] ?? 'No especificado';
             $estudiantes_vinculados = $row['num_est_vin_23'] ?? '0';
-            
+
             // Determinar número de proyecto para archivos
             $nroProject = 0;
             switch ($nameProject) {
@@ -182,7 +187,7 @@ if (empty($id_cole)) {
                     $nroProject = 4;
                     break;
             }
-            
+
             // Contar archivos
             $num_archivos = 0;
             if ($nroProject >= 1 && $nroProject <= 4) {
@@ -269,7 +274,7 @@ if (empty($id_cole)) {
                 $nombre_plan = $plan['nombre_proy_plan'];
                 $tipo_plan = $plan['tipo_proy_plan'];
                 $fecha_creacion = date('d/m/Y', strtotime($plan['fecha_alta_proy_plan']));
-                
+
                 // Contar archivos del plan
                 $directorio_plan = './../plans/files/' . $id_plan . '/';
                 $num_archivos_plan = 0;
@@ -299,7 +304,7 @@ if (empty($id_cole)) {
                 echo '<a href="editPlan.php?id=' . $id_plan . '" class="btn btn-warning btn-sm" title="Editar">';
                 echo '<i class="fas fa-edit"></i>';
                 echo '</a>';
-                echo '<a href="../plans/find_doc.php?id_proy_plan=' . $id_plan . '" class="btn btn-info btn-sm" title="Ver archivos">';
+                echo '<a href="../../plans/find_doc.php?id_proy_plan=' . $id_plan . '" class="btn btn-info btn-sm" title="Ver archivos">';
                 echo '<i class="fas fa-folder"></i>';
                 echo '</a>';
                 echo '<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="deletePlan(' . $id_plan . ', \'' . addslashes($nombre_plan) . '\')">';
@@ -326,7 +331,6 @@ if (empty($id_cole)) {
         echo '<img src="./../../../img/atras.png" width="27" height="27"> REGRESAR';
         echo '</button>';
         echo '</div>';
-
     } else {
         echo '<div class="container">';
         echo '<h2>' . $nombre_cole . '</h2>';
@@ -340,12 +344,12 @@ if (empty($id_cole)) {
         echo '<h4>No se encontraron proyectos para este colegio.</h4>';
         echo '<p>Comience agregando su primer proyecto pedagógico transversal.</p>';
         echo '</div>';
-        
+
         // Mostrar tabla de proyectos y planes aunque no haya proyectos transversales
         echo '<div class="mt-5">';
         echo '<div class="d-flex justify-content-between align-items-center mb-3">';
         echo '<h3 class="text-primary"><i class="fas fa-project-diagram"></i> Proyectos y Planes</h3>';
-        echo '<a href="../plans/addplans1.php" class="btn btn-success d-flex align-items-center gap-2 rounded-pill shadow px-3">';
+        echo '<a href="../../plans/addplans1.php" class="btn btn-success d-flex align-items-center gap-2 rounded-pill shadow px-3">';
         echo '<i class="fas fa-plus"></i>';
         echo '<span>Agregar Proyecto/Plan</span>';
         echo '</a>';
@@ -377,7 +381,7 @@ if (empty($id_cole)) {
                 $nombre_plan = $plan['nombre_proy_plan'];
                 $tipo_plan = $plan['tipo_proy_plan'];
                 $fecha_creacion = date('d/m/Y', strtotime($plan['fecha_alta_proy_plan']));
-                
+
                 // Contar archivos del plan
                 $directorio_plan = './../plans/files/' . $id_plan . '/';
                 $num_archivos_plan = 0;
@@ -428,7 +432,7 @@ if (empty($id_cole)) {
             echo '</div>';
         }
         echo '</div>';
-        
+
         echo '<div class="back text-center mt-4">';
         echo '<button type="button" class="btn btn-secondary" onclick="window.location.href=\'./../../../access.php\';">';
         echo '<img src="./../../../img/atras.png" width="27" height="27"> REGRESAR';

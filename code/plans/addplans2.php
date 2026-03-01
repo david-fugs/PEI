@@ -17,11 +17,16 @@ $nombre_proy_plan       =   $_POST['nombre_proy_plan'];
 $tipo_proy_plan         =   $_POST['tipo_proy_plan'];
 $obs_proy_plan          =   $_POST['obs_proy_plan'];
 $id_cole                 =   $_POST['id_cole'];
+
 $fecha_alta_proy_plan   =   date('Y-m-d h:i:s');
 $fecha_edit_proy_plan   =   ('0000-00-00 00:00:00');
 $id_usu                  =   $_SESSION['id'];
 
 $sql = "INSERT INTO proyectos_planes (nombre_proy_plan, tipo_proy_plan, obs_proy_plan, id_cole, fecha_alta_proy_plan, fecha_edit_proy_plan, id_usu) values ('$nombre_proy_plan', '$tipo_proy_plan', '$obs_proy_plan', '$id_cole', '$fecha_alta_proy_plan', '$fecha_edit_proy_plan', '$id_usu')";
+
+// DEBUG: Mostrar el SQL que se ejecuta
+error_log("DEBUG addplans2.php - SQL: " . $sql);
+
 $resultado = $mysqli->query($sql);
 
 if ($resultado) {
@@ -53,39 +58,14 @@ if ($resultado) {
         }
     }
 
-    // Solo mostramos el HTML si el INSERT fue exitoso
-    echo "
-        <!DOCTYPE html>
-            <html lang='es'>
-                <head>
-                    <meta charset='utf-8' />
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-                    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
-                    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
-                    <link rel='stylesheet' href='../../css/bootstrap.min.css'>
-                    <link href='../../fontawesome/css/all.css' rel='stylesheet'>
-                    <title>PEI | SOFT</title>
-                    <style>
-                        .responsive {
-                            max-width: 100%;
-                            height: auto;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <center>
-                        <img src='../../img/logo_educacion_fondo_azul.png' width='600' height='111' class='responsive'>
-                    
-                    <div class='container'>
-                        <br />
-                        <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
-                        <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
-                    </div>
-                    </center>
-                </body>
-            </html>
-        ";
+    // Redirigir a la página de visualización de proyectos con mensaje de éxito
+    $_SESSION['message'] = '✓ Se guardó de forma exitosa el proyecto/plan';
+    $_SESSION['message_type'] = 'success';
+    header("Location: ../proyect_transv/management/userViewProject.php");
+    exit();
 } else {
-    echo "❌ Error al insertar el proyecto/plan: " . $mysqli->error;
+    $_SESSION['message'] = '❌ Error al insertar el proyecto/plan: ' . $mysqli->error;
+    $_SESSION['message_type'] = 'danger';
+    header("Location: addplans1.php");
+    exit();
 }
