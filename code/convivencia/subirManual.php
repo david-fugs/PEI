@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -26,7 +26,7 @@ $id_cole = $_SESSION['id_cole'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PEI | SOFT</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link href="../../fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
     <style>
         .responsive {
             max-width: 100%;

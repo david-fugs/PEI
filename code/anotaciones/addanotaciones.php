@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 session_start();
 
@@ -26,7 +26,7 @@ $id_cole        = $_SESSION['id_cole'];
 	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 	<!--<link rel="stylesheet" type="text/css" href="../../css/estilos.css">-->
 	<link rel="stylesheet" href="../../css/bootstrap.min.css">
-	<link href="../../fontawesome/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
 
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

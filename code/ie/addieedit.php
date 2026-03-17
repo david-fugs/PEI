@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     
     session_start();
     
@@ -20,7 +20,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PEI | SOFT</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <style>
         .responsive {

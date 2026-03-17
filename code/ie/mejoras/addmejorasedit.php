@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     
     session_start();
     
@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="../../../css/bootstrap.min.css">
 		<script src="jquery-3.1.1.js" ></script>
 		<script src="main.js" ></script>
-		<link href="../../../fontawesome/css/all.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
 		<style>
         	.responsive {
            		max-width: 100%;

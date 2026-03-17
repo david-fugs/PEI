@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -62,7 +62,7 @@ $config = $configuracion[$tipo_documento];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PEI | SOFT</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link href="../../fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .responsive {

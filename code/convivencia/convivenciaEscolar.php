@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -14,6 +14,13 @@ mb_internal_encoding('UTF-8');
 $nombre        = $_SESSION['nombre'];
 $tipo_usuario  = $_SESSION['tipo_usuario'];
 $id_cole       = $_SESSION['id_cole'];
+
+// Incluir helper de administrador
+include_once(__DIR__ . '/../../adminViewHelper.php');
+// Si está en modo administrador, usar el id_cole efectivo
+if (isAdminViewMode() && $tipo_usuario == "1") {
+    $id_cole = getEfectivoIdCole();
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +35,7 @@ $id_cole       = $_SESSION['id_cole'];
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../css/estilos.css">
-    <link href="../../fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GGkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

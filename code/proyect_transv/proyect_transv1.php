@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     
     session_start();     // iniciar seccion
     
@@ -26,7 +26,7 @@
         <script type="text/javascript" src="../../js/jquery.min.js"></script>
         <script type="text/javascript" src="../../js/popper.min.j"></script>
         <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-        <link href="../../fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
         <style>
             .responsive {
                 max-width: 100%;

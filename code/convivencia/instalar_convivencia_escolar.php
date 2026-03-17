@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Archivo de instalación automática para el módulo de Convivencia Escolar
 // Ejecutar desde el navegador: http://localhost/PEI/code/convivencia/instalar_convivencia_escolar.php
 
@@ -27,7 +27,7 @@ if (isset($mysqli)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instalador - Convivencia Escolar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
     <style>
         .install-section {
             margin: 20px 0;

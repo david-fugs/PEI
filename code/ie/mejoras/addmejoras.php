@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     
     session_start();
     
@@ -24,7 +24,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="../../../css/estilos.css">
-		<link href="../../../fontawesome/css/all.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
 		<style>
         	.responsive {
            		max-width: 100%;

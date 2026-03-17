@@ -1,19 +1,19 @@
 <?php
-	// Configurar la codificación antes de la conexión
+	// Configurar la codificaci贸n antes de la conexi贸n
 	ini_set('default_charset', 'UTF-8');
 	mb_internal_encoding('UTF-8');
 	mb_http_output('UTF-8');
 	
-	$mysqli = new mysqli("localhost", 'profesional2', 'sVb0t2Y5rHAAAEd', 'profesional2');
+	$mysqli = new mysqli("localhost", 'root', '', 'softepuc_pei');
 	
 	if ($mysqli->connect_error) {
-		die("Error de conexión: " . $mysqli->connect_error);
+		die("Error de conexi贸n: " . $mysqli->connect_error);
 	}
 	
 	// Configurar charset a UTF-8
 	$mysqli->set_charset('utf8mb4');
 	
-	// Configuración adicional para asegurar UTF-8
+	// Configuraci贸n adicional para asegurar UTF-8
 	$mysqli->query("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
 	$mysqli->query("SET CHARACTER SET utf8mb4");
 	$mysqli->query("SET character_set_connection=utf8mb4");

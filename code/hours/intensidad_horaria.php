@@ -11,6 +11,13 @@ $nombre = $_SESSION['nombre'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $id_cole = $_SESSION['id_cole'];
 
+// Incluir helper de administrador
+include_once(__DIR__ . '/../../adminViewHelper.php');
+// Si está en modo administrador, usar el id_cole efectivo
+if (isAdminViewMode() && $tipo_usuario == "1") {
+    $id_cole = getEfectivoIdCole();
+}
+
 include("../../conexion.php");
 
 // Obtener información del colegio
