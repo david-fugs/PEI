@@ -126,6 +126,7 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
                                 <th>OBJETIVOS</th>
                                 <th>ARCHIVOS</th>
                                 <th>EDIT</th>
+                                <th>ELIM.</th>
                             </tr>
                         </thead>
                     <tbody>";
@@ -145,6 +146,7 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
                             <td data-label="OBJETIVOS"><span class="truncate">' . $row['obj_ins_ct'] . '</span><span class="more-text">' . $row['obj_ins_ct'] . '</span><span class="more-link">ver más</span></td>
                             <td data-label="ARCHIVOS"><a href="find_doc.php?id_cole=' . $row['id_cole'] . '"><img src="../../img/files.png" width=28 height=28></a></td>
                             <td data-label="EDIT"><a href="addteleologicoedit.php?id_ct=' . $row['id_ct'] . '"><img src="../../img/editar.png" width=20 height=20></a></td>
+                            <td data-label="ELIM."><button onclick="eliminarRegistro(' . $row['id_ct'] . ')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button></td>
                         </tr>';
         }
         echo '</tbody></table></div>';
@@ -170,6 +172,12 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
                 }
             });
         });
+
+        function eliminarRegistro(id) {
+            if (confirm('¿Está seguro de eliminar este registro? Esta acción no se puede deshacer y eliminará también los archivos adjuntos.')) {
+                window.location.href = 'eliminar_teleologico.php?id_ct=' + id;
+            }
+        }
     </script>
 </body>
 

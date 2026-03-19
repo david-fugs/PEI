@@ -85,6 +85,7 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 						<th>OBSERVACIONES</th>
 		        		<th>PDF</th>
 		        		<th>EDIT</th>
+		        		<th>ELIM.</th>
 		    		</tr>
 		  		</thead>
             <tbody>";
@@ -102,6 +103,7 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 					<td data-label="OBSERVACIONES">' . $row['obs_plan_aula'] . '</td>
 					<td data-label="PDF"><a href="find_doc.php?id_plan_aula=' . $row['id_plan_aula'] . '"><img src="../../../img/files.png" width=28 heigth=28></td>
 					<td data-label="EDIT"><a href="addaulaedit.php?id_plan_aula=' . $row['id_plan_aula'] . '"><img src="../../../img/editar.png" width=20 heigth=20></td>
+				<td data-label="ELIM."><button onclick="eliminarRegistro(' . $row['id_plan_aula'] . ')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button></td>
 				</tr>';
 			}
 
@@ -115,6 +117,14 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 		</div>
 
 	</section>
+
+	<script>
+		function eliminarRegistro(id) {
+			if (confirm('¿Está seguro de eliminar este registro? Esta acción no se puede deshacer y eliminará también los archivos adjuntos.')) {
+				window.location.href = 'eliminar_plan_aula.php?id_plan_aula=' + id;
+			}
+		}
+	</script>
 
 </body>
 
