@@ -18,7 +18,7 @@ $tipo_proy_plan         =   $_POST['tipo_proy_plan'];
 $obs_proy_plan          =   $_POST['obs_proy_plan'];
 $id_cole                 =   $_POST['id_cole'];
 
-$fecha_alta_proy_plan   =   date('Y-m-d h:i:s');
+$fecha_alta_proy_plan   =   date('Y-m-d H:i:s');
 $fecha_edit_proy_plan   =   ('0000-00-00 00:00:00');
 $id_usu                  =   $_SESSION['id'];
 

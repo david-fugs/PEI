@@ -39,7 +39,7 @@
     $preg12_1_siee      =   strtoupper($_POST['preg12_1_siee']);
     $obs_siee           =   strtoupper($_POST['obs_siee']);
     $id_cole            =   $_SESSION['id_cole'];
-    $fecha_alta_siee    =   date('Y-m-d h:i:s');
+    $fecha_alta_siee    =   date('Y-m-d H:i:s');
     $fecha_edit_siee    =   ('0000-00-00 00:00:00');
     $id_usu             =   $_SESSION['id'];
 

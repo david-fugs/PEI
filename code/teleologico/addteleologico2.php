@@ -19,7 +19,7 @@
     $obj_ins_ct         =   strtoupper($_POST['obj_ins_ct']);
     $obs_ct             =   strtoupper($_POST['obs_ct']);
     $estado_ct          =   1;
-    $fecha_alta_ct      =   date('Y-m-d h:i:s');
+    $fecha_alta_ct      =   date('Y-m-d H:i:s');
     $fecha_edit_ct      =   ('0000-00-00 00:00:00');
     $id_usu             =   $_SESSION['id'];
 

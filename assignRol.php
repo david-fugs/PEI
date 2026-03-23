@@ -178,13 +178,17 @@
         <tbody>";
         $result = $mysqli->query($query);
         $i = 1;
+        $deshabilitarSelect = false; // Variable para controlar la habilitación del select
+        if($_SESSION['tipo_usuario'] == 3){
+            $deshabilitarSelect = true; // Si el usuario es implementador, deshabilitar el select
+        }
         while ($row = mysqli_fetch_array($result)) {
             echo '
             <tr>
                 <td data-label="No.">' . $i++ . '</td>
                 <td data-label="nombre">' . $row['nombre'] . '</td>
                 <td data-label="rol">
-                    <select class="form-control" onchange="actualizarRol(this, ' . $row['id'] . ')">
+                    <select class="form-control" onchange="actualizarRol(this, ' . $row['id'] . ')" ' . ($deshabilitarSelect ? 'disabled' : '') . '>
                         <option value="2" ' . ($row['tipo_usuario'] == 2 ? 'selected' : '') . '>Rector</option>
                         <option value="3" ' . ($row['tipo_usuario'] == 3 ? 'selected' : '') . '>Implementador Encuestas</option>
                         <option value="9" ' . ($row['tipo_usuario'] == 9 ? 'selected' : '') . '>Pendiente</option>

@@ -177,6 +177,8 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 				<th>Objetivos Generales</th>
 				<th style='width:50px' class='text-center'>Arch.</th>
 				<th style='width:50px' class='text-center'>Edit</th>
+			<th style='width:130px'>Creación</th>
+			<th style='width:130px'>Última Edición</th>
 				<th style='width:50px' class='text-center'>Elim.</th>
 			</tr>
 		</thead>
@@ -214,6 +216,8 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 					<i class="fas fa-edit"></i>
 				</a>
 			</td>
+			<td class="fecha-cell">' . ($row['fecha_alta_mc'] ?? '—') . '</td>
+			<td class="fecha-cell">' . ((!empty($row['fecha_edit_mc']) && $row['fecha_edit_mc'] !== '0000-00-00 00:00:00') ? $row['fecha_edit_mc'] : '—') . '</td>
 			<td class="text-center">
 				<button onclick="eliminarMalla(' . $id_mc . ')" class="btn-action-icon btn-delete" title="Eliminar">
 					<i class="fas fa-trash"></i>
@@ -227,7 +231,7 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 	?>
 
 	<div class="text-center mt-4">
-		<a href="../../access.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+		<a href="../ie/showIe.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
 			<i class="fas fa-arrow-left"></i> Regresar
 		</a>
 	</div>

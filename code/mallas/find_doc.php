@@ -98,8 +98,8 @@
         }
       ?>
     <center>
-    <br/><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-    </center>
+<a href="addmallas.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+                <i class="fas fa-arrow-left"></i> REGRESAR    </center>
 
       </div>
 

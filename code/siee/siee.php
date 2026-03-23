@@ -37,85 +37,101 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 	<style>
-		.responsive {
-			max-width: 100%;
-			height: auto;
+		.responsive { max-width: 100%; height: auto; }
+		body {
+			background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+			min-height: 100vh;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		}
+		.page-wrapper {
+			max-width: 1400px;
+			margin: 20px auto;
+			background: #fff;
+			border-radius: 14px;
+			box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+			padding: 30px;
+		}
+		.page-title { color: #412fd1; font-size: 1.6rem; font-weight: 700; }
+		.pei-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+		.pei-table thead th {
+			background: linear-gradient(135deg, #1a2332, #2c3e50);
+			color: #fff;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			padding: 14px 12px;
+			border: none;
+			white-space: nowrap;
+		}
+		.pei-table thead th:first-child { border-radius: 10px 0 0 0; }
+		.pei-table thead th:last-child  { border-radius: 0 10px 0 0; }
+		.pei-table tbody tr:nth-child(even) { background: #f8f9fa; }
+		.pei-table tbody tr:hover { background: #eef2ff; }
+		.pei-table tbody td {
+			padding: 12px;
+			vertical-align: middle;
+			border-bottom: 1px solid #e9ecef;
+			font-size: 0.9rem;
+		}
+		.btn-action-icon {
+			display: inline-flex; align-items: center; justify-content: center;
+			width: 34px; height: 34px; border-radius: 8px; border: none;
+			transition: all 0.2s; font-size: 0.9rem; text-decoration: none;
+		}
+		.btn-action-icon:hover { transform: translateY(-2px); }
+		.btn-files  { background: #e3f0ff; color: #3498db; }
+		.btn-edit   { background: #fff8e1; color: #f39c12; }
+		.btn-files:hover  { background: #3498db; color: #fff; }
+		.btn-edit:hover   { background: #f39c12; color: #fff; }
+		.fecha-cell { font-size: 0.82rem; color: #555; white-space: nowrap; }
 	</style>
 </head>
 
 <body>
-
-	<center>
-		<img src="../../img/logo_educacion_fondo_azul.png" width="945" height="175" class="responsive">
-	</center>
-
-	<BR />
-
-	<section class="principal">
-
-		<div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
-
-			<div align="center">
-				<h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="fas fa-user-check"></i> SISTEMA INSTITUCIONAL DE EVALUACIÓN DE LOS ESTUDIANTES -SIEE- </b></h1>
-			</div>
-			<div class="d-flex justify-content-end p-3 mr-1" style="margin-right: 45px;"  >
-				<a href="siee1.php" class="btn btn-success btn-lg d-flex align-items-center gap-2 rounded-pill shadow  pl-3 mr-4">
-					<i class="fas fa-plus"></i>
-					<span>Agregar S.I.E.E.</span>
-				</a>
-			</div>
-
-			<br />
-
-			<?php
-
-			date_default_timezone_set("America/Bogota");
-			include("../../conexion.php");
-
-			$query = "SELECT * FROM siee INNER JOIN colegios ON siee.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
-			$res = $mysqli->query($query);
-			$num_registros = mysqli_num_rows($res);
-
-			echo "<div class='container'>
-        	<table class='table'>
-            	<thead>
-					<tr>
-						<th>No.</th>
-						<th>I.E.</th>
-						<th>ADJUNTOS</th>
-		        		<th>EDIT</th>
-		    		</tr>
-		  		</thead>
-            <tbody>";
-
-			$consulta = "SELECT * FROM siee INNER JOIN colegios ON siee.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
-			$result = $mysqli->query($consulta);
-
-			$i = 1;
-			while ($row = mysqli_fetch_array($result)) {
-
-				echo '
-				<tr>
-					<td data-label="No.">' . $i++ . '</td>
-					<td data-label="I.E.">' . $row['nombre_cole'] . '</td>
-					<td data-label="ADJUNTOS"><a href="find_doc.php?id_cole=' . $row['id_cole'] . '"><img src="../../img/files.png" width=28 heigth=28></td>
-					<td data-label="EDIT"><a href="sieeedit.php?id_siee=' . $row['id_siee'] . '"><img src="../../img/editar.png" width=20 heigth=20></td>
-				</tr>';
-			}
-
-			echo '</table>';
-
-			?>
-
-			<center>
-				<br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-			</center>
-
-		</div>
-
-	</section>
-
+<div class="page-wrapper">
+	<div class="text-center mb-4">
+		<img src="../../img/logo_educacion_fondo_azul.png" width="400" height="142" class="responsive mb-3">
+	</div>
+	<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+		<h1 class="page-title mb-0"><i class="fas fa-user-check me-2"></i>Sistema Institucional de Evaluación (S.I.E.E.)</h1>
+		<a href="siee1.php" class="btn btn-success d-flex align-items-center gap-2 rounded-pill shadow-sm px-4">
+			<i class="fas fa-plus"></i><span>Agregar S.I.E.E.</span>
+		</a>
+	</div>
+	<?php
+	date_default_timezone_set("America/Bogota");
+	include("../../conexion.php");
+	$consulta = "SELECT * FROM siee INNER JOIN colegios ON siee.id_cole=colegios.id_cole WHERE colegios.id_cole=$id_cole";
+	$result = $mysqli->query($consulta);
+	echo "<div class='table-responsive'><table class='pei-table'><thead><tr>
+		<th style='width:50px'>No.</th>
+		<th>I.E.</th>
+		<th style='width:60px' class='text-center'>Arch.</th>
+		<th style='width:60px' class='text-center'>Edit</th>
+		<th style='width:145px'>Creación</th>
+		<th style='width:145px'>Última Edición</th>
+	</tr></thead><tbody>";
+	$i = 1;
+	while ($row = mysqli_fetch_array($result)) {
+		$id_siee = (int)$row['id_siee'];
+		$fe = (!empty($row['fecha_edit_siee']) && $row['fecha_edit_siee'] !== '0000-00-00 00:00:00') ? $row['fecha_edit_siee'] : '—';
+		echo '
+		<tr>
+			<td class="fw-bold text-primary">' . $i++ . '</td>
+			<td class="fw-semibold text-uppercase" style="font-size:0.82rem">' . htmlspecialchars($row['nombre_cole']) . '</td>
+			<td class="text-center"><a href="find_doc.php?id_cole=' . $row['id_cole'] . '" class="btn-action-icon btn-files" title="Ver Archivos"><i class="fas fa-folder-open"></i></a></td>
+			<td class="text-center"><a href="sieeedit.php?id_siee=' . $id_siee . '" class="btn-action-icon btn-edit" title="Editar"><i class="fas fa-edit"></i></a></td>
+			<td class="fecha-cell">' . ($row['fecha_alta_siee'] ?? '—') . '</td>
+			<td class="fecha-cell">' . $fe . '</td>
+		</tr>';
+	}
+	echo '</tbody></table></div>';
+	?>
+	<div class="text-center mt-4">
+		<a href="../../access.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+			<i class="fas fa-arrow-left"></i> Regresar
+		</a>
+	</div>
+</div>
 </body>
-
 </html>

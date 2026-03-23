@@ -24,6 +24,7 @@ $id_cole = $_SESSION['id_cole'];
     <title>PEI | SOFT</title>
     <link href="fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="css/access.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 </head>
 
 <body>
@@ -35,8 +36,8 @@ $id_cole = $_SESSION['id_cole'];
         </div>
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <i class="fa-solid fa-sun" id="darkLight"></i><!--<i class='bx bx-sun' id="darkLight"></i>-->
-            <a href="logout.php"> <i class="fa-solid fa-door-open"></i></a>
+            <i class="fa-solid fa-sun" id="darkLight"></i>
+            <a href="logout.php"><i class="fa-solid fa-door-open"></i></a>
             <img src="img/logo_educacion_fondo_azul.png" alt="" class="profile" />
         </div>
     </nav>

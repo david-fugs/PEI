@@ -1,107 +1,109 @@
 ﻿<?php
-	
-  session_start();
-    
-  if(!isset($_SESSION['id'])){
-      header("Location: index.php");
-  }
-  
-  $nombre = $_SESSION['nombre'];
-  $tipo_usuario = $_SESSION['tipo_usuario'];
-  
-  include("../../conexion.php");
-	
-	$id_proy_trans = $_GET['id_proy_trans'];
-  
-	$sql = "SELECT * FROM proyectos_transversales WHERE id_proy_trans = '$id_proy_trans'";
-	$resultado = $mysqli->query($sql);
-	$row = $resultado->fetch_array(MYSQLI_ASSOC);
- 
+
+session_start();
+
+if (!isset($_SESSION['id'])) {
+  header("Location: index.php");
+}
+
+$nombre = $_SESSION['nombre'];
+$tipo_usuario = $_SESSION['tipo_usuario'];
+
+include("../../conexion.php");
+
+$id_proy_trans = $_GET['id_proy_trans'];
+
+$sql = "SELECT * FROM proyectos_transversales WHERE id_proy_trans = '$id_proy_trans'";
+$resultado = $mysqli->query($sql);
+$row = $resultado->fetch_array(MYSQLI_ASSOC);
+
 ?>
 <html lang="es">
-  <head> 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PEI | SOFT</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/estilos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
-    <style>
-          .responsive {
-              max-width: 100%;
-              height: auto;
-          }
-    </style>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $('.delete').click(function(){
-          var parent = $(this).parent().attr('id_insert');
-          var service = $(this).parent().attr('data');
-          var dataString = 'id_insert='+service;
 
-          $.ajax({
-            type: "POST",
-            url: "del_file.php",
-            data: dataString,
-            success: function(){
-              location.reload();
-            }
-          });
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PEI | SOFT</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../../css/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    .responsive {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.delete').click(function() {
+        var parent = $(this).parent().attr('id_insert');
+        var service = $(this).parent().attr('data');
+        var dataString = 'id_insert=' + service;
+
+        $.ajax({
+          type: "POST",
+          url: "del_file.php",
+          data: dataString,
+          success: function() {
+            location.reload();
+          }
         });
       });
-    </script>
-  </head>
-    <body>
+    });
+  </script>
+</head>
 
-    <center>
-        <img src='../../img/logo_educacion_fondo_azul.png' width="600" height="111" class="responsive">
-    </center>
-    <BR/>
+<body>
 
-     <section class="principal">
+  <center>
+    <img src='../../img/logo_educacion_fondo_azul.png' width="600" height="111" class="responsive">
+  </center>
+  <BR />
 
-      <div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
+  <section class="principal">
 
-        <div align="center">
+    <div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
 
-          <h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="fas fa-project-diagram"></i> DOCUMENTOS PROYECTOS TRANSVERSALES </b></h1>
+      <div align="center">
 
-        </div>
+        <h1 style="color: #412fd1; font-size: 30px; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="fas fa-project-diagram"></i> DOCUMENTOS PROYECTOS TRANSVERSALES </b></h1>
 
-      <?php 
-        $path = "files/".$id_proy_trans;
-        echo "<div class='container'>
+      </div>
+
+      <?php
+      $path = "files/" . $id_proy_trans;
+      echo "<div class='container'>
                 <table class='table'>
                     <tr>
                       <th>DOCUMENTO</th>
                     </tr>";
-        if(file_exists($path))
-        {
-          $directorio = opendir($path);
-          while ($archivo = readdir($directorio))
-          {
-            if (!is_dir($archivo))
-            {
-              echo "<tr>
-                      <td data-label='DOCUMENTO'><div data='".$path."/".$archivo."'><a href='".$path."/".$archivo."' title='Ver Archivo Adjunto' target=_blank><img src='../../img/files1.png' width=50 heigth=50></a><br>".$archivo."<br><a href='#' class='delete'><h2><span class='glyphicon glyphicon-trash' aria-hidden='true' title='Eliminar el Archivo Adjunto'></span></h2></a></div></td>
+      if (file_exists($path)) {
+        $directorio = opendir($path);
+        while ($archivo = readdir($directorio)) {
+          if (!is_dir($archivo)) {
+            echo "<tr>
+                      <td data-label='DOCUMENTO'><div data='" . $path . "/" . $archivo . "'><a href='" . $path . "/" . $archivo . "' title='Ver Archivo Adjunto' target=_blank><img src='../../img/files1.png' width=50 heigth=50></a><br>" . $archivo . "<br><a href='#' class='delete'><h2><span class='glyphicon glyphicon-trash' aria-hidden='true' title='Eliminar el Archivo Adjunto'></span></h2></a></div></td>
                     </tr>";
-            }
           }
-        echo '</table>';
         }
+        echo '</table>';
+      }
       ?>
-    <center>
-    <br/><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-    </center>
+      <center>
+        <a href="addproject.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+          <i class="fas fa-arrow-left"></i> REGRESAR
+        </a>
+      </center>
 
-      </div>
+    </div>
 
-    </section>
+  </section>
 
-  </body>
+</body>
+
 </html>

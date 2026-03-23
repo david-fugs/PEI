@@ -18,7 +18,7 @@
     $obs_plan_mc        =   strtoupper($_POST['obs_plan_mc']);
     $obs_gen_mc         =   strtoupper($_POST['obs_gen_mc']);
     $id_cole            =   $_POST['id_cole'];
-    $fecha_alta_mc      =   date('Y-m-d h:i:s');
+    $fecha_alta_mc      =   date('Y-m-d H:i:s');
     $fecha_edit_mc      =   ('0000-00-00 00:00:00');
     $id_usu             =   $_SESSION['id'];
 

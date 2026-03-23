@@ -351,8 +351,9 @@
                     <span class="spinner-border spinner-border-sm"></span>
                     GUARDAR y/o ACTUALIZAR INFORMACIÓN 
             </button>
-            <button type="reset" class="btn btn-outline-dark" role='link' onclick="history.back();" type='reset'><img src='../../img/atras.png' width=27 height=27> REGRESAR
-            </button>
+            <a href="addproject.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+                <i class="fas fa-arrow-left"></i> REGRESAR
+            </a>
         </form>
     </div>
 </body>

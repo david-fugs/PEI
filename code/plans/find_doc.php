@@ -96,7 +96,7 @@
         }
       ?>
     <center>
-    <br/><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
+    <br/><a href="addplan.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
     </center>
 
       </div>
