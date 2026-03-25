@@ -111,6 +111,18 @@ $id_cole = $_SESSION['id_cole'];
                         </ul>
                     </li>
 
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item">
+                            <span class="navlink_icon">
+                                <i class="fa-solid fa-key"></i>
+                            </span>
+                            <span class="navlink">RESTAURAR CONTRASEÑAS</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                        <ul class="menu_items submenu">
+                            <a href="./code/usuarios/reset_passwords_admin.php" class="nav_link sublink">Restaurar Contraseñas</a>
+                        </ul>
+                    </li>
                     <hr style="border: 1px solid #F3840D; border-radius: 5px;">
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">

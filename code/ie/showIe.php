@@ -1070,6 +1070,15 @@ include('../general/observacion.php');
             $consulta = "SELECT * FROM colegios INNER JOIN sedes ON colegios.id_cole=sedes.id_cole WHERE colegios.id_cole=$id_cole ORDER BY sedes.nombre_sede ASC";
             $result = $mysqli->query($consulta);
 
+            // Conteo de formularios Tiempo Escolar por sede
+            $resConteos = $mysqli->query("SELECT cod_dane_sede, COUNT(*) as total FROM estrategia_ju GROUP BY cod_dane_sede");
+            $conteos = [];
+            if ($resConteos) {
+                while ($rc = $resConteos->fetch_assoc()) {
+                    $conteos[$rc['cod_dane_sede']] = (int)$rc['total'];
+                }
+            }
+
             $i = 1;
             while ($row = mysqli_fetch_array($result)) {
                 // Determinar estado y clase CSS
@@ -1079,6 +1088,15 @@ include('../general/observacion.php');
                     '<span class="badge bg-danger"><i class="fas fa-pause me-1"></i>Suspendido</span>' :
                     '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Activo</span>';
 
+                // Badge conteo formularios Tiempo Escolar
+                $conteo = isset($conteos[$row['cod_dane_sede']]) ? (int)$conteos[$row['cod_dane_sede']] : 0;
+                $badgeConteo = '';
+                if ($conteo > 0) {
+                    $labelConteo = $conteo . ' formulario' . ($conteo > 1 ? 's' : '');
+                    $nombreSedeEsc = addslashes($row['nombre_sede']);
+                    $badgeConteo = '<button class="btn btn-outline-info btn-sm rounded-pill d-flex align-items-center gap-1 mt-1" onclick="abrirModalResumenEstrategias(\'' . $row['cod_dane_sede'] . '\', \'' . $nombreSedeEsc . '\')" title="Ver formularios registrados"><i class="fas fa-list-alt me-1"></i><span>' . $labelConteo . '</span></button>';
+                }
+
                 echo '
             <tr class="' . $estadoClass . '">
                 <td data-label="No." class="fw-bold text-primary">' . $i++ . '</td>
@@ -1087,10 +1105,13 @@ include('../general/observacion.php');
                 <td data-label="ZONA">' . $row['zona_sede'] . '</td>
                 <td data-label="ESTADO" class="text-center">' . $estadoBadge . '</td>
                 <td data-label="TIEMPO ESCOLAR" class="text-center">
-                    <button class="btn btn-success btn-sm rounded-pill d-flex align-items-center gap-2" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')" ' . ($estado === 'suspendido' ? 'disabled title="Sede suspendida"' : '') . '>
-                        <i class="fas fa-chart-line"></i>
-                        <span>Tiempo Escolar</span>
-                    </button>
+                    <div class="d-flex flex-column align-items-center gap-1">
+                        <button class="btn btn-success btn-sm rounded-pill d-flex align-items-center gap-2" onclick="abrirModalEstrategia(\'' . $row['cod_dane_sede'] . '\')" ' . ($estado === 'suspendido' ? 'disabled title="Sede suspendida"' : '') . '>
+                            <i class="fas fa-chart-line"></i>
+                            <span>Tiempo Escolar</span>
+                        </button>
+                        ' . $badgeConteo . '
+                    </div>
                 </td>
                 <td data-label="OPCIONES" class="text-center">
                     <div class="d-flex gap-2 justify-content-center">
@@ -1374,6 +1395,30 @@ include('../general/observacion.php');
                 </div>
             </div>
 
+            <!-- Modal Resumen Formularios Tiempo Escolar -->
+            <div class="modal fade" id="modalResumenEstrategias" tabindex="-1" aria-labelledby="modalResumenEstrategiasLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalResumenEstrategiasLabel">
+                                <i class="fas fa-list-alt me-2"></i>Formularios Tiempo Escolar &mdash; <span id="nombreSedeResumen"></span>
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body" id="cuerpoModalResumen">
+                            <div class="text-center py-3">
+                                <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i>Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Seccion de Observaciones Administracion -->
             <div class="mt-5">
                 <h1 class="main-title text-center mb-4">
@@ -1560,6 +1605,67 @@ include('../general/observacion.php');
                 input.addEventListener('input', calcularTotal);
             }); // Calcular total inicial
             calcularTotal();
+
+            let _resumenCodDane = '';
+
+            function abrirModalResumenEstrategias(codDane, nombreSede) {
+                _resumenCodDane = codDane;
+                document.getElementById('nombreSedeResumen').textContent = nombreSede;
+                const modal = new bootstrap.Modal(document.getElementById('modalResumenEstrategias'));
+                modal.show();
+                cargarResumenEstrategias(codDane);
+            }
+
+            function cargarResumenEstrategias(codDane) {
+                document.getElementById('cuerpoModalResumen').innerHTML =
+                    '<div class="text-center py-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+                fetch('obtener_resumen_estrategias.php?cod_dane_sede=' + encodeURIComponent(codDane))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.length) {
+                            document.getElementById('cuerpoModalResumen').innerHTML =
+                                '<p class="text-muted text-center py-3"><i class="fas fa-info-circle me-1"></i>No hay formularios registrados para esta sede.</p>';
+                            return;
+                        }
+                        let html = '<div class="table-responsive"><table class="table table-bordered table-hover">' +
+                            '<thead class="table-dark"><tr><th>#</th><th><i class="fas fa-users me-1"></i>Aliado Responsable</th><th><i class="fas fa-compass me-1"></i>Eje Movilizador</th><th>Acción</th></tr></thead><tbody>';
+                        data.forEach((item, idx) => {
+                            const aliado = (item.aliado === 'Entre Otros' && item.especificar_aliado) ? item.especificar_aliado : item.aliado;
+                            html += `<tr>
+                                <td class="fw-bold">${idx + 1}</td>
+                                <td>${aliado}</td>
+                                <td>${item.eje}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarEstrategia(${item.id})">
+                                        <i class="fas fa-trash me-1"></i>Borrar
+                                    </button>
+                                </td>
+                            </tr>`;
+                        });
+                        html += '</tbody></table></div>';
+                        document.getElementById('cuerpoModalResumen').innerHTML = html;
+                    })
+                    .catch(() => {
+                        document.getElementById('cuerpoModalResumen').innerHTML =
+                            '<p class="text-danger text-center py-3"><i class="fas fa-exclamation-circle me-1"></i>Error al cargar los datos.</p>';
+                    });
+            }
+
+            function eliminarEstrategia(id) {
+                if (!confirm('¿Está seguro de eliminar este registro de Tiempo Escolar?')) return;
+                const fd = new FormData();
+                fd.append('id', id);
+                fetch('eliminar_estrategia.php', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            cargarResumenEstrategias(_resumenCodDane);
+                        } else {
+                            alert('Error: ' + (data.message || 'No se pudo eliminar'));
+                        }
+                    })
+                    .catch(() => alert('Error al eliminar el registro'));
+            }
 
             function abrirModalEstrategia(codDane) {
                 console.log('Abriendo modal para sede:', codDane);
