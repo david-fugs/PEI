@@ -26,7 +26,7 @@ function tienePlanesProyectos($id_cole, $mysqli) {
         $archivoPlanesProyectos = false;
         while ($row = mysqli_fetch_assoc($result)) {
             $id_proy_plan = $row['id_proy_plan'];
-            if (tieneArchivosTransversales($id_proy_plan)) {
+            if (tieneArchivosPlanesProyectos($id_proy_plan)) {
                 $archivoPlanesProyectos = true;
                 
                 break;
@@ -79,7 +79,7 @@ function mostrarArchivosPlanesProyectos($id_cole, $mysqli) {
     
     while ($row = mysqli_fetch_assoc($result)) {
         $id_proy_plan = $row['id_proy_plan'];
-        $path = "./../proyect_transv/proyectos_planes/files/" . $id_proy_plan;
+        $path = "./../plans/files/" . $id_proy_plan;
         
         // Contar archivos reales
         $numArchivos = 0;

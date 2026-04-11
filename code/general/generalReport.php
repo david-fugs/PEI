@@ -1433,7 +1433,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                 echo "<th class='encabezado encabezado3' colspan='2'><i class='fas fa-graduation-cap'></i><br><b>PEDAGÓGICO</b></th>";
                 echo "<th class='encabezado encabezado4' colspan='4'><i class='fas fa-project-diagram'></i><br><b>PLANES-PROGRAMAS-PROYECTOS</b></th>";
                 echo "<th class='encabezado encabezado5' colspan='3'><i class='fas fa-child'></i><br><b>PREESCOLAR</b></th>";
-                echo "<th class='encabezado encabezado6' colspan='3'><i class='fas fa-handshake'></i><br><b>CONVIVENCIA</b></th>";
+                echo "<th class='encabezado encabezado6' colspan='2'><i class='fas fa-handshake'></i><br><b>CONVIVENCIA</b></th>";
                 echo "<th rowspan='2'><i class='fas fa-clipboard-list'></i><br>Observaciones</th>";
                 echo "</tr>";
                 echo "<tr>";
@@ -1464,8 +1464,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                 echo "<th class='oculto'>Archivos Manual</th>";
                 echo "<th><i class='fas fa-users'></i><br>Convivencia Escolar</th>";
                 echo "<th class='oculto'>Archivos Convivencia</th>";
-                echo "<th><i class='fas fa-bell'></i><br>Circular</th>";
-                echo "<th class='oculto'>Archivos Circular</th>";
+
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -1596,12 +1595,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                     echo '</td>';
                     echo "<td class='oculto'>" . mostrarArchivosConvivenciaEscolar($id_cole, $mysqli) . "</td>";
 
-                    //circular
-                    $tieneCircular = tieneCircular($id_cole, $mysqli);
-                    echo '<td ' . ($tieneCircular ? 'class="verde"' : 'class="rojo"') . '>';
-                    echo $tieneCircular ? 'Si' : 'No';
-                    echo '</td>';
-                    echo "<td class='oculto'>" . mostrarArchivosCircular($id_cole, $mysqli) . "</td>";
+
 
                     // $observacion = Observacion($id_cole,$mysql,$contenido);
                     // echo'<td>'.$observacion.'</td>';
@@ -1706,8 +1700,7 @@ $resultados = mysqli_query($mysqli, $consulta);
                         $tieneConvivenciaEscolar = tieneConvivenciaEscolar($id_cole, $mysqli);
                         $convivenciaEscolarText = $tieneConvivenciaEscolar ? 'Si' : 'No';
 
-                        $tieneCircular = tieneCircular($id_cole, $mysqli);
-                        $circularText = $tieneCircular ? 'Si' : 'No';
+
 
                         // Módulo 1 I.E
                         if ($resolucionText != 'No' && $establecimientoText != 'No') {
@@ -1727,11 +1720,11 @@ $resultados = mysqli_query($mysqli, $consulta);
                             $modulo5Cargado++;
                         }
 
-                        if ($manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No') {
+                        if ($manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No') {
                             $modulo6Cargado++;
                         }
 
-                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No' && $manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No' && $circularText != 'No') {
+                        if ($cuatroText  != 'No' && $educacionText != 'No' && $planAulaText != 'No' && $integralText != 'No'&& $transversalText != 'No' && $planesText != 'No' && $mallasText != 'No' && $sieeText != 'No' && $teologicoText != 'No' && $resolucionText != 'No' && $establecimientoText != 'No' && $manualConvivenciaText != 'No' && $convivenciaEscolarText != 'No') {
                             $totalCargados++;
                         }
 

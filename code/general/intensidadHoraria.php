@@ -2,29 +2,22 @@
 // Funciones para validar Intensidad Horaria Semanal
 
 function tieneIntensidadHoraria($id_cole, $mysqli) {
-    // Verificar si existe tabla de intensidad horaria
-    $sql = "SHOW TABLES LIKE 'intensidad_horaria'";
-    $result = mysqli_query($mysqli, $sql);
-    
-    if (mysqli_num_rows($result) > 0) {
-        $sql_count = "SELECT COUNT(*) as count FROM intensidad_horaria WHERE id_cole = '$id_cole'";
-        $result_count = mysqli_query($mysqli, $sql_count);
-        if ($result_count) {
-            $row = mysqli_fetch_assoc($result_count);
-            return $row['count'] > 0;
-        }
+    // Obtener el nit del colegio
+    $sql_nit = "SELECT nit_cole FROM colegios WHERE id_cole = '$id_cole' LIMIT 1";
+    $result_nit = mysqli_query($mysqli, $sql_nit);
+    if (!$result_nit || mysqli_num_rows($result_nit) == 0) {
+        return false;
     }
-    
-    // Verificar si hay archivos en directorio de hours
-    $hours_path = "../../uploads/hours/" . $id_cole;
-    if (is_dir($hours_path)) {
-        $files = scandir($hours_path);
-        $valid_files = array_filter($files, function($file) use ($hours_path) {
-            return $file !== '.' && $file !== '..' && is_file($hours_path . '/' . $file);
-        });
-        return count($valid_files) > 0;
+    $row_nit = mysqli_fetch_assoc($result_nit);
+    $nit = $row_nit['nit_cole'];
+
+    $sql_count = "SELECT COUNT(*) as count FROM intensidad_horaria_semanal WHERE nit_establecimiento = '$nit'";
+    $result_count = mysqli_query($mysqli, $sql_count);
+    if ($result_count) {
+        $row = mysqli_fetch_assoc($result_count);
+        return $row['count'] > 0;
     }
-    
+
     return false;
 }
 
