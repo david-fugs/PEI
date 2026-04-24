@@ -4,7 +4,7 @@
 	mb_internal_encoding('UTF-8');
 	mb_http_output('UTF-8');
 	
-	$mysqli = new mysqli("localhost", 'root', '', 'softepuc_pei');
+	$mysqli = new mysqli("localhost", 'softepuc_pei', 'iSOiJX3*_W_GcW', 'softepuc_pei');
 	
 	if ($mysqli->connect_error) {
 		die("Error de conexi贸n: " . $mysqli->connect_error);
