@@ -38,14 +38,28 @@
         include("../../conexion.php");
 	    if(isset($_POST['btn-update']))
         {
-            $id             =   $_POST['id'];
-            $usuario        =   $_POST['usuario'];
-            $nombre         =   $_POST['nombre'];
-            $tipo_usuario   =   $_POST['tipo_usuario'];
-            //if($_POST['id_cole']==0){$id_cole=0;}
-            $id_cole        =   $_POST['id_cole'];
-           
-            $update = "UPDATE usuarios SET usuario='".$usuario."', nombre='".$nombre."', tipo_usuario='".$tipo_usuario."', id_cole='".$id_cole."' WHERE id='".$id."'";
+            $id             = (int)$_POST['id'];
+            $usuario        = mysqli_real_escape_string($mysqli, $_POST['usuario']);
+            $nombre         = mysqli_real_escape_string($mysqli, $_POST['nombre']);
+            $tipo_usuario   = (int)$_POST['tipo_usuario'];
+            $id_cole        = mysqli_real_escape_string($mysqli, $_POST['id_cole']);
+
+            // Subtipo: solo se permite cuando tipo_usuario = 1 (Secretaría)
+            $subtipo_raw    = isset($_POST['subtipo_usuario']) ? trim($_POST['subtipo_usuario']) : '';
+            $allowed_subtipos = ['Funcionario', 'Contratista'];
+            if ($tipo_usuario === 1 && in_array($subtipo_raw, $allowed_subtipos)) {
+                $subtipo_usuario = mysqli_real_escape_string($mysqli, $subtipo_raw);
+            } else {
+                $subtipo_usuario = '';
+            }
+
+            $update = "UPDATE usuarios
+                       SET usuario='{$usuario}',
+                           nombre='{$nombre}',
+                           tipo_usuario='{$tipo_usuario}',
+                           id_cole='{$id_cole}',
+                           subtipo_usuario=" . ($subtipo_usuario !== '' ? "'{$subtipo_usuario}'" : "NULL") . "
+                       WHERE id='{$id}'";
 
             $up = mysqli_query($mysqli, $update);
         }

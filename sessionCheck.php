@@ -21,10 +21,11 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-$id             = $_SESSION['id'];
-$nombre         = $_SESSION['nombre'];
-$tipo_usuario   = $_SESSION['tipo_usuario'];
-$id_cole        = $_SESSION['id_cole'];
+$id               = $_SESSION['id'];
+$nombre           = $_SESSION['nombre'];
+$tipo_usuario     = $_SESSION['tipo_usuario'];
+$id_cole          = $_SESSION['id_cole'];
+$subtipo_usuario  = $_SESSION['subtipo_usuario'] ?? '';
 
 // Incluir el helper de visualización de administrador
 include_once(__DIR__ . '/adminViewHelper.php');

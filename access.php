@@ -5,10 +5,11 @@ if (!isset($_SESSION['id'])) {
     header("Location: index.php");
 }
 
-$usuario = $_SESSION['usuario'];
-$nombre = $_SESSION['nombre'];
-$tipo_usu = $_SESSION['tipo_usuario'];
-$id_cole = $_SESSION['id_cole'];
+$usuario          = $_SESSION['usuario'];
+$nombre           = $_SESSION['nombre'];
+$tipo_usu         = $_SESSION['tipo_usuario'];
+$id_cole          = $_SESSION['id_cole'];
+$subtipo_usuario  = $_SESSION['subtipo_usuario'] ?? '';
 
 ?>
 
@@ -47,6 +48,7 @@ $id_cole = $_SESSION['id_cole'];
             <div class="menu_content">
                 <ul class="menu_items">
                     <div class="menu_title menu_dahsboard"></div>
+                    <?php if ( $subtipo_usuario != 'Contratista') : ?>
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">
@@ -59,6 +61,7 @@ $id_cole = $_SESSION['id_cole'];
                             <a href="./code/usuarios/adduser.php" class="nav_link sublink">Ver Usuarios</a>
                         </ul>
                     </li>
+                    <?php endif; ?>
                     <li class="item">
                         <div href="#" class="nav_link submenu_item">
                             <span class="navlink_icon">

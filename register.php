@@ -111,7 +111,7 @@ session_start();
 							while ($row = $res->fetch_array()) {
 							?>
 								<option value='<?php echo $row['id_cole']; ?>'>
-									<?php echo utf8_encode($row['nombre_cole']); ?>
+									<?php echo $row['nombre_cole']; ?>
 								</option>
 							<?php
 							}
@@ -137,6 +137,7 @@ session_start();
 					<input type="checkbox" id="aceptaDatos" required onclick="toggleSubmitButton()">
 					<label for="aceptaDatos">
 						Acepto el tratamiento de datos personales</a>.
+						Ver aqui la <a href="https://www.minambiente.gov.co/politica-de-proteccion-de-datos-personales/" target="_blank">Política de Privacidad</a>.
 					</label>
 				</div>
 				<button type="submit" class="btn btn-outline-warning">

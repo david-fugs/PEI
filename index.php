@@ -29,6 +29,7 @@
           $_SESSION['nombre'] = $row['nombre'];
           $_SESSION['tipo_usuario'] = $row['tipo_usuario'];
           $_SESSION['id_cole'] = $row['id_cole'];
+          $_SESSION['subtipo_usuario'] = isset($row['subtipo_usuario']) ? $row['subtipo_usuario'] : '';
 
           if($row['tipo_usuario'] == 1)
           {
