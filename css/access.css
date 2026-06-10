@@ -36,7 +36,8 @@ body.dark {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 30px;
+  min-height: 70px;
+  padding: 8px 30px;
   z-index: 1000;
   box-shadow: 0 0 2px var(--grey-color-light);
 }
@@ -48,11 +49,18 @@ body.dark {
   font-weight: 500;
   color: var(--blue-color);
 }
-.navbar img {
-  width: 275px;
-  height: 74px;
+.navbar_logo {
+  width: 86px;
+  height: 52px;
   object-fit: contain;
+  display: block;
+}
 
+.profile {
+  width: 72px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
 }
 .search_bar {
   height: 47px;

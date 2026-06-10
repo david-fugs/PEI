@@ -33,7 +33,7 @@ $subtipo_usuario  = $_SESSION['subtipo_usuario'] ?? '';
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-            <img src="img/logo_educacion_fondo_azul.png" alt=""></i>PEI | SOFT
+            <img src="img/logo_educacion_fondo_azul.png" alt="Logo PEI" class="navbar_logo">PEI | SOFT
         </div>
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
