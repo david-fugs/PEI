@@ -118,12 +118,13 @@ echo '<style>
        
 
             <?php
+            $numeo_fila = 1;
             if ($resultados && mysqli_num_rows($resultados) > 0) {
                 echo "<br>";
                 echo "<table border>";
                 echo "<thead style='text-align: center;'>";
                 echo "<tr>";
-                echo "<th rowspan='2'><b>ID</b></th>";
+                echo "<th rowspan='2'><b>Numero</b></th>";
                 echo "<th rowspan='2'><b>Establecimiento Educativo</b></th>";
                 echo "<th class='encabezado encabezado1' colspan='2'><b>INSTITUCIÓN EDUCATIVA</b></th>";
                 echo "<th class='encabezado encabezado2' colspan='1'><b>TELEOLÓGICO</b></th>";
@@ -153,7 +154,7 @@ echo '<style>
                 echo "<tbody>";
                 while ($fila = mysqli_fetch_assoc($resultados)) {
                     echo "<tr ALIGN=center>";
-                    echo "<td>".$fila['id_cole']."</td>";
+                    echo "<td>".$numeo_fila++."</td>";
                     echo "<td>".$fila['nombre_cole']."</td>";
                     $id_cole = $fila['id_cole'];
                 

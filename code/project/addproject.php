@@ -128,8 +128,16 @@ if (isAdminViewMode() && $tipo_usuario == "1") {
 	}
 	echo '</tbody></table></div>';
 	?>
+	<?php
+	if($tipo_usuario == 1){
+		$redireccion = '../ie/showIeAdmin.php?id_cole=' . $id_cole;
+	}
+	else{
+		$redireccion = '../ie/showIe.php';
+	}
+	?>
 	<div class="text-center mt-4">
-		<a href="../../access.php" class="btn btn-secondary d-inline-flex align-items-center gap-2">
+		<a href="<?php echo $redireccion; ?>" class="btn btn-secondary d-inline-flex align-items-center gap-2">
 			<i class="fas fa-arrow-left"></i> Regresar
 		</a>
 	</div>
