@@ -134,181 +134,86 @@ function tieneCircular($id_cole, $mysqli) {
 
 function mostrarArchivosManualConvivencia($id_cole, $mysqli) {
     include_once("archivosHelper.php");
-    
+
     // Verificar si la tabla existe
     $sql_check = "SHOW TABLES LIKE 'manual_convivencia'";
     $result_check = mysqli_query($mysqli, $sql_check);
-    
+
     if (mysqli_num_rows($result_check) == 0) {
         return "Tabla no existe";
     }
-    
-    // Verificar qué columnas tiene la tabla
-    $sql_describe = "DESCRIBE manual_convivencia";
-    $result_describe = mysqli_query($mysqli, $sql_describe);
-    $columns = array();
-    while ($row = mysqli_fetch_assoc($result_describe)) {
-        $columns[] = $row['Field'];
-    }
-    
-    // Determinar qué columna usar para id_cole
-    $id_column = '';
-    if (in_array('id_cole', $columns)) {
-        $id_column = 'id_cole';
-    } elseif (in_array('colegio_id', $columns)) {
-        $id_column = 'colegio_id';
-    } elseif (in_array('institucion_id', $columns)) {
-        $id_column = 'institucion_id';
-    } elseif (in_array('id_institucion', $columns)) {
-        $id_column = 'id_institucion';
-    }
-    
-    // Construir la consulta según las columnas disponibles
-    $select_fields = array();
-    if (in_array('archivo', $columns)) $select_fields[] = 'archivo';
-    if (in_array('titulo', $columns)) $select_fields[] = 'titulo';
-    if (in_array('nombre', $columns)) $select_fields[] = 'nombre';
-    if (in_array('descripcion', $columns)) $select_fields[] = 'descripcion';
-    if (in_array('ruta_archivo', $columns)) $select_fields[] = 'ruta_archivo';
-    
-    if (empty($select_fields)) {
-        return "No hay campos de archivo disponibles";
-    }
-    
-    $where_clause = $id_column ? "WHERE $id_column = '$id_cole'" : "";
-    $sql = "SELECT " . implode(', ', $select_fields) . " FROM manual_convivencia $where_clause";
+
+    // Obtener todos los registros de manual_convivencia para este id_cole
+    $sql = "SELECT id_cole, anio_manual, nombre_archivo, nombre_original, descripcion FROM manual_convivencia WHERE id_cole = '$id_cole'";
     $result = mysqli_query($mysqli, $sql);
     $archivos = "";
     $totalArchivos = 0;
-    
-    if ($result) {
+
+    if ($result && mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $archivo_campo = '';
-            $titulo_campo = '';
-            
-            // Determinar cuál campo usar para archivo
-            if (isset($row['archivo']) && !empty($row['archivo'])) {
-                $archivo_campo = $row['archivo'];
-            } elseif (isset($row['ruta_archivo']) && !empty($row['ruta_archivo'])) {
-                $archivo_campo = $row['ruta_archivo'];
-            }
-            
-            // Determinar cuál campo usar para título
-            if (isset($row['titulo']) && !empty($row['titulo'])) {
-                $titulo_campo = $row['titulo'];
-            } elseif (isset($row['nombre']) && !empty($row['nombre'])) {
-                $titulo_campo = $row['nombre'];
-            } elseif (isset($row['descripcion']) && !empty($row['descripcion'])) {
-                $titulo_campo = $row['descripcion'];
-            } else {
-                $titulo_campo = 'Manual de Convivencia';
-            }
-            
-            if (!empty($archivo_campo)) {
-                $archivos .= "<div style='margin-bottom:5px;'><a href='../convivencia/uploads/circulares/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
-                           htmlspecialchars($titulo_campo) . "</a></div>";
+            $relPath = "../convivencia/files/" . $row['id_cole'] . "/" . $row['anio_manual'] . "/" . $row['nombre_archivo'];
+            $absPath = __DIR__ . "/../convivencia/files/" . $row['id_cole'] . "/" . $row['anio_manual'] . "/" . $row['nombre_archivo'];
+            $fileExists = file_exists($absPath);
+            $titulo = !empty($row['nombre_original']) ? $row['nombre_original'] : $row['nombre_archivo'];
+
+            if ($fileExists) {
+                $archivos .= "<div style='margin-bottom:5px;'><a href='$relPath' target='_blank'>" .
+                           htmlspecialchars($titulo) . "</a></div>";
                 $totalArchivos++;
             } else {
-                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo_campo) . " (Registrado)</div>";
+                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo) . " (No disponible)</div>";
                 $totalArchivos++;
             }
         }
     }
-    
+
     if (empty($archivos)) {
         return "No hay archivos";
     }
-    
+
     return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'manual_convivencia');
 }
 
 function mostrarArchivosConvivenciaEscolar($id_cole, $mysqli) {
     include_once("archivosHelper.php");
-    
+
     // Verificar si la tabla existe
     $sql_check = "SHOW TABLES LIKE 'convivencia_escolar'";
     $result_check = mysqli_query($mysqli, $sql_check);
-    
+
     if (mysqli_num_rows($result_check) == 0) {
         return "Tabla no existe";
     }
-    
-    // Verificar qué columnas tiene la tabla
-    $sql_describe = "DESCRIBE convivencia_escolar";
-    $result_describe = mysqli_query($mysqli, $sql_describe);
-    $columns = array();
-    while ($row = mysqli_fetch_assoc($result_describe)) {
-        $columns[] = $row['Field'];
-    }
-    
-    // Determinar qué columna usar para id_cole
-    $id_column = '';
-    if (in_array('id_cole', $columns)) {
-        $id_column = 'id_cole';
-    } elseif (in_array('colegio_id', $columns)) {
-        $id_column = 'colegio_id';
-    } elseif (in_array('institucion_id', $columns)) {
-        $id_column = 'institucion_id';
-    } elseif (in_array('id_institucion', $columns)) {
-        $id_column = 'id_institucion';
-    }
-    
-    // Construir la consulta según las columnas disponibles
-    $select_fields = array();
-    if (in_array('archivo', $columns)) $select_fields[] = 'archivo';
-    if (in_array('titulo', $columns)) $select_fields[] = 'titulo';
-    if (in_array('nombre', $columns)) $select_fields[] = 'nombre';
-    if (in_array('descripcion', $columns)) $select_fields[] = 'descripcion';
-    if (in_array('ruta_archivo', $columns)) $select_fields[] = 'ruta_archivo';
-    
-    if (empty($select_fields)) {
-        return "No hay campos de archivo disponibles";
-    }
-    
-    $where_clause = $id_column ? "WHERE $id_column = '$id_cole'" : "";
-    $sql = "SELECT " . implode(', ', $select_fields) . " FROM convivencia_escolar $where_clause";
+
+    // Obtener todos los registros de convivencia_escolar para este id_cole
+    $sql = "SELECT id_cole, anio_documento, nombre_archivo, nombre_original, tipo_documento FROM convivencia_escolar WHERE id_cole = '$id_cole'";
     $result = mysqli_query($mysqli, $sql);
     $archivos = "";
     $totalArchivos = 0;
-    
-    if ($result) {
+
+    if ($result && mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $archivo_campo = '';
-            $titulo_campo = '';
-            
-            // Determinar cuál campo usar para archivo
-            if (isset($row['archivo']) && !empty($row['archivo'])) {
-                $archivo_campo = $row['archivo'];
-            } elseif (isset($row['ruta_archivo']) && !empty($row['ruta_archivo'])) {
-                $archivo_campo = $row['ruta_archivo'];
-            }
-            
-            // Determinar cuál campo usar para título
-            if (isset($row['titulo']) && !empty($row['titulo'])) {
-                $titulo_campo = $row['titulo'];
-            } elseif (isset($row['nombre']) && !empty($row['nombre'])) {
-                $titulo_campo = $row['nombre'];
-            } elseif (isset($row['descripcion']) && !empty($row['descripcion'])) {
-                $titulo_campo = $row['descripcion'];
-            } else {
-                $titulo_campo = 'Convivencia Escolar';
-            }
-            
-            if (!empty($archivo_campo)) {
-                $archivos .= "<div style='margin-bottom:5px;'><a href='../convivencia/" . htmlspecialchars($archivo_campo) . "' target='_blank'>" . 
-                           htmlspecialchars($titulo_campo) . "</a></div>";
+            $relPath = "../convivencia/files/" . $row['id_cole'] . "/" . $row['anio_documento'] . "/convivencia_escolar/" . $row['nombre_archivo'];
+            $absPath = __DIR__ . "/../convivencia/files/" . $row['id_cole'] . "/" . $row['anio_documento'] . "/convivencia_escolar/" . $row['nombre_archivo'];
+            $fileExists = file_exists($absPath);
+            $titulo = !empty($row['nombre_original']) ? $row['nombre_original'] : $row['nombre_archivo'];
+            $tipoDoc = ucfirst($row['tipo_documento']);
+
+            if ($fileExists) {
+                $archivos .= "<div style='margin-bottom:5px;'><a href='$relPath' target='_blank'>" .
+                           htmlspecialchars("[$tipoDoc] " . $titulo) . "</a></div>";
                 $totalArchivos++;
             } else {
-                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars($titulo_campo) . " (Registrado)</div>";
+                $archivos .= "<div style='margin-bottom:5px;'>" . htmlspecialchars("[$tipoDoc] " . $titulo) . " (No disponible)</div>";
                 $totalArchivos++;
             }
         }
     }
-    
+
     if (empty($archivos)) {
         return "No hay archivos";
     }
-    
+
     return generarArchivosColapsables($archivos, $totalArchivos, $id_cole, 'convivencia_escolar');
 }
 
